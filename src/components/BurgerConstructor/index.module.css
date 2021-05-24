@@ -1,0 +1,9 @@
+.list {
+  height: calc(100vh - 320px) !important;
+}
+
+.order {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}

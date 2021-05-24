@@ -1,0 +1,20 @@
+.tab {
+  display: flex;
+  width: 100%;
+}
+
+.ingrediants {
+  height: calc(100vh - 320px) !important;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.item {
+  flex: 0 0 50%;
+}

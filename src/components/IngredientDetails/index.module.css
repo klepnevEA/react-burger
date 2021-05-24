@@ -1,0 +1,25 @@
+.ingrediant {
+  position: relative;
+}
+
+.image {
+  display: flex;
+  justify-content: center;
+  min-height: 120px;
+}
+
+.image img {
+  height: 120px;
+  width: auto;
+}
+
+.price {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.name {
+  text-align: center;
+  min-height: 48px;
+}
