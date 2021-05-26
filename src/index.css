@@ -3,6 +3,10 @@
   --bgColorHeader: #1c1c21;
 } */
 
+:root {
+  --mobile: "768px";
+}
+
 * {
   box-sizing: border-box;
 }

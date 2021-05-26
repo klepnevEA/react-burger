@@ -1,0 +1,16 @@
+.structure {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  color: var(--text-inactive-color);
+}
+
+.text {
+  text-align: center;
+}
+
+.image {
+  height: 240px;
+  width: 480px;
+  margin: 0 auto;
+}
