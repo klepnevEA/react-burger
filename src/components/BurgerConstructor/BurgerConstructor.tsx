@@ -7,9 +7,16 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./index.module.css";
+import { TDataItem } from "../../../src/interface";
 
-function BurgerConstructor(props: any) {
-  const { dataBurger, openOrder } = props;
+interface TDataProps {
+  dataBurger: TDataItem[];
+  openIngredients: (ingredient: TDataItem) => void;
+  openOrder: () => void;
+}
+
+function BurgerConstructor(props: TDataProps) {
+  const { dataBurger, openOrder, openIngredients } = props;
   const ingredients = [];
 
   for (let i = 0; i < dataBurger.length; i++) {
@@ -21,7 +28,10 @@ function BurgerConstructor(props: any) {
   return (
     <div className="pt-25">
       <div className={`mb-10 ${styles.ingrediants}`}>
-        <div className={`pl-8 mb-2 ${styles["ingredients-top"]}`}>
+        <div
+          className={`pl-8 mb-2 ${styles["ingredients-top"]}`}
+          onClick={() => openIngredients(dataBurger[0])}
+        >
           <ConstructorElement
             type="top"
             isLocked={true}
@@ -55,7 +65,11 @@ function BurgerConstructor(props: any) {
             >
               {ingredients.map((item) => {
                 return (
-                  <li key={item._id} className={styles["ingredients-item"]}>
+                  <li
+                    key={item._id}
+                    className={styles["ingredients-item"]}
+                    onClick={() => openIngredients(item)}
+                  >
                     <div className={`mr-1 ${styles["ingredients-drag"]}`}>
                       <DragIcon type="primary" />
                     </div>
@@ -70,7 +84,10 @@ function BurgerConstructor(props: any) {
             </ul>
           </Scrollbars>
         </div>
-        <div className={`pl-8 mt-2 ${styles["ingredients-bottom"]}`}>
+        <div
+          className={`pl-8 mt-2 ${styles["ingredients-bottom"]}`}
+          onClick={() => openIngredients(dataBurger[0])}
+        >
           <ConstructorElement
             type="bottom"
             isLocked={true}

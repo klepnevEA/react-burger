@@ -4,12 +4,13 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./index.module.css";
 
 function Modal(props: any) {
+  const { closeModal } = props;
   return (
     <div className={styles.modal}>
       <div className={`p-10 pn-15 ${styles["modal-body"]}`}>
-        <a href="/" className={styles["modal-close"]}>
+        <button className={styles["modal-close"]} onClick={closeModal}>
           <CloseIcon type="primary" />
-        </a>
+        </button>
         <div className={styles["modal-content"]}>{props.children}</div>
       </div>
     </div>

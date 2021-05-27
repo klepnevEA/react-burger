@@ -4,7 +4,7 @@ import IngredientDetails from "../IngredientDetails";
 import styles from "./index.module.css";
 
 function IngredientList(props: any) {
-  const { ingredients } = props;
+  const { ingredients, openIngredients } = props;
 
   return (
     <div className={styles["ingredient-list"]}>
@@ -12,7 +12,11 @@ function IngredientList(props: any) {
       <ul className={styles.list}>
         {ingredients.list.map((elem: any) => {
           return (
-            <li key={elem._id} className={`pr-3 pl-3 pb-10 ${styles.item}`}>
+            <li
+              key={elem._id}
+              className={`pr-3 pl-3 pb-10 ${styles.item}`}
+              onClick={() => openIngredients(elem)}
+            >
               <IngredientDetails ingredient={elem} />
             </li>
           );

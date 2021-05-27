@@ -1,17 +1,22 @@
 import React from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./index.module.css";
-import IngredientDetails from "../IngredientDetails";
 import Scrollbars from "react-custom-scrollbars";
 import IngredientList from "../IngredientList";
+import { TDataItem } from "../../../src/interface";
 
-function BurgerIngredients(props: any) {
-  const { dataBurger } = props;
+interface TDataProps {
+  dataBurger: TDataItem[];
+  openIngredients: (ingredient: TDataItem) => void;
+}
+
+function BurgerIngredients(props: TDataProps) {
+  const { dataBurger, openIngredients } = props;
   const [current, setCurrent] = React.useState("Булки");
   const ingredients = {
     bun: { type: "bun", name: "Булки", list: [] },
     main: { type: "main", name: "Мясо", list: [] },
-    sauce: { type: "sauce", name: "Соуся", list: [] },
+    sauce: { type: "sauce", name: "Соусы", list: [] },
   };
 
   for (let i = 0; i < dataBurger.length; i++) {
@@ -65,7 +70,13 @@ function BurgerIngredients(props: any) {
         autoHideDuration={200}
       >
         {Object.entries(ingredients).map(([key, value]) => {
-          return <IngredientList ingredients={value} />;
+          return (
+            <IngredientList
+              key={key}
+              ingredients={value}
+              openIngredients={openIngredients}
+            />
+          );
         })}
       </Scrollbars>
     </div>
