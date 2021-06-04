@@ -5,9 +5,7 @@ import {
   Logo,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import LogoSmall from "../../images/logo.svg";
 import styles from "./index.module.css";
-import { MenuIcon } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons";
 
 function AppHeader() {
   return (

@@ -15,8 +15,8 @@ function BurgerIngredients(props: TDataProps) {
   const [current, setCurrent] = React.useState("Булки");
   const ingredients = {
     bun: { type: "bun", name: "Булки", list: [] },
-    main: { type: "main", name: "Мясо", list: [] },
     sauce: { type: "sauce", name: "Соусы", list: [] },
+    main: { type: "main", name: "Мясо", list: [] },
   };
 
   for (let i = 0; i < dataBurger.length; i++) {

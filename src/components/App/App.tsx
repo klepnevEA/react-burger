@@ -18,7 +18,7 @@ function App() {
     setisOpenOrder(true);
   };
 
-  const closeModal = () => {
+  const closeModal = (event: Event) => {
     setisOpenOrder(false);
     setisOpenIngredient(false);
     setingredient(Data[0]);
