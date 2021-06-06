@@ -59,7 +59,12 @@ function App() {
               </div>
             </>
           ) : (
-            "Загрузка"
+            <div className={styles.loadingWrapper}>
+              <div className={styles.loading}>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
           )}
         </main>
       </div>
