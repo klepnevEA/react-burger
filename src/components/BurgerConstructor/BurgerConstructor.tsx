@@ -9,13 +9,13 @@ import {
 import styles from "./index.module.css";
 import { TDataItem } from "../../../src/interface";
 
-interface TDataProps {
+interface Props {
   dataBurger: TDataItem[];
   openIngredients: (ingredient: TDataItem) => void;
   openOrder: () => void;
 }
 
-function BurgerConstructor(props: TDataProps) {
+function BurgerConstructor(props: Props) {
   const { dataBurger, openOrder, openIngredients } = props;
   const ingredients = [];
 
