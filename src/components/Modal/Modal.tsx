@@ -14,19 +14,18 @@ const reactModals = document.getElementById("react-modals");
 function Modal(props: Props) {
   const { closeModal } = props;
 
-  const close = (event: KeyboardEvent) => {
-    if (event.key === "Escape") {
-      closeModal();
-    }
-    return;
-  };
-
   useEffect(() => {
+    const close = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeModal();
+      }
+      return;
+    };
     document.addEventListener("keydown", close);
     return () => {
       document.removeEventListener("keydown", close);
     };
-  });
+  }, [closeModal]);
 
   return reactModals
     ? createPortal(
