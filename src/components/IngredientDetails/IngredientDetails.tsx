@@ -4,9 +4,14 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
 import styles from "./index.module.css";
+import { TDataItem } from "../../../src/interface";
+interface Props {
+  ingredient: TDataItem;
+}
 
-function IngredientDetails(props: any) {
+function IngredientDetails(props: Props) {
   const { ingredient } = props;
+
   return (
     <div className={styles.ingrediant}>
       <Counter count={1} size="default" />

@@ -3,11 +3,11 @@ import React from "react";
 import { TDataItem } from "../../../src/interface";
 import styles from "./index.module.css";
 
-interface TDataProps {
+interface Props {
   data: TDataItem;
 }
 
-function IngredientModal(props: TDataProps) {
+function IngredientModal(props: Props) {
   const { data } = props;
 
   return (

@@ -5,12 +5,12 @@ import Scrollbars from "react-custom-scrollbars";
 import IngredientList from "../IngredientList";
 import { TDataItem } from "../../../src/interface";
 
-interface TDataProps {
+interface Props {
   dataBurger: TDataItem[];
   openIngredients: (ingredient: TDataItem) => void;
 }
 
-function BurgerIngredients(props: TDataProps) {
+function BurgerIngredients(props: Props) {
   const { dataBurger, openIngredients } = props;
   const [current, setCurrent] = React.useState("Булки");
   const ingredients = {

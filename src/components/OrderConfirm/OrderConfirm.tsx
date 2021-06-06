@@ -3,7 +3,7 @@ import Done from "../../images/done.svg";
 
 import styles from "./index.module.css";
 
-function OrderConfirm(props: any) {
+function OrderConfirm() {
   return (
     <div className={styles["content-wrapper"]}>
       <div className="mb-8 text text_type_digits-large">034536</div>

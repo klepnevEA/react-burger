@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AppHeader from "../AppHeader";
 import BurgerConstructor from "../BurgerConstructor";
 import BurgerIngredients from "../BurgerIngredients";
@@ -13,12 +13,13 @@ function App() {
   const [isOpenOrder, setisOpenOrder] = useState(false);
   const [isOpenIngredient, setisOpenIngredient] = useState(false);
   const [ingredient, setingredient] = useState(Data[0]);
+  const url = "https://norma.nomoreparties.space/api/ingredients ";
 
   const order = () => {
     setisOpenOrder(true);
   };
 
-  const closeModal = (event: Event) => {
+  const closeModal = () => {
     setisOpenOrder(false);
     setisOpenIngredient(false);
     setingredient(Data[0]);
@@ -28,6 +29,13 @@ function App() {
     setingredient(ingredient);
     setisOpenIngredient(true);
   };
+
+  const addDate = () => {
+    let ingredients = fetch(url).then((response) => response.json());
+    console.log(ingredients);
+  };
+
+  useEffect(addDate, []);
 
   return (
     <div className={styles.wrapper}>

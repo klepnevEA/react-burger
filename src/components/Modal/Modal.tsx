@@ -4,17 +4,28 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./index.module.css";
 import { createPortal } from "react-dom";
 
+interface Props {
+  closeModal: () => void;
+  children: object;
+}
+
 const reactModals = document.getElementById("react-modals");
 
-function Modal(props: any) {
+function Modal(props: Props) {
   const { closeModal } = props;
 
+  const close = (event: KeyboardEvent) => {
+    if (event.key === "Escape") {
+      closeModal();
+    }
+    return;
+  };
+
   useEffect(() => {
-    document.addEventListener("keydown", (event) => {
-      if (event.code === "Escape") {
-        closeModal();
-      }
-    });
+    document.addEventListener("keydown", close);
+    return () => {
+      document.removeEventListener("keydown", close);
+    };
   });
 
   return reactModals
