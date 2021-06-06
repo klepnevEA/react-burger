@@ -3,6 +3,7 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from "./index.module.css";
 import { createPortal } from "react-dom";
+import ModalOverlay from "../ModalOverlay";
 
 interface Props {
   closeModal: () => void;
@@ -38,6 +39,7 @@ function Modal(props: Props) {
               <div className={styles["modal-content"]}>{props.children}</div>
             </div>
           </div>
+          <ModalOverlay closeModal={closeModal} />
         </>,
         reactModals
       )
