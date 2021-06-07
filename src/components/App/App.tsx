@@ -57,11 +57,7 @@ function App() {
                 />
               </div>
               <div className={styles.col}>
-                <BurgerConstructor
-                  dataBurger={isData}
-                  openOrder={order}
-                  openIngredients={openIngredients}
-                />
+                <BurgerConstructor dataBurger={isData} openOrder={order} />
               </div>
             </>
           ) : (

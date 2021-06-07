@@ -11,12 +11,11 @@ import { TDataItem } from "../../../src/interface";
 
 interface Props {
   dataBurger: TDataItem[];
-  openIngredients: (ingredient: TDataItem) => void;
   openOrder: () => void;
 }
 
 function BurgerConstructor(props: Props) {
-  const { dataBurger, openOrder, openIngredients } = props;
+  const { dataBurger, openOrder } = props;
   const ingredients = [];
 
   for (let i = 0; i < dataBurger.length; i++) {
@@ -28,10 +27,7 @@ function BurgerConstructor(props: Props) {
   return (
     <div className="pt-25">
       <div className={`mb-10 ${styles.ingrediants}`}>
-        <div
-          className={`pl-8 mb-2 ${styles["ingredients-top"]}`}
-          onClick={() => openIngredients(dataBurger[0])}
-        >
+        <div className={`pl-8 mb-2 ${styles["ingredients-top"]}`}>
           <ConstructorElement
             type="top"
             isLocked={true}
@@ -65,11 +61,7 @@ function BurgerConstructor(props: Props) {
             >
               {ingredients.map((item) => {
                 return (
-                  <li
-                    key={item._id}
-                    className={styles["ingredients-item"]}
-                    onClick={() => openIngredients(item)}
-                  >
+                  <li key={item._id} className={styles["ingredients-item"]}>
                     <div className={`mr-1 ${styles["ingredients-drag"]}`}>
                       <DragIcon type="primary" />
                     </div>
@@ -84,10 +76,7 @@ function BurgerConstructor(props: Props) {
             </ul>
           </Scrollbars>
         </div>
-        <div
-          className={`pl-8 mt-2 ${styles["ingredients-bottom"]}`}
-          onClick={() => openIngredients(dataBurger[0])}
-        >
+        <div className={`pl-8 mt-2 ${styles["ingredients-bottom"]}`}>
           <ConstructorElement
             type="bottom"
             isLocked={true}
