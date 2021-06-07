@@ -31,8 +31,14 @@ function App() {
 
   const addDate = () => {
     fetch(url)
-      .then((response) => response.json())
-      .then((data) => setIsData(data.data));
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        return Promise.reject(response.status);
+      })
+      .then((data) => setIsData(data.data))
+      .catch((err) => console.log(`Ошибка ${err}`));
   };
 
   useEffect(addDate, []);
