@@ -1,0 +1,11 @@
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.primary {
+  color: var(--text-inactive-color);
+}

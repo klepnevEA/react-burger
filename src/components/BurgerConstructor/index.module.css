@@ -1,0 +1,32 @@
+.list {
+  height: calc(100vh - 500px) !important;
+}
+
+.order {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.ingredients-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ingredients-item {
+  display: flex;
+  align-items: center;
+}
+
+.ingredients-drag {
+  width: 30px;
+}
+
+:global(.constructor-element) {
+  flex-grow: 1;
+}
+
+:global(.constructor-element__text) {
+  flex-grow: 1;
+}

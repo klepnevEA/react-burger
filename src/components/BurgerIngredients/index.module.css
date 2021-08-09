@@ -1,0 +1,13 @@
+.tab {
+  display: flex;
+  list-style: none;
+  width: 100%;
+}
+
+.tabItem {
+  flex-grow: 1;
+}
+
+.ingrediants {
+  height: calc(100vh - 320px) !important;
+}
