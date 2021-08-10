@@ -4,30 +4,33 @@ import styles from "./index.module.css";
 import Scrollbars from "react-custom-scrollbars";
 import IngredientList from "../IngredientList";
 import { TDataItem } from "../../../src/interface";
+import { useSelector } from "react-redux";
+import { RootState } from "../../services/reducers";
 
 interface Props {
-  dataBurger: TDataItem[];
   openIngredients: (ingredient: TDataItem) => void;
 }
 
 function BurgerIngredients(props: Props) {
-  const { dataBurger, openIngredients } = props;
+  const { openIngredients } = props;
   const [current, setCurrent] = React.useState("Булки");
-  const ingredients = {
+  const { ingredients } = useSelector((state: RootState) => state.appData);
+
+  const ingredientsType = {
     bun: { type: "bun", name: "Булки", list: [] },
     sauce: { type: "sauce", name: "Соусы", list: [] },
     main: { type: "main", name: "Мясо", list: [] },
   };
 
-  for (let i = 0; i < dataBurger.length; i++) {
-    if (dataBurger[i].type === "bun") {
-      ingredients.bun.list.push(dataBurger[i] as never);
+  for (let i = 0; i < ingredients.length; i++) {
+    if (ingredients[i].type === "bun") {
+      ingredientsType.bun.list.push(ingredients[i] as never);
     }
-    if (dataBurger[i].type === "main") {
-      ingredients.main.list.push(dataBurger[i] as never);
+    if (ingredients[i].type === "main") {
+      ingredientsType.main.list.push(ingredients[i] as never);
     }
-    if (dataBurger[i].type === "sauce") {
-      ingredients.sauce.list.push(dataBurger[i] as never);
+    if (ingredients[i].type === "sauce") {
+      ingredientsType.sauce.list.push(ingredients[i] as never);
     }
   }
 
@@ -69,11 +72,11 @@ function BurgerIngredients(props: Props) {
         autoHideTimeout={1000}
         autoHideDuration={200}
       >
-        {Object.entries(ingredients).map(([key, value]) => {
+        {Object.entries(ingredientsType).map(([key, value]) => {
           return (
             <IngredientList
               key={key}
-              ingredients={value}
+              ingredientsType={value}
               openIngredients={openIngredients}
             />
           );

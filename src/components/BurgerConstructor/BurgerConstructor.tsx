@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Scrollbars } from "react-custom-scrollbars";
 import {
   ConstructorElement,
@@ -8,19 +8,22 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./index.module.css";
 import { TDataItem } from "../../../src/interface";
+import { RootState } from "../../services/reducers";
+import { useSelector } from "react-redux";
 
 interface Props {
-  dataBurger: TDataItem[];
+  // dataBurger: TDataItem[];
   openOrder: () => void;
 }
 
 function BurgerConstructor(props: Props) {
-  const { dataBurger, openOrder } = props;
-  const ingredients = [];
+  const { openOrder } = props;
+  const ingredientsBun = [];
+  const { ingredients } = useSelector((state: RootState) => state.appData);
 
-  for (let i = 0; i < dataBurger.length; i++) {
-    if (dataBurger[i].type !== "bun") {
-      ingredients.push(dataBurger[i]);
+  for (let i = 0; i < ingredients.length; i++) {
+    if (ingredients[i].type !== "bun") {
+      ingredientsBun.push(ingredients[i]);
     }
   }
 
@@ -31,9 +34,9 @@ function BurgerConstructor(props: Props) {
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={dataBurger[0].name + " (верх)"}
-            price={dataBurger[0].price}
-            thumbnail={dataBurger[0].image}
+            text={ingredientsBun[0]?.name + " (верх)"}
+            price={ingredientsBun[0]?.price}
+            thumbnail={ingredientsBun[0]?.image}
           />
         </div>
         <div className={styles["ingredients-list-wrapper"]}>
@@ -59,7 +62,7 @@ function BurgerConstructor(props: Props) {
               className={styles["ingredients-list"]}
               style={{ display: "flex", flexDirection: "column", gap: "10px" }}
             >
-              {ingredients.map((item) => {
+              {ingredients.map((item: any) => {
                 return (
                   <li key={item._id} className={styles["ingredients-item"]}>
                     <div className={`mr-1 ${styles["ingredients-drag"]}`}>
@@ -80,9 +83,9 @@ function BurgerConstructor(props: Props) {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={dataBurger[0].name + " (низ)"}
-            price={dataBurger[0].price}
-            thumbnail={dataBurger[0].image}
+            text={ingredientsBun[0]?.name + " (низ)"}
+            price={ingredientsBun[0]?.price}
+            thumbnail={ingredientsBun[0]?.image}
           />
         </div>
       </div>

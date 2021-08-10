@@ -6,7 +6,7 @@ import styles from "./index.module.css";
 import { TDataItem } from "../../../src/interface";
 
 interface Props {
-  ingredients: {
+  ingredientsType: {
     list: TDataItem[];
     name: string;
     type: string;
@@ -15,13 +15,15 @@ interface Props {
 }
 
 function IngredientList(props: Props) {
-  const { ingredients, openIngredients } = props;
+  const { ingredientsType, openIngredients } = props;
 
   return (
     <div className={styles["ingredient-list"]}>
-      <div className="text text_type_main-medium pb-6">{ingredients.name}</div>
+      <div className="text text_type_main-medium pb-6">
+        {ingredientsType.name}
+      </div>
       <ul className={styles.list}>
-        {ingredients.list.map((elem: TDataItem) => {
+        {ingredientsType.list.map((elem: TDataItem) => {
           return (
             <li
               key={elem._id}

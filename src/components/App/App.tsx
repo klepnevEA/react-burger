@@ -6,13 +6,20 @@ import Modal from "../Modal";
 import styles from "./app.module.css";
 import OrderDetails from "../OrderDetails";
 import IngredientModal from "../IngredientModal";
+import { ADD_DATA } from "../../services/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { getIngredients } from "../../services/reducers/app";
+import { RootState } from "../../services/reducers";
 
 function App() {
   const [isOpenOrder, setisOpenOrder] = useState(false);
   const [isOpenIngredient, setisOpenIngredient] = useState(false);
-  const [isData, setIsData] = useState([]);
-  const [ingredient, setingredient] = useState(isData[0]);
-  const url = "https://norma.nomoreparties.space/api/ingredients ";
+
+  const dispatch = useDispatch();
+  const { ingredients, feedRequest } = useSelector(
+    (state: RootState) => state.appData
+  );
+  const [ingredient, setingredient] = useState(ingredients);
 
   const order = () => {
     setisOpenOrder(true);
@@ -21,7 +28,7 @@ function App() {
   const closeModal = () => {
     setisOpenOrder(false);
     setisOpenIngredient(false);
-    setingredient(isData[0]);
+    setingredient(ingredients[0]);
   };
 
   const openIngredients = (ingredient: any) => {
@@ -29,35 +36,22 @@ function App() {
     setisOpenIngredient(true);
   };
 
-  const addDate = () => {
-    fetch(url)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject(response.status);
-      })
-      .then((data) => setIsData(data.data))
-      .catch((err) => console.log(`Ошибка ${err}`));
-  };
-
-  useEffect(addDate, []);
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
 
   return (
     <div className={styles.wrapper}>
       <AppHeader />
       <div className={styles.container}>
         <main className={styles.main}>
-          {isData.length ? (
+          {!feedRequest ? (
             <>
               <div className={styles.col}>
-                <BurgerIngredients
-                  dataBurger={isData}
-                  openIngredients={openIngredients}
-                />
+                <BurgerIngredients openIngredients={openIngredients} />
               </div>
               <div className={styles.col}>
-                <BurgerConstructor dataBurger={isData} openOrder={order} />
+                <BurgerConstructor openOrder={order} />
               </div>
             </>
           ) : (
