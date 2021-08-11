@@ -7,12 +7,15 @@ import styles from "./app.module.css";
 import OrderDetails from "../OrderDetails";
 import IngredientModal from "../IngredientModal";
 import { useDispatch, useSelector } from "react-redux";
-import { getIngredients } from "../../services/reducers/app";
+
 import { RootState } from "../../services/reducers";
+import { getIngredients } from "../../services/reducers/ingredientList";
 
 function App() {
   const dispatch = useDispatch();
-  const { feedRequest } = useSelector((state: RootState) => state.appData);
+  const { feedRequest } = useSelector(
+    (state: RootState) => state.ingredientList
+  );
 
   const { isOpenIngredientsDetals } = useSelector(
     (state: RootState) => state.ingredientDetails

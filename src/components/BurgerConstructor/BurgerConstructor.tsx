@@ -10,11 +10,14 @@ import styles from "./index.module.css";
 import { RootState } from "../../services/reducers";
 import { useDispatch, useSelector } from "react-redux";
 import { ORDER_DATAILS_OPEN } from "../../services/actions";
+import { TDataItem } from "../../interface";
 
 function BurgerConstructor() {
-  const ingredientsBun = [];
+  // const ingredientsBun = [];
   const dispatch = useDispatch();
-  const { ingredients } = useSelector((state: RootState) => state.appData);
+  const { ingredientsConstructor } = useSelector(
+    (state: RootState) => state.ingredientConstructorBurger
+  );
 
   const openOrder = () => {
     dispatch({
@@ -22,23 +25,28 @@ function BurgerConstructor() {
     });
   };
 
-  for (let i = 0; i < ingredients.length; i++) {
-    if (ingredients[i].type !== "bun") {
-      ingredientsBun.push(ingredients[i]);
-    }
-  }
+  // for (let i = 0; i < ingredientsConstructor.length; i++) {
+  //   if (ingredientsConstructor[i]?.type !== "bun") {
+  //     ingredientsBun.push(ingredientsConstructor[i]);
+  //   }
+  // }
 
   return (
     <div className="pt-25">
       <div className={`mb-10 ${styles.ingrediants}`}>
         <div className={`pl-8 mb-2 ${styles["ingredients-top"]}`}>
-          <ConstructorElement
-            type="top"
-            isLocked={true}
-            text={ingredientsBun[0]?.name + " (верх)"}
-            price={ingredientsBun[0]?.price}
-            thumbnail={ingredientsBun[0]?.image}
-          />
+          {ingredientsConstructor.length > 0 && (
+            <ConstructorElement
+              type="top"
+              isLocked={true}
+              // text={ingredientsConstructor[0]?.name + " (верх)"}
+              // price={ingredientsConstructor[0]?.price}
+              // thumbnail={ingredientsConstructor[0]?.image}
+              text={" (верх)"}
+              price={1000}
+              thumbnail={"!!!!"}
+            />
+          )}
         </div>
         <div className={styles["ingredients-list-wrapper"]}>
           <Scrollbars
@@ -63,7 +71,7 @@ function BurgerConstructor() {
               className={styles["ingredients-list"]}
               style={{ display: "flex", flexDirection: "column", gap: "10px" }}
             >
-              {ingredients.map((item: any) => {
+              {ingredientsConstructor.map((item: TDataItem) => {
                 return (
                   <li key={item._id} className={styles["ingredients-item"]}>
                     <div className={`mr-1 ${styles["ingredients-drag"]}`}>
@@ -81,13 +89,18 @@ function BurgerConstructor() {
           </Scrollbars>
         </div>
         <div className={`pl-8 mt-2 ${styles["ingredients-bottom"]}`}>
-          <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text={ingredientsBun[0]?.name + " (низ)"}
-            price={ingredientsBun[0]?.price}
-            thumbnail={ingredientsBun[0]?.image}
-          />
+          {ingredientsConstructor.length > 0 && (
+            <ConstructorElement
+              type="bottom"
+              isLocked={true}
+              // text={ingredientsConstructor[0]?.name + " (низ)"}
+              // price={ingredientsConstructor[0]?.price}
+              // thumbnail={ingredientsConstructor[0]?.image}
+              text={" (низ)"}
+              price={1000}
+              thumbnail={"!!!!"}
+            />
+          )}
         </div>
       </div>
 

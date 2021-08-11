@@ -39,7 +39,7 @@ const initialState = {
   ingredients: [],
 };
 
-export const appReducer = (state = initialState, action: any) => {
+export const ingredientReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case GET_FEED: {
       return {

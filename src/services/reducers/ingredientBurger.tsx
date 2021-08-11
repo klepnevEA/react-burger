@@ -1,11 +1,11 @@
 // список всех ингредиентов в текущем конструкторе бургера
 
-const ingredientBurgerReducerState = {
-  dataBurger: [],
+const ingredientConstructorBurgerReducerState = {
+  ingredientsConstructor: [],
 };
 
-export const ingredientBurgerReducer = (
-  state = ingredientBurgerReducerState,
+export const ingredientConstructorBurgerReducer = (
+  state = ingredientConstructorBurgerReducerState,
   action: any
 ) => {
   switch (action.type) {
