@@ -3,16 +3,10 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./index.module.css";
 import Scrollbars from "react-custom-scrollbars";
 import IngredientList from "../IngredientList";
-import { TDataItem } from "../../../src/interface";
 import { useSelector } from "react-redux";
 import { RootState } from "../../services/reducers";
 
-interface Props {
-  openIngredients: (ingredient: TDataItem) => void;
-}
-
-function BurgerIngredients(props: Props) {
-  const { openIngredients } = props;
+function BurgerIngredients() {
   const [current, setCurrent] = React.useState("Булки");
   const { ingredients } = useSelector((state: RootState) => state.appData);
 
@@ -73,13 +67,7 @@ function BurgerIngredients(props: Props) {
         autoHideDuration={200}
       >
         {Object.entries(ingredientsType).map(([key, value]) => {
-          return (
-            <IngredientList
-              key={key}
-              ingredientsType={value}
-              openIngredients={openIngredients}
-            />
-          );
+          return <IngredientList key={key} ingredientsType={value} />;
         })}
       </Scrollbars>
     </div>

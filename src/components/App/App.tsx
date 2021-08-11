@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import AppHeader from "../AppHeader";
 import BurgerConstructor from "../BurgerConstructor";
 import BurgerIngredients from "../BurgerIngredients";
@@ -6,35 +6,18 @@ import Modal from "../Modal";
 import styles from "./app.module.css";
 import OrderDetails from "../OrderDetails";
 import IngredientModal from "../IngredientModal";
-import { ADD_DATA } from "../../services/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { getIngredients } from "../../services/reducers/app";
 import { RootState } from "../../services/reducers";
 
 function App() {
-  const [isOpenOrder, setisOpenOrder] = useState(false);
-  const [isOpenIngredient, setisOpenIngredient] = useState(false);
-
   const dispatch = useDispatch();
-  const { ingredients, feedRequest } = useSelector(
-    (state: RootState) => state.appData
+  const { feedRequest } = useSelector((state: RootState) => state.appData);
+
+  const { isOpenIngredientsDetals } = useSelector(
+    (state: RootState) => state.ingredientDetails
   );
-  const [ingredient, setingredient] = useState(ingredients);
-
-  const order = () => {
-    setisOpenOrder(true);
-  };
-
-  const closeModal = () => {
-    setisOpenOrder(false);
-    setisOpenIngredient(false);
-    setingredient(ingredients[0]);
-  };
-
-  const openIngredients = (ingredient: any) => {
-    setingredient(ingredient);
-    setisOpenIngredient(true);
-  };
+  const { isOpenOrder } = useSelector((state: RootState) => state.orderDetails);
 
   useEffect(() => {
     dispatch(getIngredients());
@@ -48,10 +31,10 @@ function App() {
           {!feedRequest ? (
             <>
               <div className={styles.col}>
-                <BurgerIngredients openIngredients={openIngredients} />
+                <BurgerIngredients />
               </div>
               <div className={styles.col}>
-                <BurgerConstructor openOrder={order} />
+                <BurgerConstructor />
               </div>
             </>
           ) : (
@@ -65,13 +48,13 @@ function App() {
         </main>
       </div>
       {isOpenOrder ? (
-        <Modal closeModal={closeModal}>
+        <Modal>
           <OrderDetails />
         </Modal>
       ) : null}
-      {isOpenIngredient && ingredient ? (
-        <Modal closeModal={closeModal}>
-          <IngredientModal data={ingredient} />
+      {isOpenIngredientsDetals ? (
+        <Modal>
+          <IngredientModal />
         </Modal>
       ) : null}
     </div>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Scrollbars } from "react-custom-scrollbars";
 import {
   ConstructorElement,
@@ -7,19 +7,20 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./index.module.css";
-import { TDataItem } from "../../../src/interface";
 import { RootState } from "../../services/reducers";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { ORDER_DATAILS_OPEN } from "../../services/actions";
 
-interface Props {
-  // dataBurger: TDataItem[];
-  openOrder: () => void;
-}
-
-function BurgerConstructor(props: Props) {
-  const { openOrder } = props;
+function BurgerConstructor() {
   const ingredientsBun = [];
+  const dispatch = useDispatch();
   const { ingredients } = useSelector((state: RootState) => state.appData);
+
+  const openOrder = () => {
+    dispatch({
+      type: ORDER_DATAILS_OPEN,
+    });
+  };
 
   for (let i = 0; i < ingredients.length; i++) {
     if (ingredients[i].type !== "bun") {
@@ -94,7 +95,7 @@ function BurgerConstructor(props: Props) {
         <span className="text text_type_digits-medium">600</span>
         <CurrencyIcon type="primary" />
         <div className="pl-10">
-          <Button type="primary" size="large" onClick={() => openOrder()}>
+          <Button type="primary" size="large" onClick={openOrder}>
             Оформить заказ
           </Button>
         </div>

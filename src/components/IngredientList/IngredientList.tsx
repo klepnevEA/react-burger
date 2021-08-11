@@ -4,18 +4,27 @@ import IngredientDetails from "../IngredientDetails";
 import styles from "./index.module.css";
 
 import { TDataItem } from "../../../src/interface";
-
+import { INGREDIENT_DATAILS_OPEN } from "../../services/actions";
+import { useDispatch } from "react-redux";
 interface Props {
   ingredientsType: {
     list: TDataItem[];
     name: string;
     type: string;
   };
-  openIngredients: (arg0: TDataItem) => void;
 }
 
 function IngredientList(props: Props) {
-  const { ingredientsType, openIngredients } = props;
+  const { ingredientsType } = props;
+
+  const dispatch = useDispatch();
+
+  const openIngredients = (ingredient: TDataItem) => {
+    dispatch({
+      type: INGREDIENT_DATAILS_OPEN,
+      ingredient,
+    });
+  };
 
   return (
     <div className={styles["ingredient-list"]}>
