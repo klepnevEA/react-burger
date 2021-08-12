@@ -1,25 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./index.module.css";
-import Scrollbars from "react-custom-scrollbars";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../services/reducers";
 import { TDataItem } from "../../interface";
 import { INGREDIENT_DATAILS_OPEN } from "../../services/actions";
 import IngredientDetails from "../IngredientDetails";
-import { useInView } from "react-intersection-observer";
-import { InView } from "react-intersection-observer";
 
 function BurgerIngredients() {
-  const [current, setCurrent] = useState("Булки");
   const [bunActive, setBunActive] = useState(true);
   const [sauceActive, setSauceActive] = useState(false);
   const [meatActive, setMeatActive] = useState(false);
+
   const { ingredients } = useSelector(
     (state: RootState) => state.ingredientList
   );
 
   const dispatch = useDispatch();
+
+  const handleClick = () => {
+    console.log("Click!");
+  };
 
   const openIngredients = (ingredient: TDataItem) => {
     dispatch({
@@ -89,17 +90,17 @@ function BurgerIngredients() {
       <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
       <ul className={`mb-10 ${styles.tab}`}>
         <li className={styles.tabItem}>
-          <Tab value="one" active={bunActive} onClick={setCurrent}>
+          <Tab value="one" active={bunActive} onClick={handleClick}>
             Булки
           </Tab>
         </li>
         <li className={styles.tabItem}>
-          <Tab value="two" active={sauceActive} onClick={setCurrent}>
+          <Tab value="two" active={sauceActive} onClick={handleClick}>
             Соусы
           </Tab>
         </li>
         <li className={styles.tabItem}>
-          <Tab value="three" active={meatActive} onClick={setCurrent}>
+          <Tab value="three" active={meatActive} onClick={handleClick}>
             Начинки
           </Tab>
         </li>

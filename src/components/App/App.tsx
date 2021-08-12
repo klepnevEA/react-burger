@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { RootState } from "../../services/reducers";
 import { getIngredients } from "../../services/reducers/ingredientList";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 function App() {
   const dispatch = useDispatch();
@@ -20,6 +22,7 @@ function App() {
   const { isOpenIngredientsDetals } = useSelector(
     (state: RootState) => state.ingredientDetails
   );
+
   const { isOpenOrder } = useSelector((state: RootState) => state.orderDetails);
 
   useEffect(() => {
@@ -27,40 +30,42 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div className={styles.wrapper}>
-      <AppHeader />
-      <div className={styles.container}>
-        <main className={styles.main}>
-          {!feedRequest ? (
-            <>
-              <div className={styles.col}>
-                <BurgerIngredients />
+    <DndProvider backend={HTML5Backend}>
+      <div className={styles.wrapper}>
+        <AppHeader />
+        <div className={styles.container}>
+          <main className={styles.main}>
+            {!feedRequest ? (
+              <>
+                <div className={styles.col}>
+                  <BurgerIngredients />
+                </div>
+                <div className={styles.col}>
+                  <BurgerConstructor />
+                </div>
+              </>
+            ) : (
+              <div className={styles.loadingWrapper}>
+                <div className={styles.loading}>
+                  <div></div>
+                  <div></div>
+                </div>
               </div>
-              <div className={styles.col}>
-                <BurgerConstructor />
-              </div>
-            </>
-          ) : (
-            <div className={styles.loadingWrapper}>
-              <div className={styles.loading}>
-                <div></div>
-                <div></div>
-              </div>
-            </div>
-          )}
-        </main>
+            )}
+          </main>
+        </div>
+        {isOpenOrder ? (
+          <Modal>
+            <OrderDetails />
+          </Modal>
+        ) : null}
+        {isOpenIngredientsDetals ? (
+          <Modal>
+            <IngredientModal />
+          </Modal>
+        ) : null}
       </div>
-      {isOpenOrder ? (
-        <Modal>
-          <OrderDetails />
-        </Modal>
-      ) : null}
-      {isOpenIngredientsDetals ? (
-        <Modal>
-          <IngredientModal />
-        </Modal>
-      ) : null}
-    </div>
+    </DndProvider>
   );
 }
 

@@ -10,8 +10,15 @@
 
 .ingredients-list {
   list-style: none;
+  height: 100%;
   padding: 0;
   margin: 0;
+  border-width: 1px;
+}
+
+.ingredients-top,
+.ingredients-bottom {
+  min-height: 30px;
 }
 
 .ingredients-item {
