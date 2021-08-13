@@ -4,6 +4,8 @@ import {
   INGREDIENT_CONSTRUCTOR_ADD,
   INGREDIENT_CONSTRUCTOR_ADD_BUN,
   INGREDIENT_CONSTRUCTOR_CLEAR,
+  INGREDIENT_CONSTRUCTOR_CUSTOM_ID,
+  INGREDIENT_CONSTRUCTOR_DELETE,
 } from "../actions";
 
 const ingredientConstructorBurgerReducerState = {
@@ -19,6 +21,7 @@ export const ingredientConstructorBurgerReducer = (
 ) => {
   switch (action.type) {
     case INGREDIENT_CONSTRUCTOR_ADD: {
+      console.log(state.ingredientsConstructor);
       return {
         ...state,
         ingredientsConstructor: [
@@ -29,6 +32,33 @@ export const ingredientConstructorBurgerReducer = (
           state.totalPriceIngredients + action.ellement[0].price,
       };
     }
+
+    case INGREDIENT_CONSTRUCTOR_CUSTOM_ID: {
+      return {
+        ...state,
+        ingredientsConstructor: [
+          ...state.ingredientsConstructor.map((item) =>
+            true
+              ? {
+                  ...item,
+                  count: 1,
+                  customId: Number((Math.random() * 1000).toFixed(0)),
+                }
+              : item
+          ),
+        ],
+      };
+    }
+
+    case INGREDIENT_CONSTRUCTOR_DELETE: {
+      return {
+        ...state,
+        ingredientsConstructor: [...state.ingredientsConstructor].filter(
+          (item) => item.customId !== action.customId
+        ),
+      };
+    }
+
     case INGREDIENT_CONSTRUCTOR_ADD_BUN: {
       return {
         ...state,

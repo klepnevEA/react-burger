@@ -17,6 +17,8 @@ import {
   INGREDIENT_LIST_COUNT_INGREDIENTS,
   ORDER_DATAILS_OPEN,
   INGREDIENT_LIST_COUNT_CLEAR,
+  INGREDIENT_CONSTRUCTOR_CUSTOM_ID,
+  INGREDIENT_CONSTRUCTOR_DELETE,
 } from "../../services/actions";
 import { TDataItem } from "../../interface";
 
@@ -32,21 +34,26 @@ const BurgerConstructor = () => {
     (state: RootState) => state.ingredientList
   );
 
-  const handleDrop = (itemId: any) => {
+  const handleDrop = (itemId: any, customId: number) => {
+    console.log(customId);
     dispatch({
       type: INGREDIENT_CONSTRUCTOR_ADD,
-      ellement: ingredients.filter(
-        (element: any) => element._id === itemId.ingredientId
-      ),
+      customId: customId,
+      ellement: ingredients.filter((element: any) => {
+        return element._id === itemId.ingredientId;
+      }),
+    });
+    dispatch({
+      type: INGREDIENT_CONSTRUCTOR_CUSTOM_ID,
     });
   };
 
   const handleDropBun = (itemId: any) => {
     dispatch({
       type: INGREDIENT_CONSTRUCTOR_ADD_BUN,
-      ellement: ingredients.filter(
-        (element: any) => element._id === itemId.ingredientId
-      ),
+      ellement: ingredients.filter((element: any) => {
+        return element._id === itemId.ingredientId;
+      }),
     });
   };
 
@@ -67,7 +74,7 @@ const BurgerConstructor = () => {
   const [{ isHover }, dropTarget] = useDrop({
     accept: ["main", "sauce"],
     drop(itemId) {
-      handleDrop(itemId);
+      handleDrop(itemId, Math.random());
       handheDropCount(itemId);
     },
     collect: (monitor) => ({
@@ -108,6 +115,13 @@ const BurgerConstructor = () => {
     });
   };
 
+  const handleClose = (item: number) => {
+    dispatch({
+      type: INGREDIENT_CONSTRUCTOR_DELETE,
+      customId: item.customId,
+    });
+  };
+
   return (
     <div className="pt-25">
       <div className={`mb-10 ${styles.ingrediants}`} ref={dropTargetBunTop}>
@@ -144,6 +158,7 @@ const BurgerConstructor = () => {
                       text={item.name}
                       price={item.price}
                       thumbnail={item.image}
+                      handleClose={() => handleClose(item)}
                     />
                   </li>
                 );

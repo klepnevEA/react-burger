@@ -75,9 +75,11 @@ export const ingredientReducer = (state = initialState, action: any) => {
         ingredients: [
           ...state.ingredients,
           state.ingredients.map((item) =>
-            item._id === action.ellementId.ingredientId
+            item._id === action.ellementId.ingredientId && item.type === "bun"
               ? (item.__v = 2)
-              : (item.__v = 0)
+              : item.type === "bun"
+              ? (item.__v = 0)
+              : item.__v
           ),
         ],
       };
