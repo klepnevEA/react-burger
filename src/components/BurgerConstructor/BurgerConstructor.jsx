@@ -99,6 +99,15 @@ const BurgerConstructor = () => {
     }
   };
 
+  const clearOrder = () => {
+    dispatch({
+      type: INGREDIENT_CONSTRUCTOR_CLEAR,
+    });
+    dispatch({
+      type: INGREDIENT_LIST_COUNT_CLEAR,
+    });
+  };
+
   return (
     <div className="pt-25">
       <div className={`mb-10 ${styles.ingrediants}`} ref={dropTargetBunTop}>
@@ -163,6 +172,11 @@ const BurgerConstructor = () => {
         <div className="pl-10">
           <Button type="primary" size="large" onClick={openOrder}>
             Оформить заказ
+          </Button>
+        </div>
+        <div>
+          <Button type="secondary" size="large" onClick={clearOrder}>
+            Очистить
           </Button>
         </div>
       </div>

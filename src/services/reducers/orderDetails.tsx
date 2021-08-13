@@ -13,7 +13,7 @@ export const orderDetailsReducer = (state = orderDetailsState, action: any) => {
       return {
         ...state,
         isOpenOrder: true,
-        order: state.order + 1,
+        order: Math.floor(Math.random() * 10000),
       };
     }
     case ORDER_DATAILS_CLOSE: {

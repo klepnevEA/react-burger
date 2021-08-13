@@ -26,7 +26,10 @@ function IngredientDetails(props: Props) {
     <>
       {!isDrag && (
         <div className={styles.ingrediant} ref={dragRef}>
-          <Counter count={ingredient.__v} size="default" />
+          {ingredient.__v !== 0 && (
+            <Counter count={ingredient.__v} size="default" />
+          )}
+
           <div className={styles.image}>
             <img src={ingredient.image} alt={ingredient.name} />
           </div>
