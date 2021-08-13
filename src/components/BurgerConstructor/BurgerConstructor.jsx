@@ -116,7 +116,7 @@ const BurgerConstructor = () => {
     });
   };
 
-  const handleClose = (item: number) => {
+  const handleClose = (item: TDataItem) => {
     console.log(item._id);
     dispatch({
       type: INGREDIENT_CONSTRUCTOR_DELETE,

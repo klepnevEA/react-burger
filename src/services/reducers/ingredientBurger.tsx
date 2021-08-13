@@ -37,15 +37,12 @@ export const ingredientConstructorBurgerReducer = (
       return {
         ...state,
         ingredientsConstructor: [
-          ...state.ingredientsConstructor.map((item) =>
-            true
-              ? {
-                  ...item,
-                  count: 1,
-                  customId: Number((Math.random() * 1000).toFixed(0)),
-                }
-              : item
-          ),
+          ...state.ingredientsConstructor.map((item) => {
+            return {
+              ...item,
+              customId: Number((Math.random() * 1000).toFixed(0)),
+            };
+          }),
         ],
       };
     }
