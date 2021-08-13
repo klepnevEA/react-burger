@@ -5,6 +5,7 @@ import {
   INGREDIENT_LIST_COUNT_BUN,
   INGREDIENT_LIST_COUNT_INGREDIENTS,
   INGREDIENT_LIST_COUNT_CLEAR,
+  INGREDIENT_LIST_COUNT_INGREDIENTS_DECREASE,
 } from "../actions";
 
 export function getIngredients() {
@@ -91,6 +92,17 @@ export const ingredientReducer = (state = initialState, action: any) => {
           ...state.ingredients,
           state.ingredients.map((item) =>
             item._id === action.ellementId.ingredientId ? item.__v++ : item.__v
+          ),
+        ],
+      };
+    }
+    case INGREDIENT_LIST_COUNT_INGREDIENTS_DECREASE: {
+      return {
+        ...state,
+        ingredients: [
+          ...state.ingredients,
+          state.ingredients.map((item) =>
+            item._id === action.ellementId ? item.__v-- : item.__v
           ),
         ],
       };

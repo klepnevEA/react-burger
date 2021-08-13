@@ -19,6 +19,7 @@ import {
   INGREDIENT_LIST_COUNT_CLEAR,
   INGREDIENT_CONSTRUCTOR_CUSTOM_ID,
   INGREDIENT_CONSTRUCTOR_DELETE,
+  INGREDIENT_LIST_COUNT_INGREDIENTS_DECREASE,
 } from "../../services/actions";
 import { TDataItem } from "../../interface";
 
@@ -116,9 +117,14 @@ const BurgerConstructor = () => {
   };
 
   const handleClose = (item: number) => {
+    console.log(item._id);
     dispatch({
       type: INGREDIENT_CONSTRUCTOR_DELETE,
       customId: item.customId,
+    });
+    dispatch({
+      type: INGREDIENT_LIST_COUNT_INGREDIENTS_DECREASE,
+      ellementId: item._id,
     });
   };
 
