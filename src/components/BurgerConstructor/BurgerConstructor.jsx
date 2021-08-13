@@ -1,22 +1,24 @@
 import React from "react";
+import { useDrop } from "react-dnd";
 import {
   ConstructorElement,
   CurrencyIcon,
   Button,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./index.module.css";
 import { RootState } from "../../services/reducers";
-import { useDispatch, useSelector } from "react-redux";
 import {
   INGREDIENT_CONSTRUCTOR_ADD,
-  INGREDIENT_CONSTRUCTOR_ADD__BUN,
+  INGREDIENT_CONSTRUCTOR_ADD_BUN,
   INGREDIENT_CONSTRUCTOR_CLEAR,
+  INGREDIENT_LIST_COUNT_BUN,
+  INGREDIENT_LIST_COUNT_INGREDIENTS,
   ORDER_DATAILS_OPEN,
+  INGREDIENT_LIST_COUNT_CLEAR,
 } from "../../services/actions";
 import { TDataItem } from "../../interface";
-import { useDrop } from "react-dnd";
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
@@ -37,22 +39,28 @@ const BurgerConstructor = () => {
         (element: any) => element._id === itemId.ingredientId
       ),
     });
-    // setElements([
-    //   ...elements.filter((element: any) => element._id !== itemId.ingredientId),
-    // ]);
-
-    // setDraggedElements([
-    //   ...draggedElements,
-    //   ...elements.filter((element: any) => element._id === itemId.ingredientId),
-    // ]);
   };
 
   const handleDropBun = (itemId: any) => {
     dispatch({
-      type: INGREDIENT_CONSTRUCTOR_ADD__BUN,
+      type: INGREDIENT_CONSTRUCTOR_ADD_BUN,
       ellement: ingredients.filter(
         (element: any) => element._id === itemId.ingredientId
       ),
+    });
+  };
+
+  const handheDropCount = (itemId: any) => {
+    dispatch({
+      type: INGREDIENT_LIST_COUNT_INGREDIENTS,
+      ellementId: itemId,
+    });
+  };
+
+  const handheDropCountBun = (itemId: any) => {
+    dispatch({
+      type: INGREDIENT_LIST_COUNT_BUN,
+      ellementId: itemId,
     });
   };
 
@@ -60,6 +68,7 @@ const BurgerConstructor = () => {
     accept: ["main", "sauce"],
     drop(itemId) {
       handleDrop(itemId);
+      handheDropCount(itemId);
     },
     collect: (monitor) => ({
       isHover: monitor.isOver(),
@@ -70,6 +79,7 @@ const BurgerConstructor = () => {
     accept: ["bun"],
     drop(itemId) {
       handleDropBun(itemId);
+      handheDropCountBun(itemId);
     },
   });
 
@@ -82,6 +92,9 @@ const BurgerConstructor = () => {
       });
       dispatch({
         type: INGREDIENT_CONSTRUCTOR_CLEAR,
+      });
+      dispatch({
+        type: INGREDIENT_LIST_COUNT_CLEAR,
       });
     }
   };

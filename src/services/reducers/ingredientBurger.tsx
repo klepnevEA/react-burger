@@ -2,7 +2,7 @@
 
 import {
   INGREDIENT_CONSTRUCTOR_ADD,
-  INGREDIENT_CONSTRUCTOR_ADD__BUN,
+  INGREDIENT_CONSTRUCTOR_ADD_BUN,
   INGREDIENT_CONSTRUCTOR_CLEAR,
 } from "../actions";
 
@@ -29,7 +29,7 @@ export const ingredientConstructorBurgerReducer = (
           state.totalPriceIngredients + action.ellement[0].price,
       };
     }
-    case INGREDIENT_CONSTRUCTOR_ADD__BUN: {
+    case INGREDIENT_CONSTRUCTOR_ADD_BUN: {
       return {
         ...state,
         ingredientsConstructorBun: action.ellement[0],

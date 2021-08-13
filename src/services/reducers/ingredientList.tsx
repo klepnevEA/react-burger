@@ -1,4 +1,11 @@
-import { GET_FEED, GET_FEED_FAILED, GET_FEED_SUCCESS } from "../actions";
+import {
+  GET_FEED,
+  GET_FEED_FAILED,
+  GET_FEED_SUCCESS,
+  INGREDIENT_LIST_COUNT_BUN,
+  INGREDIENT_LIST_COUNT_INGREDIENTS,
+  INGREDIENT_LIST_COUNT_CLEAR,
+} from "../actions";
 
 export function getIngredients() {
   return function (dispatch: any) {
@@ -60,6 +67,39 @@ export const ingredientReducer = (state = initialState, action: any) => {
         ...state,
         feedFailed: true,
         feedRequest: false,
+      };
+    }
+    case INGREDIENT_LIST_COUNT_BUN: {
+      return {
+        ...state,
+        ingredients: [
+          ...state.ingredients,
+          state.ingredients.map((item) =>
+            item._id === action.ellementId.ingredientId
+              ? (item.__v = 2)
+              : (item.__v = 0)
+          ),
+        ],
+      };
+    }
+    case INGREDIENT_LIST_COUNT_INGREDIENTS: {
+      return {
+        ...state,
+        ingredients: [
+          ...state.ingredients,
+          state.ingredients.map((item) =>
+            item._id === action.ellementId.ingredientId ? item.__v++ : item.__v
+          ),
+        ],
+      };
+    }
+    case INGREDIENT_LIST_COUNT_CLEAR: {
+      return {
+        ...state,
+        ingredients: [
+          ...state.ingredients,
+          state.ingredients.map((item) => (item.__v = 0)),
+        ],
       };
     }
     default: {
