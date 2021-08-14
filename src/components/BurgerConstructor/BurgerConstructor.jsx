@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useDrop } from "react-dnd";
 import {
   ConstructorElement,
   CurrencyIcon,
   Button,
-  DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./index.module.css";
@@ -20,6 +19,7 @@ import {
   INGREDIENT_CONSTRUCTOR_CUSTOM_ID,
   INGREDIENT_CONSTRUCTOR_DELETE,
   INGREDIENT_LIST_COUNT_INGREDIENTS_DECREASE,
+  REOTDER_INGREDIENTS,
 } from "../../services/actions";
 import { TDataItem } from "../../interface";
 import IngredientsListItem from "../ingredientsListItem/ingredientsListItem";
@@ -37,7 +37,6 @@ const BurgerConstructor = () => {
   );
 
   const handleDrop = (itemId: any, customId: number) => {
-    console.log(customId);
     dispatch({
       type: INGREDIENT_CONSTRUCTOR_ADD,
       customId: customId,
@@ -118,7 +117,6 @@ const BurgerConstructor = () => {
   };
 
   const handleClose = (item: TDataItem) => {
-    console.log(item._id);
     dispatch({
       type: INGREDIENT_CONSTRUCTOR_DELETE,
       customId: item.customId,
@@ -127,6 +125,34 @@ const BurgerConstructor = () => {
       type: INGREDIENT_LIST_COUNT_INGREDIENTS_DECREASE,
       ellementId: item._id,
     });
+  };
+
+  const moveIngredient = useCallback(
+    (dragIndex, hoverIndex) => {
+      const dragIngredient = ingredientsConstructor[dragIndex];
+      const newIngredient = [...ingredientsConstructor];
+
+      newIngredient.splice(
+        hoverIndex,
+        0,
+        newIngredient.splice(dragIngredient, 1)[0]
+      );
+      dispatch({ type: REOTDER_INGREDIENTS, payload: newIngredient });
+    },
+    [ingredientsConstructor]
+  );
+
+  const renderIngredient = (itemIngredient: any, index: any) => {
+    return (
+      <IngredientsListItem
+        key={index}
+        index={index}
+        id={itemIngredient.customId}
+        moveIngredient={moveIngredient}
+        itemIngredient={itemIngredient}
+        handleClose={handleClose}
+      />
+    );
   };
 
   return (
@@ -155,26 +181,9 @@ const BurgerConstructor = () => {
               }}
               ref={dropTarget}
             >
-              {ingredientsConstructor.map((item: TDataItem, index) => {
-                return (
-                  // <li key={index} className={styles["ingredients-item"]}>
-                  //   <div className={`mr-1 ${styles["ingredients-drag"]}`}>
-                  //     <DragIcon type="primary" />
-                  //   </div>
-                  //   <ConstructorElement
-                  //     text={item.name}
-                  //     price={item.price}
-                  //     thumbnail={item.image}
-                  //     handleClose={() => handleClose(item)}
-                  //   />
-                  // </li>
-                  <IngredientsListItem
-                    item={item}
-                    handleClose={handleClose}
-                    index={index}
-                  />
-                );
-              })}
+              {ingredientsConstructor.map((itemIngredient: TDataItem, index) =>
+                renderIngredient(itemIngredient, index)
+              )}
             </ul>
           </div>
         </div>

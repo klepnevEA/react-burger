@@ -6,6 +6,7 @@ import {
   INGREDIENT_CONSTRUCTOR_CLEAR,
   INGREDIENT_CONSTRUCTOR_CUSTOM_ID,
   INGREDIENT_CONSTRUCTOR_DELETE,
+  REOTDER_INGREDIENTS,
 } from "../actions";
 
 const ingredientConstructorBurgerReducerState = {
@@ -21,7 +22,6 @@ export const ingredientConstructorBurgerReducer = (
 ) => {
   switch (action.type) {
     case INGREDIENT_CONSTRUCTOR_ADD: {
-      console.log(state.ingredientsConstructor);
       return {
         ...state,
         ingredientsConstructor: [
@@ -70,6 +70,12 @@ export const ingredientConstructorBurgerReducer = (
         ingredientsConstructor: [],
         totalPriceIngredients: 0,
         totalPriceBun: 0,
+      };
+    }
+    case REOTDER_INGREDIENTS: {
+      return {
+        ...state,
+        ingredientsConstructor: action.payload,
       };
     }
     default: {
