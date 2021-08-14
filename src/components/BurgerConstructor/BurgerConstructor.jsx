@@ -22,6 +22,7 @@ import {
   INGREDIENT_LIST_COUNT_INGREDIENTS_DECREASE,
 } from "../../services/actions";
 import { TDataItem } from "../../interface";
+import IngredientsListItem from "../ingredientsListItem/ingredientsListItem";
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
@@ -156,17 +157,22 @@ const BurgerConstructor = () => {
             >
               {ingredientsConstructor.map((item: TDataItem, index) => {
                 return (
-                  <li key={index} className={styles["ingredients-item"]}>
-                    <div className={`mr-1 ${styles["ingredients-drag"]}`}>
-                      <DragIcon type="primary" />
-                    </div>
-                    <ConstructorElement
-                      text={item.name}
-                      price={item.price}
-                      thumbnail={item.image}
-                      handleClose={() => handleClose(item)}
-                    />
-                  </li>
+                  // <li key={index} className={styles["ingredients-item"]}>
+                  //   <div className={`mr-1 ${styles["ingredients-drag"]}`}>
+                  //     <DragIcon type="primary" />
+                  //   </div>
+                  //   <ConstructorElement
+                  //     text={item.name}
+                  //     price={item.price}
+                  //     thumbnail={item.image}
+                  //     handleClose={() => handleClose(item)}
+                  //   />
+                  // </li>
+                  <IngredientsListItem
+                    item={item}
+                    handleClose={handleClose}
+                    index={index}
+                  />
                 );
               })}
             </ul>
