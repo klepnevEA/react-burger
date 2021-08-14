@@ -52,7 +52,7 @@ function Modal(props: Props) {
               <div className={styles["modal-content"]}>{props.children}</div>
             </div>
           </div>
-          <ModalOverlay />
+          <ModalOverlay closeModal={closeModal} />
         </>,
         reactModals
       )
