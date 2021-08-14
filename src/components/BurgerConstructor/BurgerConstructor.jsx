@@ -133,6 +133,19 @@ const BurgerConstructor = () => {
     dispatch({ type: REOTDER_INGREDIENTS, payload: newIngredient });
   };
 
+  // const moveIngredient = useCallback(
+  //   (dragIndex, hoverIndex) => {
+  //     const newIngredient = [...ingredientsConstructor];
+  //     newIngredient.splice(
+  //       hoverIndex,
+  //       0,
+  //       newIngredient.splice(dragIndex, 1)[0]
+  //     );
+  //     dispatch({ type: REOTDER_INGREDIENTS, payload: newIngredient });
+  //   },
+  //   [ingredientsConstructor]
+  // );
+
   const renderIngredient = (itemIngredient: any, index: any) => {
     return (
       <IngredientsListItem
