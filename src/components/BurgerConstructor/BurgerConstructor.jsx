@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useDrop } from "react-dnd";
 import {
   ConstructorElement,
@@ -46,6 +46,18 @@ const BurgerConstructor = () => {
     });
     dispatch({
       type: INGREDIENT_CONSTRUCTOR_CUSTOM_ID,
+    });
+  };
+
+  const handleClose = (item: TDataItem) => {
+    dispatch({
+      type: INGREDIENT_CONSTRUCTOR_DELETE,
+      customId: item.customId,
+      item: item,
+    });
+    dispatch({
+      type: INGREDIENT_LIST_COUNT_INGREDIENTS_DECREASE,
+      ellementId: item._id,
     });
   };
 
@@ -116,35 +128,11 @@ const BurgerConstructor = () => {
     });
   };
 
-  const handleClose = (item: TDataItem) => {
-    dispatch({
-      type: INGREDIENT_CONSTRUCTOR_DELETE,
-      customId: item.customId,
-    });
-    dispatch({
-      type: INGREDIENT_LIST_COUNT_INGREDIENTS_DECREASE,
-      ellementId: item._id,
-    });
-  };
-
   const moveIngredient = (dragIndex: any, hoverIndex: any) => {
     const newIngredient = [...ingredientsConstructor];
     newIngredient.splice(hoverIndex, 0, newIngredient.splice(dragIndex, 1)[0]);
     dispatch({ type: REOTDER_INGREDIENTS, payload: newIngredient });
   };
-
-  // const moveIngredient = useCallback(
-  //   (dragIndex, hoverIndex) => {
-  //     const newIngredient = [...ingredientsConstructor];
-  //     newIngredient.splice(
-  //       hoverIndex,
-  //       0,
-  //       newIngredient.splice(dragIndex, 1)[0]
-  //     );
-  //     dispatch({ type: REOTDER_INGREDIENTS, payload: newIngredient });
-  //   },
-  //   [ingredientsConstructor]
-  // );
 
   const renderIngredient = (itemIngredient: any, index: any) => {
     return (

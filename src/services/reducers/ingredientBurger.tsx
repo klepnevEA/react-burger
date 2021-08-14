@@ -53,6 +53,7 @@ export const ingredientConstructorBurgerReducer = (
         ingredientsConstructor: [...state.ingredientsConstructor].filter(
           (item) => item.customId !== action.customId
         ),
+        totalPriceIngredients: state.totalPriceIngredients - action.item.price,
       };
     }
 

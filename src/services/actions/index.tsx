@@ -21,3 +21,36 @@ export const INGREDIENT_CONSTRUCTOR_CUSTOM_ID =
   "INGREDIENT_CONSTRUCTOR_CUSTOM_ID";
 export const INGREDIENT_CONSTRUCTOR_DELETE = "INGREDIENT_CONSTRUCTOR_DELETE";
 export const REOTDER_INGREDIENTS = "REOTDER_INGREDIENTS";
+
+export function getIngredients() {
+  return function (dispatch: any) {
+    dispatch({
+      type: GET_FEED,
+    });
+    // Запрашиваем данные у сервера
+    fetch("https://norma.nomoreparties.space/api/ingredients")
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        console.log(data.data);
+        if (data.success) {
+          dispatch({
+            type: GET_FEED_SUCCESS,
+            ingredients: data.data,
+          });
+        } else {
+          dispatch({
+            type: GET_FEED_FAILED,
+          });
+        }
+      })
+      .catch((err) => {
+        dispatch({
+          type: GET_FEED_FAILED,
+        });
+      });
+  };
+}

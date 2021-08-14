@@ -9,9 +9,9 @@ import IngredientModal from "../IngredientModal";
 import { useDispatch, useSelector } from "react-redux";
 
 import { RootState } from "../../services/reducers";
-import { getIngredients } from "../../services/reducers/ingredientList";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { getIngredients } from "../../services/actions";
 
 function App() {
   const dispatch = useDispatch();
