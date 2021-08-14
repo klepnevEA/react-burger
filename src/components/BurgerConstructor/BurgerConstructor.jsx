@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { useDrop } from "react-dnd";
 import {
   ConstructorElement,
@@ -128,8 +128,6 @@ const BurgerConstructor = () => {
   };
 
   const moveIngredient = (dragIndex: any, hoverIndex: any) => {
-    // const dragIngredient = ingredientsConstructor[dragIndex];
-    // const hoverIngredient = ingredientsConstructor[hoverIndex];
     const newIngredient = [...ingredientsConstructor];
     newIngredient.splice(hoverIndex, 0, newIngredient.splice(dragIndex, 1)[0]);
     dispatch({ type: REOTDER_INGREDIENTS, payload: newIngredient });
