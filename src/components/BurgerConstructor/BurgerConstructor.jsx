@@ -127,20 +127,13 @@ const BurgerConstructor = () => {
     });
   };
 
-  const moveIngredient = useCallback(
-    (dragIndex, hoverIndex) => {
-      const dragIngredient = ingredientsConstructor[dragIndex];
-      const newIngredient = [...ingredientsConstructor];
-
-      newIngredient.splice(
-        hoverIndex,
-        0,
-        newIngredient.splice(dragIngredient, 1)[0]
-      );
-      dispatch({ type: REOTDER_INGREDIENTS, payload: newIngredient });
-    },
-    [ingredientsConstructor]
-  );
+  const moveIngredient = (dragIndex: any, hoverIndex: any) => {
+    // const dragIngredient = ingredientsConstructor[dragIndex];
+    // const hoverIngredient = ingredientsConstructor[hoverIndex];
+    const newIngredient = [...ingredientsConstructor];
+    newIngredient.splice(hoverIndex, 0, newIngredient.splice(dragIndex, 1)[0]);
+    dispatch({ type: REOTDER_INGREDIENTS, payload: newIngredient });
+  };
 
   const renderIngredient = (itemIngredient: any, index: any) => {
     return (
