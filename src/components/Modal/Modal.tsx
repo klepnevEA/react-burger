@@ -6,6 +6,7 @@ import { createPortal } from "react-dom";
 import ModalOverlay from "../ModalOverlay";
 import { useDispatch } from "react-redux";
 import {
+  INGREDIENT_CONSTRUCTOR_CLEAR,
   INGREDIENT_DATAILS_CLOSE,
   ORDER_DATAILS_CLOSE,
 } from "../../services/actions";

@@ -20,18 +20,21 @@ import {
   INGREDIENT_CONSTRUCTOR_DELETE,
   INGREDIENT_LIST_COUNT_INGREDIENTS_DECREASE,
   REOTDER_INGREDIENTS,
+  setOrder,
 } from "../../services/actions";
 import { TDataItem } from "../../interface";
 import IngredientsListItem from "../ingredientsListItem/ingredientsListItem";
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
+
   const {
     ingredientsConstructor,
     ingredientsConstructorBun,
     totalPriceBun,
     totalPriceIngredients,
   } = useSelector((state: RootState) => state.ingredientConstructorBurger);
+
   const { ingredients } = useSelector(
     (state: RootState) => state.ingredientList
   );
@@ -106,16 +109,17 @@ const BurgerConstructor = () => {
   const border = isHover ? "1px solid #2f2f37" : "1px solid transparent";
 
   const openOrder = () => {
-    if (ingredientsConstructorBun.name && ingredientsConstructor.length) {
-      dispatch({
-        type: ORDER_DATAILS_OPEN,
-      });
-      dispatch({
-        type: INGREDIENT_CONSTRUCTOR_CLEAR,
-      });
-      dispatch({
-        type: INGREDIENT_LIST_COUNT_CLEAR,
-      });
+    let ingredients = [];
+    if (ingredientsConstructor.length > 0) {
+      if (ingredientsConstructorBun && ingredientsConstructor) {
+        ingredients.push(ingredientsConstructorBun._id);
+        ingredientsConstructor.map((item) => {
+          ingredients.push(item._id);
+        });
+        ingredients.push(ingredientsConstructorBun._id);
+
+        dispatch(setOrder(ingredients));
+      }
     }
   };
 
