@@ -14,7 +14,6 @@ import {
   INGREDIENT_CONSTRUCTOR_CLEAR,
   INGREDIENT_LIST_COUNT_BUN,
   INGREDIENT_LIST_COUNT_INGREDIENTS,
-  ORDER_DATAILS_OPEN,
   INGREDIENT_LIST_COUNT_CLEAR,
   INGREDIENT_CONSTRUCTOR_CUSTOM_ID,
   INGREDIENT_CONSTRUCTOR_DELETE,
@@ -115,6 +114,7 @@ const BurgerConstructor = () => {
         ingredients.push(ingredientsConstructorBun._id);
         ingredientsConstructor.map((item) => {
           ingredients.push(item._id);
+          return item;
         });
         ingredients.push(ingredientsConstructorBun._id);
 
