@@ -1,7 +1,5 @@
 import React, { useEffect } from "react";
 import AppHeader from "../AppHeader";
-import BurgerConstructor from "../BurgerConstructor";
-import BurgerIngredients from "../BurgerIngredients";
 import Modal from "../Modal";
 import styles from "./app.module.css";
 import OrderDetails from "../OrderDetails";
@@ -12,12 +10,10 @@ import { RootState } from "../../services/reducers";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { getIngredients } from "../../services/actions";
+import Main from "./pages/main";
 
 function App() {
   const dispatch = useDispatch();
-  const { feedRequest } = useSelector(
-    (state: RootState) => state.ingredientList
-  );
 
   const { isOpenIngredientsDetals } = useSelector(
     (state: RootState) => state.ingredientDetails
@@ -35,23 +31,7 @@ function App() {
         <AppHeader />
         <div className={styles.container}>
           <main className={styles.main}>
-            {!feedRequest ? (
-              <>
-                <div className={styles.col}>
-                  <BurgerIngredients />
-                </div>
-                <div className={styles.col}>
-                  <BurgerConstructor />
-                </div>
-              </>
-            ) : (
-              <div className={styles.loadingWrapper}>
-                <div className={styles.loading}>
-                  <div></div>
-                  <div></div>
-                </div>
-              </div>
-            )}
+            <Main />
           </main>
         </div>
         {isOpenOrder ? (
