@@ -4,16 +4,29 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./index.module.css";
 import { createPortal } from "react-dom";
 import ModalOverlay from "../ModalOverlay";
+import { useDispatch } from "react-redux";
+import {
+  INGREDIENT_DATAILS_CLOSE,
+  ORDER_DATAILS_CLOSE,
+} from "../../services/actions";
 
 interface Props {
-  closeModal: () => void;
   children: object;
 }
 
 const reactModals = document.getElementById("react-modals");
 
 function Modal(props: Props) {
-  const { closeModal } = props;
+  const dispatch = useDispatch();
+
+  const closeModal = () => {
+    dispatch({
+      type: INGREDIENT_DATAILS_CLOSE,
+    });
+    dispatch({
+      type: ORDER_DATAILS_CLOSE,
+    });
+  };
 
   useEffect(() => {
     const close = (event: KeyboardEvent) => {
@@ -26,7 +39,7 @@ function Modal(props: Props) {
     return () => {
       document.removeEventListener("keydown", close);
     };
-  }, [closeModal]);
+  });
 
   return reactModals
     ? createPortal(

@@ -10,13 +10,16 @@
 
 .ingredients-list {
   list-style: none;
+  height: 100%;
+  overflow-y: auto;
   padding: 0;
   margin: 0;
+  border-width: 1px;
 }
 
-.ingredients-item {
-  display: flex;
-  align-items: center;
+.ingredients-top,
+.ingredients-bottom {
+  min-height: 30px;
 }
 
 .ingredients-drag {

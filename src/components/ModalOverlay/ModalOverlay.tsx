@@ -2,15 +2,12 @@ import React from "react";
 
 import styles from "./index.module.css";
 
-interface Props {
-  closeModal: () => void;
-}
-
-function ModalOverlay(props: Props) {
+function ModalOverlay(props: any) {
   const { closeModal } = props;
+
   return (
     <>
-      <div className={styles["modal-overlay"]} onClick={closeModal}></div>
+      <div className={styles["modal-overlay"]} onClick={closeModal} />
     </>
   );
 }

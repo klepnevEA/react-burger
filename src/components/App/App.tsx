@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import AppHeader from "../AppHeader";
 import BurgerConstructor from "../BurgerConstructor";
 import BurgerIngredients from "../BurgerIngredients";
@@ -6,81 +6,66 @@ import Modal from "../Modal";
 import styles from "./app.module.css";
 import OrderDetails from "../OrderDetails";
 import IngredientModal from "../IngredientModal";
+import { useDispatch, useSelector } from "react-redux";
+
+import { RootState } from "../../services/reducers";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { getIngredients } from "../../services/actions";
 
 function App() {
-  const [isOpenOrder, setisOpenOrder] = useState(false);
-  const [isOpenIngredient, setisOpenIngredient] = useState(false);
-  const [isData, setIsData] = useState([]);
-  const [ingredient, setingredient] = useState(isData[0]);
-  const url = "https://norma.nomoreparties.space/api/ingredients ";
+  const dispatch = useDispatch();
+  const { feedRequest } = useSelector(
+    (state: RootState) => state.ingredientList
+  );
 
-  const order = () => {
-    setisOpenOrder(true);
-  };
+  const { isOpenIngredientsDetals } = useSelector(
+    (state: RootState) => state.ingredientDetails
+  );
 
-  const closeModal = () => {
-    setisOpenOrder(false);
-    setisOpenIngredient(false);
-    setingredient(isData[0]);
-  };
+  const { isOpenOrder } = useSelector((state: RootState) => state.orderDetails);
 
-  const openIngredients = (ingredient: any) => {
-    setingredient(ingredient);
-    setisOpenIngredient(true);
-  };
-
-  const addDate = () => {
-    fetch(url)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject(response.status);
-      })
-      .then((data) => setIsData(data.data))
-      .catch((err) => console.log(`Ошибка ${err}`));
-  };
-
-  useEffect(addDate, []);
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
 
   return (
-    <div className={styles.wrapper}>
-      <AppHeader />
-      <div className={styles.container}>
-        <main className={styles.main}>
-          {isData.length ? (
-            <>
-              <div className={styles.col}>
-                <BurgerIngredients
-                  dataBurger={isData}
-                  openIngredients={openIngredients}
-                />
+    <DndProvider backend={HTML5Backend}>
+      <div className={styles.wrapper}>
+        <AppHeader />
+        <div className={styles.container}>
+          <main className={styles.main}>
+            {!feedRequest ? (
+              <>
+                <div className={styles.col}>
+                  <BurgerIngredients />
+                </div>
+                <div className={styles.col}>
+                  <BurgerConstructor />
+                </div>
+              </>
+            ) : (
+              <div className={styles.loadingWrapper}>
+                <div className={styles.loading}>
+                  <div></div>
+                  <div></div>
+                </div>
               </div>
-              <div className={styles.col}>
-                <BurgerConstructor dataBurger={isData} openOrder={order} />
-              </div>
-            </>
-          ) : (
-            <div className={styles.loadingWrapper}>
-              <div className={styles.loading}>
-                <div></div>
-                <div></div>
-              </div>
-            </div>
-          )}
-        </main>
+            )}
+          </main>
+        </div>
+        {isOpenOrder ? (
+          <Modal>
+            <OrderDetails />
+          </Modal>
+        ) : null}
+        {isOpenIngredientsDetals ? (
+          <Modal>
+            <IngredientModal />
+          </Modal>
+        ) : null}
       </div>
-      {isOpenOrder ? (
-        <Modal closeModal={closeModal}>
-          <OrderDetails />
-        </Modal>
-      ) : null}
-      {isOpenIngredient && ingredient ? (
-        <Modal closeModal={closeModal}>
-          <IngredientModal data={ingredient} />
-        </Modal>
-      ) : null}
-    </div>
+    </DndProvider>
   );
 }
 
