@@ -25,11 +25,3 @@
 .ingredients-drag {
   width: 30px;
 }
-
-:global(.constructor-element) {
-  flex-grow: 1;
-}
-
-:global(.constructor-element__text) {
-  flex-grow: 1;
-}

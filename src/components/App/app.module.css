@@ -20,4 +20,21 @@
 .main {
   display: flex;
   flex: 1;
+  height: 100%;
+}
+
+:global(.input__container) {
+  width: 100%;
+}
+
+:global(.input) {
+  width: 100%;
+}
+
+:global(.constructor-element) {
+  flex-grow: 1;
+}
+
+:global(.constructor-element__text) {
+  flex-grow: 1;
 }
