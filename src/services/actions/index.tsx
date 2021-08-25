@@ -161,28 +161,72 @@ export function sendEmailRequest(data: {}) {
   };
 }
 
+/*сохраним этот токен в куку*/
+export function setCookie(name: any, value: any, props: any = {}) {
+  props = props || {};
+  let exp = props.expires;
+  if (typeof exp == "number" && exp) {
+    const d = new Date();
+    d.setTime(d.getTime() + exp * 1000);
+    exp = props.expires = d;
+  }
+  if (exp && exp.toUTCString) {
+    props.expires = exp.toUTCString();
+  }
+  value = encodeURIComponent(value);
+  let updatedCookie = name + "=" + value;
+  for (const propName in props) {
+    updatedCookie += "; " + propName;
+    const propValue = props[propName];
+    if (propValue !== true) {
+      updatedCookie += "=" + propValue;
+    }
+  }
+  document.cookie = updatedCookie;
+}
+
 export function sendRegisterRequest(data: {
   email: string;
   password: string;
   name: string;
 }) {
+  console.log(data);
   return function (dispatch: any) {
+    let authToken: any;
+
     dispatch({
       type: SEND_REGISTER,
     });
     fetch("https://norma.nomoreparties.space/api/auth/register", {
       method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        email: data.email,
-        password: data.password,
-        name: data.name,
-      }),
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+      body: JSON.stringify(data),
     })
       .then((response) => {
         if (response.ok) {
+          console.log("response.headers");
+          console.log(response.headers);
+          // Ищем интересующий нас заголовок
+          response.headers.forEach((header: any) => {
+            if (header.indexOf("Bearer") === 0) {
+              console.log(response);
+              // Отделяем схему авторизации от "полезной нагрузки токена",
+              // Стараемся экономить память в куках (доступно 4кб)
+              authToken = header.split("Bearer ")[1];
+            }
+          });
+          if (authToken) {
+            // Сохраняем токен в куку token
+            setCookie("token", authToken);
+            console.log(authToken);
+          }
           return response.json();
         }
       })
@@ -190,6 +234,7 @@ export function sendRegisterRequest(data: {
         if (data.success) {
           dispatch({
             type: SEND_REGISTER_SUCCESS,
+            token: authToken,
           });
         } else {
           dispatch({

@@ -16,7 +16,7 @@ function ForgotPassword() {
   const dispatch = useDispatch();
   const [value, setValue] = React.useState("");
 
-  const { isMailSuccess, mailLoader, mailStatus } = useSelector(
+  const { mailLoader } = useSelector(
     (state: RootState) => state.sendMailReducer
   );
 

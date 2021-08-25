@@ -16,7 +16,7 @@ function Register() {
   const dispatch = useDispatch();
   const [form, setForm] = useState({ email: "", password: "", name: "" });
 
-  const { isRegisterSuccess, registerLoader, registerStatus } = useSelector(
+  const { registerLoader } = useSelector(
     (state: RootState) => state.registerReducer
   );
 

@@ -3,9 +3,11 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { resetPasswordRequest } from "../../../../services/actions";
+import { RootState } from "../../../../services/reducers";
+import Loader from "../../../Loader";
 import styles from "./index.module.css";
 
 function ResetPassword() {
@@ -19,6 +21,10 @@ function ResetPassword() {
       history.replace({ pathname: `/${text}` });
     },
     [history]
+  );
+
+  const { resetLoader } = useSelector(
+    (state: RootState) => state.resetPassword
   );
 
   useEffect(() => {
@@ -98,6 +104,11 @@ function ResetPassword() {
           </p>
         </div>
       </div>
+      {resetLoader && (
+        <div className={styles.loginLoader}>
+          <Loader />
+        </div>
+      )}
     </div>
   );
 }

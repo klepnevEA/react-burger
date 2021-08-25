@@ -10,6 +10,7 @@ const registerState = {
   isRegisterSuccess: false,
   registerLoader: false,
   registerStatus: "",
+  token: "",
 };
 
 export const registerReducer = (state = registerState, action: any) => {
@@ -26,6 +27,7 @@ export const registerReducer = (state = registerState, action: any) => {
         ...state,
         registerLoader: false,
         isRegisterSuccess: true,
+        token: action.token,
       };
     }
 

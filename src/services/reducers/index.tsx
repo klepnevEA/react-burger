@@ -14,7 +14,6 @@ export const rootReducer = combineReducers({
   orderDetails: orderDetailsReducer,
   sendMailReducer: sendMailReducer,
   registerReducer: registerReducer,
-
   resetPassword: resetPassword,
 });
 
