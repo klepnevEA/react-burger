@@ -2,18 +2,40 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { resetPasswordRequest } from "../../../../services/actions";
 import styles from "./index.module.css";
 
 function ResetPassword() {
   const history = useHistory();
+  const inputPassword = useRef(null);
+  const dispatch = useDispatch();
+  const [form, setForm] = useState({ code: "", password: "" });
+
   const handleClick = useCallback(
     (text: string) => {
       history.replace({ pathname: `/${text}` });
     },
     [history]
   );
+
+  useEffect(() => {
+    if (inputPassword) {
+      inputPassword.current.focus();
+    }
+  }, []);
+
+  const resetRassord = async (e: Event) => {
+    e.preventDefault();
+
+    if (form.code !== "" && form.password !== "") {
+      console.log(form);
+      await dispatch(resetPasswordRequest(form));
+    }
+  };
+
   return (
     <div className={styles.login}>
       <div className={styles.loginBox}>
@@ -30,20 +52,33 @@ function ResetPassword() {
               errorText={"Ошибка"}
               size={"default"}
               icon={"ShowIcon"}
+              onChange={(e) =>
+                setForm({ ...form, [e.target.name]: e.target.value })
+              }
+              value={form.password}
+              ref={inputPassword}
             />
           </div>
           <div className="mb-6">
             <Input
               type={"text"}
               placeholder={"Введите код из письма"}
-              name={"password"}
+              name={"code"}
               error={false}
               errorText={"Ошибка"}
               size={"default"}
+              onChange={(e) =>
+                setForm({ ...form, [e.target.name]: e.target.value })
+              }
+              value={form.code}
             />
           </div>
           <div className="mb-20">
-            <Button type="primary" size="medium">
+            <Button
+              type="primary"
+              size="medium"
+              onClick={(e: Event) => resetRassord(e)}
+            >
               Сохранить
             </Button>
           </div>

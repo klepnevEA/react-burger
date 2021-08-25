@@ -2,18 +2,50 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { sendRegisterRequest } from "../../../../services/actions";
+import { RootState } from "../../../../services/reducers";
+import Loader from "../../../Loader";
 import styles from "./index.module.css";
 
 function Register() {
   const history = useHistory();
+  const inputEl = useRef(null);
+  const dispatch = useDispatch();
+  const [form, setForm] = useState({ email: "", password: "", name: "" });
+
+  const { isRegisterSuccess, registerLoader, registerStatus } = useSelector(
+    (state: RootState) => state.registerReducer
+  );
+
   const handleClick = useCallback(
     (text: string) => {
       history.replace({ pathname: `/${text}` });
     },
     [history]
   );
+
+  useEffect(() => {
+    if (inputEl) {
+      inputEl.current.focus();
+    }
+  }, []);
+
+  const sendRegister = async (e: Event) => {
+    e.preventDefault();
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (form.name !== "" && form.password !== "" && form.email !== "") {
+      if (re.test(String(form.email).toLowerCase())) {
+        console.log(form);
+        await dispatch(sendRegisterRequest(form));
+
+        setForm({ ...form, email: "", password: "", name: "" });
+      }
+    }
+  };
   return (
     <div className={styles.login}>
       <div className={styles.loginBox}>
@@ -28,17 +60,26 @@ function Register() {
               errorText={"Ошибка"}
               size={"default"}
               icon={"EditIconn"}
+              onChange={(e) =>
+                setForm({ ...form, [e.target.name]: e.target.value })
+              }
+              value={form.name}
+              ref={inputEl}
             />
           </div>
           <div className="mb-6">
             <Input
               type={"text"}
               placeholder={"E-mail"}
-              name={"mail"}
+              name={"email"}
               error={false}
               errorText={"Ошибка"}
               size={"default"}
               icon={"EditIconn"}
+              onChange={(e) =>
+                setForm({ ...form, [e.target.name]: e.target.value })
+              }
+              value={form.email}
             />
           </div>
           <div className="mb-6">
@@ -50,10 +91,18 @@ function Register() {
               errorText={"Ошибка"}
               size={"default"}
               icon={"EditIconn"}
+              onChange={(e) =>
+                setForm({ ...form, [e.target.name]: e.target.value })
+              }
+              value={form.password}
             />
           </div>
           <div className="mb-20">
-            <Button type="primary" size="medium">
+            <Button
+              type="primary"
+              size="medium"
+              onClick={(e: Event) => sendRegister(e)}
+            >
               Зарегистрироваться
             </Button>
           </div>
@@ -73,6 +122,11 @@ function Register() {
           </p>
         </div>
       </div>
+      {registerLoader && (
+        <div className={styles.loginLoader}>
+          <Loader />
+        </div>
+      )}
     </div>
   );
 }

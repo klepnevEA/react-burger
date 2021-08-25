@@ -3,12 +3,22 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import React, { useCallback, useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { sendEmailRequest } from "../../../../services/actions";
+import { RootState } from "../../../../services/reducers";
+import Loader from "../../../Loader";
 import styles from "./index.module.css";
 
 function ForgotPassword() {
   const history = useHistory();
   const inputEl = useRef(null);
+  const dispatch = useDispatch();
+  const [value, setValue] = React.useState("");
+
+  const { isMailSuccess, mailLoader, mailStatus } = useSelector(
+    (state: RootState) => state.sendMailReducer
+  );
 
   const handleClick = useCallback(
     (text: string) => {
@@ -23,16 +33,18 @@ function ForgotPassword() {
     }
   }, []);
 
-  const sendEmail = (e) => {
+  const sendEmail = async (e: Event) => {
     e.preventDefault();
-    console.log(inputEl.current.value);
-    inputEl.current.value = "";
+    if (value !== "") {
+      await dispatch(sendEmailRequest(value));
+      history.replace({ pathname: `/reset-password` });
+    }
   };
 
   return (
     <div className={styles.login}>
       <div className={styles.loginBox}>
-        <form className={styles.loginForm}>
+        <div className={styles.loginForm}>
           <h1 className="text text_type_main-medium mb-6">
             Восстановление пароля
           </h1>
@@ -41,19 +53,24 @@ function ForgotPassword() {
               type={"text"}
               placeholder={"Укажите e-mail"}
               name={"mail"}
+              onChange={(e) => setValue(e.target.value)}
+              value={value}
               error={false}
               errorText={"Ошибка"}
               size={"default"}
               ref={inputEl}
-              className="input_status_active"
             />
           </div>
           <div className="mb-20">
-            <Button type="primary" size="medium" onClick={sendEmail}>
+            <Button
+              type="primary"
+              size="medium"
+              onClick={(e: Event) => sendEmail(e)}
+            >
               Восстановить
             </Button>
           </div>
-        </form>
+        </div>
         <div>
           <p className="text">
             Вспомнили пароль?
@@ -69,6 +86,11 @@ function ForgotPassword() {
           </p>
         </div>
       </div>
+      {mailLoader && (
+        <div className={styles.loginLoader}>
+          <Loader />
+        </div>
+      )}
     </div>
   );
 }

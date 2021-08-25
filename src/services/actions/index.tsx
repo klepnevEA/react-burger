@@ -26,6 +26,21 @@ export const INGREDIENT_CONSTRUCTOR_CUSTOM_ID =
 export const INGREDIENT_CONSTRUCTOR_DELETE = "INGREDIENT_CONSTRUCTOR_DELETE";
 export const REOTDER_INGREDIENTS = "REOTDER_INGREDIENTS";
 
+/* sendEmail */
+export const SEND_EMAIL = "SEND_EMAIL";
+export const SEND_EMAIL_SUCCESS = "SEND_EMAIL_SUCCESS";
+export const SEND_EMAIL_FAILED = "SEND_EMAIL_FAILED";
+
+/* register */
+export const SEND_REGISTER = "SEND_REGISTER";
+export const SEND_REGISTER_SUCCESS = "SEND_REGISTER_SUCCESS";
+export const SEND_REGISTER_FAILED = "SEND_REGISTER_FAILED";
+
+/* register */
+export const RESET_PASSWORD = "RESET_PASSWORD";
+export const RESET_PASSWORD_SUCCESS = "RESET_PASSWORD_SUCCESS";
+export const RESET_PASSWORD_FAILED = "RESET_PASSWORD_FAILED";
+
 export function getIngredients() {
   return function (dispatch: any) {
     dispatch({
@@ -101,6 +116,135 @@ export function setOrder(data: {}) {
         dispatch({
           type: SET_ORDER_FAILED,
           orderName: "Офонмить заказ не получилось",
+        });
+      });
+  };
+}
+
+export function sendEmailRequest(data: {}) {
+  return function (dispatch: any) {
+    dispatch({
+      type: SEND_EMAIL,
+    });
+    fetch("https://norma.nomoreparties.space/api/password-reset", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: data,
+      }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        if (data.success) {
+          dispatch({
+            type: SEND_EMAIL_SUCCESS,
+          });
+        } else {
+          dispatch({
+            type: SEND_EMAIL_FAILED,
+            orderName: "Отправить емайл не получилось",
+          });
+        }
+      })
+      .catch((err) => {
+        dispatch({
+          type: SEND_EMAIL_FAILED,
+          orderName: "Отправить емайл не получилось",
+        });
+      });
+  };
+}
+
+export function sendRegisterRequest(data: {
+  email: string;
+  password: string;
+  name: string;
+}) {
+  return function (dispatch: any) {
+    dispatch({
+      type: SEND_REGISTER,
+    });
+    fetch("https://norma.nomoreparties.space/api/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: data.email,
+        password: data.password,
+        name: data.name,
+      }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        if (data.success) {
+          dispatch({
+            type: SEND_REGISTER_SUCCESS,
+          });
+        } else {
+          dispatch({
+            type: SEND_REGISTER_FAILED,
+            registerName: "Регистрация не прошла",
+          });
+        }
+      })
+      .catch((err) => {
+        dispatch({
+          type: SEND_REGISTER_FAILED,
+          registerName: err,
+        });
+      });
+  };
+}
+
+/*reset password */
+
+export function resetPasswordRequest(data: { code: string; password: string }) {
+  return function (dispatch: any) {
+    dispatch({
+      type: RESET_PASSWORD,
+    });
+    fetch("https://norma.nomoreparties.space/api/password-reset/reset", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: data.code,
+        password: data.password,
+      }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        if (data.success) {
+          dispatch({
+            type: RESET_PASSWORD_SUCCESS,
+          });
+        } else {
+          dispatch({
+            type: RESET_PASSWORD_FAILED,
+            registerName: "Регистрация не прошла",
+          });
+        }
+      })
+      .catch((err) => {
+        dispatch({
+          type: RESET_PASSWORD_FAILED,
+          registerName: err,
         });
       });
   };
