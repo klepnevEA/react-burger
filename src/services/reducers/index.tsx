@@ -6,6 +6,7 @@ import { orderDetailsReducer } from "./orderDetails";
 import { sendMailReducer } from "./forgotPassword";
 import { registerReducer } from "./register";
 import { resetPassword } from "./resetPassword";
+import { loginReducer } from "./login";
 
 export const rootReducer = combineReducers({
   ingredientList: ingredientReducer,
@@ -15,6 +16,7 @@ export const rootReducer = combineReducers({
   sendMailReducer: sendMailReducer,
   registerReducer: registerReducer,
   resetPassword: resetPassword,
+  loginReducer: loginReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

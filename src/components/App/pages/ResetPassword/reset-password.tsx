@@ -37,8 +37,8 @@ function ResetPassword() {
     e.preventDefault();
 
     if (form.code !== "" && form.password !== "") {
-      console.log(form);
       await dispatch(resetPasswordRequest(form));
+      setForm({ code: "", password: "" });
     }
   };
 

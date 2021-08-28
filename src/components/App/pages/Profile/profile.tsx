@@ -1,32 +1,57 @@
 import React from "react";
 import styles from "./index.module.css";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../services/reducers";
 
 function Profile() {
+  const { user } = useSelector((state: RootState) => state.registerReducer);
+  console.log(user);
   return (
     <div className={styles.profile}>
       <div className={styles.profileAside}>
         <ul className={styles.profileNav}>
           <li className={styles.profileItem}>
-            <Link to={{ pathname: `/` }} className={styles.profileLink}>
+            <NavLink
+              to={{ pathname: `/profile` }}
+              activeStyle={{
+                color: "var(--text-primary-color)",
+              }}
+              exact
+              className={styles.profileLink}
+            >
               <span className="text text_type_main-medium">Профиль</span>
-            </Link>
+            </NavLink>
           </li>
           <li className={styles.profileItem}>
-            <Link to={{ pathname: `/` }} className={styles.profileLink}>
+            <NavLink
+              to={{ pathname: `/profile/orders` }}
+              className={styles.profileLink}
+              exact
+              activeStyle={{
+                color: "var(--text-primary-color)",
+              }}
+            >
               <span className="text text_type_main-medium">
                 История заказов
               </span>
-            </Link>
+            </NavLink>
           </li>
           <li className={styles.profileItem}>
-            <Link to={{ pathname: `/` }} className={styles.profileLink}>
+            <NavLink
+              to={{ pathname: `/profile/orders/:id` }}
+              className={styles.profileLink}
+              exact
+              activeStyle={{
+                color: "var(--text-primary-color)",
+              }}
+            >
               <span className="text text_type_main-medium">Выход</span>
-            </Link>
+            </NavLink>
           </li>
         </ul>
         <div className={styles.subText}>
@@ -46,6 +71,7 @@ function Profile() {
             errorText={"Ошибка"}
             size={"default"}
             icon={"EditIcon"}
+            value={user.name}
           />
         </div>
         <div className="mb-6">
@@ -57,12 +83,13 @@ function Profile() {
             errorText={"Ошибка"}
             size={"default"}
             icon={"EditIcon"}
+            value={user.email}
           />
         </div>
         <div className="mb-6">
           <Input
             type={"text"}
-            placeholder={"Имя"}
+            placeholder={"Пароль"}
             name={"mail"}
             error={false}
             errorText={"Ошибка"}
@@ -77,6 +104,11 @@ function Profile() {
           <Button type="primary" size="medium">
             Сохранить
           </Button>
+          <div className="ml-2">
+            <Button type="primary" size="medium">
+              Выйти
+            </Button>
+          </div>
         </div>
       </div>
     </div>

@@ -41,6 +41,24 @@ export const RESET_PASSWORD = "RESET_PASSWORD";
 export const RESET_PASSWORD_SUCCESS = "RESET_PASSWORD_SUCCESS";
 export const RESET_PASSWORD_FAILED = "RESET_PASSWORD_FAILED";
 
+/* rlogin */
+export const LOGIN = "LOGIN";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAILED = "LOGIN_FAILED";
+
+export function getCookie(name: string) {
+  const token = localStorage.getItem("authToken");
+  console.log(token);
+  const matches = token.match(
+    new RegExp(
+      "(?:^|; )" +
+        name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
+        "=([^;]*)"
+    )
+  );
+  return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+
 export function getIngredients() {
   return function (dispatch: any) {
     dispatch({
@@ -162,19 +180,20 @@ export function sendEmailRequest(data: {}) {
 }
 
 /*сохраним этот токен в куку*/
-export function setCookie(name: any, value: any, props: any = {}) {
-  props = props || {};
+export function setCookie(name: any, value: any, props: any) {
   let exp = props.expires;
   if (typeof exp == "number" && exp) {
     const d = new Date();
-    d.setTime(d.getTime() + exp * 1000);
+    d.setTime(d.getTime() + exp * 1200);
     exp = props.expires = d;
+    console.log(exp);
   }
   if (exp && exp.toUTCString) {
     props.expires = exp.toUTCString();
   }
   value = encodeURIComponent(value);
   let updatedCookie = name + "=" + value;
+  console.log(updatedCookie);
   for (const propName in props) {
     updatedCookie += "; " + propName;
     const propValue = props[propName];
@@ -183,6 +202,8 @@ export function setCookie(name: any, value: any, props: any = {}) {
     }
   }
   document.cookie = updatedCookie;
+  localStorage.setItem("authToken", updatedCookie);
+  console.log(document.cookie);
 }
 
 export function sendRegisterRequest(data: {
@@ -190,10 +211,10 @@ export function sendRegisterRequest(data: {
   password: string;
   name: string;
 }) {
-  console.log(data);
-  return function (dispatch: any) {
-    let authToken: any;
+  let authToken: any;
+  let refreshToken: any;
 
+  return function (dispatch: any) {
     dispatch({
       type: SEND_REGISTER,
     });
@@ -209,38 +230,32 @@ export function sendRegisterRequest(data: {
       referrerPolicy: "no-referrer",
       body: JSON.stringify(data),
     })
-      .then((response) => {
-        if (response.ok) {
-          console.log("response.headers");
-          console.log(response.headers);
-          // Ищем интересующий нас заголовок
-          response.headers.forEach((header: any) => {
-            if (header.indexOf("Bearer") === 0) {
-              console.log(response);
-              // Отделяем схему авторизации от "полезной нагрузки токена",
-              // Стараемся экономить память в куках (доступно 4кб)
-              authToken = header.split("Bearer ")[1];
-            }
-          });
-          if (authToken) {
-            // Сохраняем токен в куку token
-            setCookie("token", authToken);
-            console.log(authToken);
-          }
-          return response.json();
-        }
-      })
+      .then((res) => res.json())
       .then((data) => {
-        if (data.success) {
+        console.log(data);
+        if (data.accessToken.indexOf("Bearer") === 0) {
+          authToken = data.accessToken.split("Bearer ")[1];
+        }
+        if (authToken) {
+          // Сохраняем токен в куку token
+          setCookie("token", authToken, { expires: 1 });
+          console.log(authToken);
           dispatch({
             type: SEND_REGISTER_SUCCESS,
-            token: authToken,
+            authToken: authToken,
+            refreshToken: refreshToken,
+            user: data.user,
           });
         } else {
           dispatch({
             type: SEND_REGISTER_FAILED,
             registerName: "Регистрация не прошла",
           });
+        }
+        if (data.refreshToken) {
+          refreshToken = data.refreshToken;
+          console.log(refreshToken);
+          localStorage.setItem("refreshToken", refreshToken);
         }
       })
       .catch((err) => {
@@ -261,11 +276,16 @@ export function resetPasswordRequest(data: { code: string; password: string }) {
     });
     fetch("https://norma.nomoreparties.space/api/password-reset/reset", {
       method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
       headers: {
         "Content-Type": "application/json",
       },
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
       body: JSON.stringify({
-        email: data.code,
+        token: data.code,
         password: data.password,
       }),
     })
@@ -294,3 +314,126 @@ export function resetPasswordRequest(data: { code: string; password: string }) {
       });
   };
 }
+
+/*login */
+
+export function loginRequest(data: { email: string; password: string }) {
+  return function (dispatch: any) {
+    dispatch({
+      type: LOGIN,
+    });
+    fetch("https://norma.nomoreparties.space/api/auth/login", {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+      body: JSON.stringify({
+        email: data.email,
+        password: data.password,
+      }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        if (data.success) {
+          dispatch({
+            type: LOGIN_SUCCESS,
+          });
+        } else {
+          dispatch({
+            type: LOGIN_FAILED,
+            registerName: "Такого пользователя у нас нет",
+          });
+        }
+      })
+      .catch((err) => {
+        dispatch({
+          type: LOGIN_FAILED,
+          registerName: err,
+        });
+      });
+  };
+}
+
+/*login */
+
+export function tokenRefrech(refreshToken: string) {
+  console.log(localStorage.getItem("refreshToken"));
+  return function (dispatch: any) {
+    fetch("https://norma.nomoreparties.space/api/auth/token", {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+      body: JSON.stringify({
+        token: localStorage.getItem("refreshToken"),
+      }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        localStorage.setItem("refreshToken", data.refreshToken);
+      });
+  };
+}
+
+/* авторизация */
+
+// export function getChatsRequest() {
+//   return function (dispatch: any) {
+//     fetch("https://norma.nomoreparties.space/api/auth/user", {
+//       method: "POST",
+//       mode: "cors",
+//       cache: "no-cache",
+//       credentials: "same-origin",
+//       headers: {
+//         "Content-Type": "application/json",
+//         // Отправляем токен и схему авторизации в заголовке при запросе данных
+//         Authorization: "Bearer " + getCookie("token"),
+//       },
+//       redirect: "follow",
+//       referrerPolicy: "no-referrer",
+//     })
+//       .then((response) => {
+//         if (response.ok) {
+//           return response.json();
+//         }
+//       })
+//       .then((data) => {
+//         console.log(data);
+//       });
+//   };
+// }
+
+// export const getChatsRequest = async () =>
+//   await fetch("https://norma.nomoreparties.space/api/auth/user", {
+//     method: "POST",
+//     mode: "cors",
+//     cache: "no-cache",
+//     credentials: "same-origin",
+//     headers: {
+//       "Content-Type": "application/json",
+//       // Отправляем токен и схему авторизации в заголовке при запросе данных
+//       Authorization: "Bearer " + getCookie("token"),
+//     },
+//     redirect: "follow",
+//     referrerPolicy: "no-referrer",
+//   });

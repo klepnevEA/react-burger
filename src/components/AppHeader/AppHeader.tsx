@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   ListIcon,
   BurgerIcon,
   Logo,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import styles from "./index.module.css";
+import { RootState } from "../../services/reducers";
+import { useDispatch, useSelector } from "react-redux";
+import { getChatsRequest } from "../../services/actions";
 
 function AppHeader() {
+  const { isLoginSuccess } = useSelector(
+    (state: RootState) => state.loginReducer
+  );
+
   return (
     <header className={`pb-4 pt-4 ${styles.header}`}>
       <div className={styles.container}>
@@ -39,6 +46,7 @@ function AppHeader() {
                   </span>
                 </Link>
               </li>
+              <li>{isLoginSuccess ? "залолгинен" : "не залогинен"}</li>
             </ul>
           </nav>
         </div>
@@ -46,12 +54,18 @@ function AppHeader() {
           <Logo />
         </div>
         <div className={`${styles.col} ${styles["col_right"]}`}>
-          <a href="/" className={styles.profile}>
+          <NavLink
+            to="/profile"
+            className={styles.profile}
+            activeStyle={{
+              color: "var(--text-primary-color)",
+            }}
+          >
             <ProfileIcon type="secondary" />
             <span className={`ml-2 text text_type_main-default`}>
               Личный кабинет
             </span>
-          </a>
+          </NavLink>
         </div>
       </div>
     </header>
