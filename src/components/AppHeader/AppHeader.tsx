@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ListIcon,
   BurgerIcon,
@@ -8,17 +8,15 @@ import {
 import { Link, NavLink } from "react-router-dom";
 import styles from "./index.module.css";
 import { RootState } from "../../services/reducers";
-import { useDispatch, useSelector } from "react-redux";
-import { getChatsRequest } from "../../services/actions";
+import { useSelector } from "react-redux";
+import { authUser, getAuthUser } from "../../services/actions";
 
 function AppHeader() {
-  const { isLoginSuccess } = useSelector(
-    (state: RootState) => state.loginReducer
-  );
+  const [isLoginSuccess, setIsLoginSuccess] = useState(false);
 
   useEffect(() => {
-    getChatsRequest().then((data) => {
-      console.log(data);
+    getAuthUser().then((res) => {
+      setIsLoginSuccess(res.success);
     });
   }, []);
   return (

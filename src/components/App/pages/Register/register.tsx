@@ -5,7 +5,7 @@ import {
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { sendRegisterRequest } from "../../../../services/actions";
+import { getAuthUser, sendRegisterRequest } from "../../../../services/actions";
 import { RootState } from "../../../../services/reducers";
 import Loader from "../../../Loader";
 import styles from "./index.module.css";
@@ -15,6 +15,7 @@ function Register() {
   const inputEl = useRef(null);
   const dispatch = useDispatch();
   const [form, setForm] = useState({ email: "", password: "", name: "" });
+  const [isLoginSuccess, setIsLoginSuccess] = useState(false);
 
   const { registerLoader } = useSelector(
     (state: RootState) => state.registerReducer
@@ -30,6 +31,14 @@ function Register() {
   useEffect(() => {
     if (inputEl) {
       inputEl.current.focus();
+    }
+
+    getAuthUser().then((res) => {
+      setIsLoginSuccess(res.success);
+    });
+
+    if (isLoginSuccess) {
+      history.replace({ pathname: `/` });
     }
   }, []);
 

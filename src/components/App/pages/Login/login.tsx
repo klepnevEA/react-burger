@@ -5,7 +5,11 @@ import {
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { loginRequest, tokenRefrech } from "../../../../services/actions";
+import {
+  getAuthUser,
+  loginRequest,
+  tokenRefrech,
+} from "../../../../services/actions";
 import { RootState } from "../../../../services/reducers";
 import styles from "./index.module.css";
 
@@ -14,14 +18,13 @@ function Login() {
   const inputEl = useRef(null);
   const dispatch = useDispatch();
   const [form, setForm] = useState({ email: "", password: "" });
+  const [isLoginSuccess, setIsLoginSuccess] = useState(false);
 
-  const { isLoginSuccess } = useSelector(
-    (state: RootState) => state.loginReducer
-  );
-
-  const { refreshToken } = useSelector(
-    (state: RootState) => state.registerReducer
-  );
+  useEffect(() => {
+    getAuthUser().then((res) => {
+      setIsLoginSuccess(res.success);
+    });
+  }, []);
 
   const handleClickNav = useCallback(
     (text: string) => {
@@ -39,19 +42,13 @@ function Login() {
   useEffect(() => {
     if (isLoginSuccess) {
       history.replace({ pathname: `/` });
-
-      dispatch(tokenRefrech());
     }
   }, [isLoginSuccess]);
 
   const sendLogin = async (e: Event) => {
     e.preventDefault();
     if (form.password !== "" && form.email !== "") {
-      console.log(form);
       await dispatch(loginRequest(form));
-      if (isLoginSuccess) {
-        history.replace({ pathname: `/` });
-      }
       setForm({ ...form, email: "", password: "" });
     }
   };

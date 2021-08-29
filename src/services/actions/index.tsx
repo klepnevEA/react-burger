@@ -46,8 +46,22 @@ export const LOGIN = "LOGIN";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILED = "LOGIN_FAILED";
 
-export function getCookie(name: string) {
-  const token = localStorage.getItem("authToken");
+export let authUser = {};
+
+// export function getCookie(name: string) {
+//   const token = localStorage.getItem("authToken");
+//   const matches = token.match(
+//     new RegExp(
+//       "(?:^|; )" +
+//         name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
+//         "=([^;]*)"
+//     )
+//   );
+//   return matches ? decodeURIComponent(matches[1]) : undefined;
+// }
+
+export const getCookie = (name: string) => {
+  const token = localStorage.getItem("authToken") || "";
   const matches = token.match(
     new RegExp(
       "(?:^|; )" +
@@ -56,7 +70,7 @@ export function getCookie(name: string) {
     )
   );
   return matches ? decodeURIComponent(matches[1]) : undefined;
-}
+};
 
 export function getIngredients() {
   return function (dispatch: any) {
@@ -241,8 +255,6 @@ export function sendRegisterRequest(data: {
           console.log(authToken);
           dispatch({
             type: SEND_REGISTER_SUCCESS,
-            authToken: authToken,
-            refreshToken: refreshToken,
             user: data.user,
           });
         } else {
@@ -252,6 +264,7 @@ export function sendRegisterRequest(data: {
           });
         }
         if (data.refreshToken) {
+          console.log(data);
           refreshToken = data.refreshToken;
           console.log(refreshToken);
           localStorage.setItem("refreshToken", refreshToken);
@@ -342,8 +355,9 @@ export function loginRequest(data: { email: string; password: string }) {
         }
       })
       .then((data) => {
-        console.log(data);
         if (data.success) {
+          console.log(data);
+          tokenRefrech(data.refreshToken);
           dispatch({
             type: LOGIN_SUCCESS,
           });
@@ -404,9 +418,9 @@ export function logoutRequest() {
 
 /*tokenRefrech */
 
-export function tokenRefrech() {
-  console.log(localStorage.getItem("refreshToken"));
-  return function (dispatch: any) {
+export function tokenRefrech(token: string) {
+  console.log(token);
+  return function () {
     fetch("https://norma.nomoreparties.space/api/auth/token", {
       method: "POST",
       mode: "cors",
@@ -417,12 +431,12 @@ export function tokenRefrech() {
       },
       redirect: "follow",
       referrerPolicy: "no-referrer",
-      body: JSON.stringify({
-        token: localStorage.getItem("refreshToken"),
-      }),
+      body: JSON.stringify(token),
     })
       .then((response) => {
+        console.log(response);
         if (response.ok) {
+          console.log("!!!");
           return response.json();
         }
       })
@@ -435,43 +449,25 @@ export function tokenRefrech() {
 
 /* авторизация */
 
-// export function getChatsRequest() {
-//   return function (dispatch: any) {
-//     fetch("https://norma.nomoreparties.space/api/auth/user", {
-//       method: "POST",
-//       mode: "cors",
-//       cache: "no-cache",
-//       credentials: "same-origin",
-//       headers: {
-//         "Content-Type": "application/json",
-//         // Отправляем токен и схему авторизации в заголовке при запросе данных
-//         Authorization: "Bearer " + getCookie("token"),
-//       },
-//       redirect: "follow",
-//       referrerPolicy: "no-referrer",
-//     })
-//       .then((response) => {
-//         if (response.ok) {
-//           return response.json();
-//         }
-//       })
-//       .then((data) => {
-//         console.log(data);
-//       });
-//   };
-// }
-
-export const getChatsRequest = async () =>
-  await fetch("https://norma.nomoreparties.space/api/auth/user", {
-    method: "POST",
+export function getAuthUser() {
+  return fetch("https://norma.nomoreparties.space/api/auth/user", {
+    method: "GET",
     mode: "cors",
     cache: "no-cache",
     credentials: "same-origin",
     headers: {
       "Content-Type": "application/json",
-      // Отправляем токен и схему авторизации в заголовке при запросе данных
-      Authorization: "Bearer " + getCookie("token"),
+      Authorization: ("Bearer " + getCookie("token")) as string,
     },
     redirect: "follow",
     referrerPolicy: "no-referrer",
-  });
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((data) => {
+      console.log(data);
+      authUser = data;
+      return data;
+    });
+}
