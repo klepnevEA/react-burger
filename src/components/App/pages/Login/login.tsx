@@ -37,11 +37,10 @@ function Login() {
   }, []);
 
   useEffect(() => {
-    console.log(refreshToken);
     if (isLoginSuccess) {
       history.replace({ pathname: `/` });
 
-      dispatch(tokenRefrech(refreshToken));
+      dispatch(tokenRefrech());
     }
   }, [isLoginSuccess]);
 

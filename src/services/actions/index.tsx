@@ -48,7 +48,6 @@ export const LOGIN_FAILED = "LOGIN_FAILED";
 
 export function getCookie(name: string) {
   const token = localStorage.getItem("authToken");
-  console.log(token);
   const matches = token.match(
     new RegExp(
       "(?:^|; )" +
@@ -364,9 +363,48 @@ export function loginRequest(data: { email: string; password: string }) {
   };
 }
 
-/*login */
+/*logout */
 
-export function tokenRefrech(refreshToken: string) {
+export function logoutRequest() {
+  return function (dispatch: any) {
+    dispatch({
+      type: LOGIN,
+    });
+    fetch("https://norma.nomoreparties.space/api/auth/logout", {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + getCookie("token"),
+      },
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+      body: JSON.stringify({
+        token: localStorage.getItem("refreshToken"),
+      }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        if (data.success) {
+          dispatch({
+            type: LOGIN_FAILED,
+            registerName: "Разлогинился",
+          });
+        }
+      });
+  };
+}
+
+/*tokenRefrech */
+
+export function tokenRefrech() {
   console.log(localStorage.getItem("refreshToken"));
   return function (dispatch: any) {
     fetch("https://norma.nomoreparties.space/api/auth/token", {
@@ -423,17 +461,17 @@ export function tokenRefrech(refreshToken: string) {
 //   };
 // }
 
-// export const getChatsRequest = async () =>
-//   await fetch("https://norma.nomoreparties.space/api/auth/user", {
-//     method: "POST",
-//     mode: "cors",
-//     cache: "no-cache",
-//     credentials: "same-origin",
-//     headers: {
-//       "Content-Type": "application/json",
-//       // Отправляем токен и схему авторизации в заголовке при запросе данных
-//       Authorization: "Bearer " + getCookie("token"),
-//     },
-//     redirect: "follow",
-//     referrerPolicy: "no-referrer",
-//   });
+export const getChatsRequest = async () =>
+  await fetch("https://norma.nomoreparties.space/api/auth/user", {
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+      // Отправляем токен и схему авторизации в заголовке при запросе данных
+      Authorization: "Bearer " + getCookie("token"),
+    },
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+  });

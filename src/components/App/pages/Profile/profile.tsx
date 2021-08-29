@@ -5,12 +5,17 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../services/reducers";
+import { logoutRequest } from "../../../../services/actions";
 
 function Profile() {
+  const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.registerReducer);
   console.log(user);
+  const logout = () => {
+    dispatch(logoutRequest());
+  };
   return (
     <div className={styles.profile}>
       <div className={styles.profileAside}>
@@ -105,7 +110,7 @@ function Profile() {
             Сохранить
           </Button>
           <div className="ml-2">
-            <Button type="primary" size="medium">
+            <Button type="primary" size="medium" onClick={logout}>
               Выйти
             </Button>
           </div>

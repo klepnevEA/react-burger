@@ -16,6 +16,11 @@ function AppHeader() {
     (state: RootState) => state.loginReducer
   );
 
+  useEffect(() => {
+    getChatsRequest().then((data) => {
+      console.log(data);
+    });
+  }, []);
   return (
     <header className={`pb-4 pt-4 ${styles.header}`}>
       <div className={styles.container}>
