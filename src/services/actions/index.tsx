@@ -48,18 +48,6 @@ export const LOGIN_FAILED = "LOGIN_FAILED";
 
 export let authUser = {};
 
-// export function getCookie(name: string) {
-//   const token = localStorage.getItem("authToken");
-//   const matches = token.match(
-//     new RegExp(
-//       "(?:^|; )" +
-//         name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
-//         "=([^;]*)"
-//     )
-//   );
-//   return matches ? decodeURIComponent(matches[1]) : undefined;
-// }
-
 export const getCookie = (name: string) => {
   const token = localStorage.getItem("authToken") || "";
   const matches = token.match(
@@ -330,6 +318,8 @@ export function resetPasswordRequest(data: { code: string; password: string }) {
 /*login */
 
 export function loginRequest(data: { email: string; password: string }) {
+  let authToken: any;
+  let refreshToken: any;
   return function (dispatch: any) {
     dispatch({
       type: LOGIN,
@@ -350,14 +340,27 @@ export function loginRequest(data: { email: string; password: string }) {
       }),
     })
       .then((response) => {
+        console.log(response);
         if (response.ok) {
           return response.json();
         }
       })
       .then((data) => {
+        console.log(data);
         if (data.success) {
           console.log(data);
           tokenRefrech(data.refreshToken);
+          localStorage.setItem("refreshToken", data.refreshToken);
+          if (data.accessToken.indexOf("Bearer") === 0) {
+            authToken = data.accessToken.split("Bearer ")[1];
+          }
+          if (authToken) {
+            setCookie("token", authToken, { expires: 1 });
+          }
+          if (data.refreshToken) {
+            refreshToken = data.refreshToken;
+            localStorage.setItem("refreshToken", refreshToken);
+          }
           dispatch({
             type: LOGIN_SUCCESS,
           });
@@ -407,6 +410,8 @@ export function logoutRequest() {
       .then((data) => {
         console.log(data);
         if (data.success) {
+          localStorage.setItem("refreshToken", "");
+          localStorage.setItem("authToken", "");
           dispatch({
             type: LOGIN_FAILED,
             registerName: "Разлогинился",
@@ -466,8 +471,6 @@ export function getAuthUser() {
       return res.json();
     })
     .then((data) => {
-      console.log(data);
-      authUser = data;
       return data;
     });
 }

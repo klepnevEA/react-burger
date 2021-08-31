@@ -15,9 +15,12 @@ function AppHeader() {
   const [isLoginSuccess, setIsLoginSuccess] = useState(false);
 
   useEffect(() => {
-    getAuthUser().then((res) => {
-      setIsLoginSuccess(res.success);
-    });
+    const refreshToken = localStorage.getItem("refreshToken");
+    if (refreshToken) {
+      getAuthUser().then((res) => {
+        setIsLoginSuccess(res.success);
+      });
+    }
   }, []);
   return (
     <header className={`pb-4 pt-4 ${styles.header}`}>
