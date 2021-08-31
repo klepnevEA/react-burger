@@ -433,6 +433,7 @@ export function tokenRefrech(token: string) {
       credentials: "same-origin",
       headers: {
         "Content-Type": "application/json",
+        Authorization: "Bearer " + getCookie("token"),
       },
       redirect: "follow",
       referrerPolicy: "no-referrer",
@@ -448,6 +449,40 @@ export function tokenRefrech(token: string) {
       .then((data) => {
         console.log(data);
         localStorage.setItem("refreshToken", data.refreshToken);
+      });
+  };
+}
+
+/* обновление данных о пользователе */
+
+export function sendUpdateUserRequest(data: {
+  email: string;
+  password: string;
+  name: string;
+}) {
+  let authToken: any;
+  let refreshToken: any;
+
+  return function (dispatch: any) {
+    fetch("https://norma.nomoreparties.space/api/auth/user", {
+      method: "PATCH",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + getCookie("token"),
+      },
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 }

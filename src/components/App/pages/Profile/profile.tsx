@@ -1,21 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./index.module.css";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../../services/reducers";
-import { logoutRequest } from "../../../../services/actions";
+import { useDispatch } from "react-redux";
+import {
+  getAuthUser,
+  logoutRequest,
+  sendUpdateUserRequest,
+} from "../../../../services/actions";
 
 function Profile() {
   const dispatch = useDispatch();
-  const { user } = useSelector((state: RootState) => state.registerReducer);
-  console.log(user);
+  const history = useHistory();
+  const [isLoginSuccess, setIsLoginSuccess] = useState(false);
+  const [user, setUser] = useState({ email: "", name: "", password: "" });
+
+  useEffect(() => {
+    getAuthUser().then((res) => {
+      if (res.success) {
+        setIsLoginSuccess(res.success);
+        setUser(res.user);
+      } else {
+        history.replace({ pathname: `/login` });
+      }
+    });
+  }, []);
+
   const logout = () => {
     dispatch(logoutRequest());
   };
+
+  const updateUser = async () => {
+    if (user.password !== "" && user.email !== "" && user.name !== "") {
+      await dispatch(sendUpdateUserRequest(user));
+    }
+  };
+
   return (
     <div className={styles.profile}>
       <div className={styles.profileAside}>
@@ -71,11 +94,14 @@ function Profile() {
           <Input
             type={"text"}
             placeholder={"Имя"}
-            name={"mail"}
+            name={"name"}
             error={false}
             errorText={"Ошибка"}
             size={"default"}
             icon={"EditIcon"}
+            onChange={(e) =>
+              setUser({ ...user, [e.target.name]: e.target.value })
+            }
             value={user.name}
           />
         </div>
@@ -83,30 +109,37 @@ function Profile() {
           <Input
             type={"text"}
             placeholder={"Логин"}
-            name={"mail"}
+            name={"email"}
             error={false}
             errorText={"Ошибка"}
             size={"default"}
             icon={"EditIcon"}
+            onChange={(e) =>
+              setUser({ ...user, [e.target.name]: e.target.value })
+            }
             value={user.email}
           />
         </div>
         <div className="mb-6">
           <Input
-            type={"text"}
+            type={"password"}
             placeholder={"Пароль"}
-            name={"mail"}
+            name={"password"}
             error={false}
             errorText={"Ошибка"}
             size={"default"}
             icon={"EditIcon"}
+            onChange={(e) =>
+              setUser({ ...user, [e.target.name]: e.target.value })
+            }
+            value={user.password}
           />
         </div>
         <div className={styles.profileButtons}>
           <Button type="secondary" size="medium">
             Отмена
           </Button>
-          <Button type="primary" size="medium">
+          <Button type="primary" size="medium" onClick={updateUser}>
             Сохранить
           </Button>
           <div className="ml-2">

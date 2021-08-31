@@ -22,8 +22,16 @@ function Login() {
 
   useEffect(() => {
     getAuthUser().then((res) => {
-      setIsLoginSuccess(res.success);
+      if (res.success) {
+        history.replace({ pathname: `/` });
+      }
     });
+  }, []);
+
+  useEffect(() => {
+    if (inputEl) {
+      inputEl.current.focus();
+    }
   }, []);
 
   const handleClickNav = useCallback(
@@ -33,23 +41,11 @@ function Login() {
     [history]
   );
 
-  useEffect(() => {
-    if (inputEl) {
-      inputEl.current.focus();
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isLoginSuccess) {
-      history.replace({ pathname: `/` });
-    }
-  }, [isLoginSuccess]);
-
   const sendLogin = async (e: Event) => {
     e.preventDefault();
     if (form.password !== "" && form.email !== "") {
       await dispatch(loginRequest(form));
-      setForm({ ...form, email: "", password: "" });
+      history.replace({ pathname: `/` });
     }
   };
   return (
