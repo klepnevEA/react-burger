@@ -23,8 +23,6 @@ function Profile() {
       if (res.success) {
         setIsLoginSuccess(res.success);
         setUser(res.user);
-      } else {
-        history.replace({ pathname: `/login` });
       }
     });
   }, []);

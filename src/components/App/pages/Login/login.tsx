@@ -5,11 +5,7 @@ import {
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import {
-  getAuthUser,
-  loginRequest,
-  tokenRefrech,
-} from "../../../../services/actions";
+import { getAuthUser, loginRequest } from "../../../../services/actions";
 import { RootState } from "../../../../services/reducers";
 import styles from "./index.module.css";
 
@@ -23,7 +19,7 @@ function Login() {
   useEffect(() => {
     getAuthUser().then((res) => {
       if (res.success) {
-        history.replace({ pathname: `/` });
+        console.log(res.success);
       }
     });
   }, []);
@@ -44,7 +40,7 @@ function Login() {
   const sendLogin = async (e: Event) => {
     e.preventDefault();
     if (form.password !== "" && form.email !== "") {
-      await dispatch(loginRequest(form));
+      dispatch(loginRequest(form));
       history.replace({ pathname: `/` });
     }
   };

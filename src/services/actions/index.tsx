@@ -506,6 +506,25 @@ export function getAuthUser() {
       return res.json();
     })
     .then((data) => {
+      authUser = data;
       return data;
     });
 }
+
+export const getUserRequest = async () =>
+  await fetch("https://norma.nomoreparties.space/api/auth/user", {
+    method: "GET",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: ("Bearer " + getCookie("token")) as string,
+    },
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      return data.success;
+    });

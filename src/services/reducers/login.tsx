@@ -21,6 +21,7 @@ export const loginReducer = (state = loginState, action: any) => {
         ...state,
         loginLoader: false,
         isLoginSuccess: true,
+        isLoggined: true,
       };
     }
 

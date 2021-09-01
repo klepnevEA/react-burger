@@ -19,6 +19,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Profile from "./pages/Profile";
 import Page404 from "./pages/Page404";
+import { ProtectedRoute } from "../ProtectedRoute";
 
 function App() {
   const dispatch = useDispatch();
@@ -41,9 +42,9 @@ function App() {
           <div className={styles.container}>
             <main className={styles.main}>
               <Switch>
-                <Route path="/" exact={true}>
+                <ProtectedRoute path="/" exact={true}>
                   <Main />
-                </Route>
+                </ProtectedRoute>
                 <Route path="/login">
                   <Login />
                 </Route>
@@ -56,9 +57,9 @@ function App() {
                 <Route path="/reset-password">
                   <ResetPassword />
                 </Route>
-                <Route path="/profile">
+                <ProtectedRoute path="/profile">
                   <Profile />
-                </Route>
+                </ProtectedRoute>
                 <Route>
                   <Page404 />
                 </Route>

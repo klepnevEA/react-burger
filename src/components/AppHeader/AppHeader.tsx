@@ -17,9 +17,7 @@ function AppHeader() {
   useEffect(() => {
     const refreshToken = localStorage.getItem("refreshToken");
     if (refreshToken) {
-      getAuthUser().then((res) => {
-        setIsLoginSuccess(res.success);
-      });
+      getAuthUser();
     }
   }, []);
   return (
@@ -52,7 +50,7 @@ function AppHeader() {
                   </span>
                 </Link>
               </li>
-              <li>{isLoginSuccess ? "залолгинен" : "не залогинен"}</li>
+              <li>{authUser?.user?.name ?? "-"}</li>
             </ul>
           </nav>
         </div>
