@@ -40,7 +40,7 @@ function Register() {
     if (isLoginSuccess) {
       history.replace({ pathname: `/` });
     }
-  }, []);
+  }, [history, isLoginSuccess]);
 
   const sendRegister = async (e: Event) => {
     e.preventDefault();

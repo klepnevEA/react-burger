@@ -409,13 +409,18 @@ export function logoutRequest() {
       })
       .then((data) => {
         console.log(data);
-        if (data.success) {
-          localStorage.setItem("refreshToken", "");
-          localStorage.setItem("authToken", "");
-          dispatch({
-            type: LOGIN_FAILED,
-            registerName: "Разлогинился",
-          });
+        if (
+          localStorage.getItem("refreshToken") &&
+          localStorage.getItem("authToken")
+        ) {
+          if (data.success) {
+            localStorage.setItem("refreshToken", "");
+            localStorage.setItem("authToken", "");
+            dispatch({
+              type: LOGIN_FAILED,
+              registerName: "Разлогинился",
+            });
+          }
         }
       });
   };

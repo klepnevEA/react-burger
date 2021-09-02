@@ -3,10 +3,9 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getAuthUser, loginRequest } from "../../../../services/actions";
-import { RootState } from "../../../../services/reducers";
 import styles from "./index.module.css";
 
 function Login() {
@@ -14,7 +13,6 @@ function Login() {
   const inputEl = useRef(null);
   const dispatch = useDispatch();
   const [form, setForm] = useState({ email: "", password: "" });
-  const [isLoginSuccess, setIsLoginSuccess] = useState(false);
 
   useEffect(() => {
     getAuthUser().then((res) => {

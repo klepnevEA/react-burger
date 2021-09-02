@@ -42,21 +42,21 @@ function App() {
           <div className={styles.container}>
             <main className={styles.main}>
               <Switch>
-                <ProtectedRoute path="/" exact={true}>
+                <Route path="/" exact={true}>
                   <Main />
-                </ProtectedRoute>
+                </Route>
                 <Route path="/login">
                   <Login />
                 </Route>
                 <Route path="/register">
                   <Register />
                 </Route>
-                <Route path="/forgot-password">
+                <ProtectedRoute path="/forgot-password">
                   <ForgotPassword />
-                </Route>
-                <Route path="/reset-password">
+                </ProtectedRoute>
+                <ProtectedRoute path="/reset-password">
                   <ResetPassword />
-                </Route>
+                </ProtectedRoute>
                 <ProtectedRoute path="/profile">
                   <Profile />
                 </ProtectedRoute>

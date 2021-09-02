@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import {
   ListIcon,
   BurgerIcon,
@@ -7,19 +7,21 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, NavLink } from "react-router-dom";
 import styles from "./index.module.css";
-import { RootState } from "../../services/reducers";
-import { useSelector } from "react-redux";
 import { authUser, getAuthUser } from "../../services/actions";
 
 function AppHeader() {
-  const [isLoginSuccess, setIsLoginSuccess] = useState(false);
-
+  const [user, setUser] = useState({});
   useEffect(() => {
     const refreshToken = localStorage.getItem("refreshToken");
     if (refreshToken) {
       getAuthUser();
     }
   }, []);
+
+  useEffect(() => {
+    setUser(authUser);
+    console.log(authUser);
+  }, [authUser]);
   return (
     <header className={`pb-4 pt-4 ${styles.header}`}>
       <div className={styles.container}>
@@ -50,7 +52,7 @@ function AppHeader() {
                   </span>
                 </Link>
               </li>
-              <li>{authUser?.user?.name ?? "-"}</li>
+              <li>{user?.user?.name ?? "-"}</li>
             </ul>
           </nav>
         </div>

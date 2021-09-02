@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./index.module.css";
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import {
   Button,
   Input,
@@ -14,7 +14,6 @@ import {
 
 function Profile() {
   const dispatch = useDispatch();
-  const history = useHistory();
   const [isLoginSuccess, setIsLoginSuccess] = useState(false);
   const [user, setUser] = useState({ email: "", name: "", password: "" });
 
