@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./index.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../services/reducers";
 import { TDataItem } from "../../interface";
-import { INGREDIENT_DATAILS_OPEN } from "../../services/actions";
 import IngredientDetails from "../IngredientDetails";
 import { Link, useLocation } from "react-router-dom";
 
@@ -18,17 +17,8 @@ function BurgerIngredients() {
     (state: RootState) => state.ingredientList
   );
 
-  const dispatch = useDispatch();
-
   const handleClick = () => {
     console.log("Click!");
-  };
-
-  const openIngredients = (ingredient: TDataItem) => {
-    dispatch({
-      type: INGREDIENT_DATAILS_OPEN,
-      ingredient,
-    });
   };
 
   const scrollList = (

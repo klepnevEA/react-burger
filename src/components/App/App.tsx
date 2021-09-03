@@ -34,10 +34,6 @@ function App() {
     const location = useLocation();
     let background = location.state && location?.state?.background;
 
-    const { isOpenIngredientsDetals } = useSelector(
-      (state: RootState) => state.ingredientDetails
-    );
-
     const { isOpenOrder } = useSelector(
       (state: RootState) => state.orderDetails
     );

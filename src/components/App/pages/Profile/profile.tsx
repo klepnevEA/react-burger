@@ -14,13 +14,11 @@ import {
 
 function Profile() {
   const dispatch = useDispatch();
-  const [isLoginSuccess, setIsLoginSuccess] = useState(false);
   const [user, setUser] = useState({ email: "", name: "", password: "" });
 
   useEffect(() => {
     getAuthUser().then((res) => {
       if (res.success) {
-        setIsLoginSuccess(res.success);
         setUser(res.user);
       }
     });

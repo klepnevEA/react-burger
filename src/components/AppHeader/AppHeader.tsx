@@ -1,11 +1,11 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect } from "react";
 import {
   ListIcon,
   BurgerIcon,
   Logo,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styles from "./index.module.css";
 import { getAuthUser } from "../../services/actions";
 

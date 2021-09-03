@@ -5,7 +5,7 @@ import {
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { getAuthUser, loginRequest } from "../../../../services/actions";
+import { loginRequest } from "../../../../services/actions";
 import styles from "./index.module.css";
 
 function Login() {
