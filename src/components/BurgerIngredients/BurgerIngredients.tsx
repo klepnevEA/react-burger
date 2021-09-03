@@ -120,15 +120,13 @@ function BurgerIngredients() {
                     <li
                       key={elem._id}
                       className={`pr-3 pl-3 pb-10 ${styles.item}`}
-                      // onClick={() => openIngredients(elem)}
                     >
                       <Link
                         to={{
-                          // Тут мы формируем динамический путь для нашего ингредиента
-                          // а также сохраняем в свойство background роут, на котором была открыта наша модалка.
                           pathname: `/ingredients/${elem._id}`,
                           state: { background: location },
                         }}
+                        className={styles.link}
                       >
                         <IngredientDetails ingredient={elem} />
                       </Link>

@@ -12,7 +12,6 @@ export function ProtectedRoute({ children, ...rest }) {
   };
 
   useEffect(() => {
-    console.log(authUser);
     init();
   }, []);
 

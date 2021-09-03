@@ -1,5 +1,7 @@
 .ingrediant {
   position: relative;
+  color: var(--text-primary-color);
+  text-decoration: none;
 }
 
 .image {

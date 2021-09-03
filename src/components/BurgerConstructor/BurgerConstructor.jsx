@@ -42,7 +42,6 @@ const BurgerConstructor = () => {
   useEffect(() => {
     getAuthUser().then((res) => {
       if (res.success) {
-        console.log(res);
         setTimeout(() => {
           setIsLoginSuccess(res.success);
         }, 0);

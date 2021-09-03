@@ -48,9 +48,7 @@ function Register() {
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (form.name !== "" && form.password !== "" && form.email !== "") {
       if (re.test(String(form.email).toLowerCase())) {
-        console.log(form);
         await dispatch(sendRegisterRequest(form));
-
         setForm({ ...form, email: "", password: "", name: "" });
       }
     }

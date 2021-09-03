@@ -187,14 +187,12 @@ export function setCookie(name: any, value: any, props: any) {
     const d = new Date();
     d.setTime(d.getTime() + exp * 1200);
     exp = props.expires = d;
-    console.log(exp);
   }
   if (exp && exp.toUTCString) {
     props.expires = exp.toUTCString();
   }
   value = encodeURIComponent(value);
   let updatedCookie = name + "=" + value;
-  console.log(updatedCookie);
   for (const propName in props) {
     updatedCookie += "; " + propName;
     const propValue = props[propName];
@@ -204,7 +202,6 @@ export function setCookie(name: any, value: any, props: any) {
   }
   document.cookie = updatedCookie;
   localStorage.setItem("authToken", updatedCookie);
-  console.log(document.cookie);
 }
 
 export function sendRegisterRequest(data: {
@@ -233,14 +230,12 @@ export function sendRegisterRequest(data: {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.accessToken.indexOf("Bearer") === 0) {
           authToken = data.accessToken.split("Bearer ")[1];
         }
         if (authToken) {
           // Сохраняем токен в куку token
           setCookie("token", authToken, { expires: 1 });
-          console.log(authToken);
           dispatch({
             type: SEND_REGISTER_SUCCESS,
             user: data.user,
@@ -252,9 +247,7 @@ export function sendRegisterRequest(data: {
           });
         }
         if (data.refreshToken) {
-          console.log(data);
           refreshToken = data.refreshToken;
-          console.log(refreshToken);
           localStorage.setItem("refreshToken", refreshToken);
         }
       })
@@ -340,15 +333,12 @@ export function loginRequest(data: { email: string; password: string }) {
       }),
     })
       .then((response) => {
-        console.log(response);
         if (response.ok) {
           return response.json();
         }
       })
       .then((data) => {
-        console.log(data);
         if (data.success) {
-          console.log(data);
           tokenRefrech(data.refreshToken);
           localStorage.setItem("refreshToken", data.refreshToken);
           if (data.accessToken.indexOf("Bearer") === 0) {
@@ -408,7 +398,6 @@ export function logoutRequest() {
         }
       })
       .then((data) => {
-        console.log(data);
         if (
           localStorage.getItem("refreshToken") &&
           localStorage.getItem("authToken")
@@ -429,7 +418,6 @@ export function logoutRequest() {
 /*tokenRefrech */
 
 export function tokenRefrech(token: string) {
-  console.log(token);
   return function () {
     fetch("https://norma.nomoreparties.space/api/auth/token", {
       method: "POST",
@@ -445,14 +433,11 @@ export function tokenRefrech(token: string) {
       body: JSON.stringify(token),
     })
       .then((response) => {
-        console.log(response);
         if (response.ok) {
-          console.log("!!!");
           return response.json();
         }
       })
       .then((data) => {
-        console.log(data);
         localStorage.setItem("refreshToken", data.refreshToken);
       });
   };
@@ -465,9 +450,6 @@ export function sendUpdateUserRequest(data: {
   password: string;
   name: string;
 }) {
-  let authToken: any;
-  let refreshToken: any;
-
   return function (dispatch: any) {
     fetch("https://norma.nomoreparties.space/api/auth/user", {
       method: "PATCH",
@@ -483,9 +465,6 @@ export function sendUpdateUserRequest(data: {
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      })
       .catch((err) => {
         console.log(err);
       });

@@ -46,10 +46,6 @@ function App() {
       dispatch(getIngredients());
     }, [dispatch]);
 
-    useEffect(() => {
-      console.log(background);
-    });
-
     return (
       <DndProvider backend={HTML5Backend}>
         <div className={styles.wrapper}>
