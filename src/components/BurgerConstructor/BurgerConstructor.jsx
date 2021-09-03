@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDrop } from "react-dnd";
 import {
   ConstructorElement,
@@ -20,12 +20,15 @@ import {
   INGREDIENT_LIST_COUNT_INGREDIENTS_DECREASE,
   REOTDER_INGREDIENTS,
   setOrder,
+  getAuthUser,
 } from "../../services/actions";
 import { TDataItem } from "../../interface";
 import IngredientsListItem from "../ingredientsListItem/ingredientsListItem";
+import { useHistory } from "react-router-dom";
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const {
     ingredientsConstructor,
@@ -33,6 +36,19 @@ const BurgerConstructor = () => {
     totalPriceBun,
     totalPriceIngredients,
   } = useSelector((state: RootState) => state.ingredientConstructorBurger);
+
+  const [isLoginSuccess, setIsLoginSuccess] = useState(false);
+
+  useEffect(() => {
+    getAuthUser().then((res) => {
+      if (res.success) {
+        console.log(res);
+        setTimeout(() => {
+          setIsLoginSuccess(res.success);
+        }, 0);
+      }
+    });
+  }, []);
 
   const { ingredients } = useSelector(
     (state: RootState) => state.ingredientList
@@ -109,17 +125,21 @@ const BurgerConstructor = () => {
 
   const openOrder = () => {
     let ingredients = [];
-    if (ingredientsConstructor.length > 0) {
-      if (ingredientsConstructorBun && ingredientsConstructor) {
-        ingredients.push(ingredientsConstructorBun._id);
-        ingredientsConstructor.map((item) => {
-          ingredients.push(item._id);
-          return item;
-        });
-        ingredients.push(ingredientsConstructorBun._id);
+    if (isLoginSuccess) {
+      if (ingredientsConstructor.length > 0) {
+        if (ingredientsConstructorBun && ingredientsConstructor) {
+          ingredients.push(ingredientsConstructorBun._id);
+          ingredientsConstructor.map((item) => {
+            ingredients.push(item._id);
+            return item;
+          });
+          ingredients.push(ingredientsConstructorBun._id);
 
-        dispatch(setOrder(ingredients));
+          dispatch(setOrder(ingredients));
+        }
       }
+    } else {
+      history.replace({ pathname: `/login` });
     }
   };
 

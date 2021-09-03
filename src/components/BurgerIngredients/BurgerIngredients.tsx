@@ -6,11 +6,13 @@ import { RootState } from "../../services/reducers";
 import { TDataItem } from "../../interface";
 import { INGREDIENT_DATAILS_OPEN } from "../../services/actions";
 import IngredientDetails from "../IngredientDetails";
+import { Link, useLocation } from "react-router-dom";
 
 function BurgerIngredients() {
   const [bunActive, setBunActive] = useState(true);
   const [sauceActive, setSauceActive] = useState(false);
   const [meatActive, setMeatActive] = useState(false);
+  const location = useLocation();
 
   const { ingredients } = useSelector(
     (state: RootState) => state.ingredientList
@@ -118,9 +120,18 @@ function BurgerIngredients() {
                     <li
                       key={elem._id}
                       className={`pr-3 pl-3 pb-10 ${styles.item}`}
-                      onClick={() => openIngredients(elem)}
+                      // onClick={() => openIngredients(elem)}
                     >
-                      <IngredientDetails ingredient={elem} />
+                      <Link
+                        to={{
+                          // Тут мы формируем динамический путь для нашего ингредиента
+                          // а также сохраняем в свойство background роут, на котором была открыта наша модалка.
+                          pathname: `/ingredients/${elem._id}`,
+                          state: { background: location },
+                        }}
+                      >
+                        <IngredientDetails ingredient={elem} />
+                      </Link>
                     </li>
                   );
                 })}

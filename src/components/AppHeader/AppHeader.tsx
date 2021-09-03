@@ -7,10 +7,9 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, NavLink } from "react-router-dom";
 import styles from "./index.module.css";
-import { authUser, getAuthUser } from "../../services/actions";
+import { getAuthUser } from "../../services/actions";
 
 function AppHeader() {
-  const [user, setUser] = useState({});
   useEffect(() => {
     const refreshToken = localStorage.getItem("refreshToken");
     if (refreshToken) {
@@ -18,10 +17,6 @@ function AppHeader() {
     }
   }, []);
 
-  useEffect(() => {
-    setUser(authUser);
-    console.log(authUser);
-  }, [authUser]);
   return (
     <header className={`pb-4 pt-4 ${styles.header}`}>
       <div className={styles.container}>
@@ -31,28 +26,35 @@ function AppHeader() {
               <li
                 className={`mr-2 ${styles["nav__link"]} ${styles["nav__link_active"]}`}
               >
-                <Link
+                <NavLink
+                  exact
                   to={{ pathname: `/` }}
                   className={`pl-5 pr-5 ${styles["nav__link"]}`}
+                  activeStyle={{
+                    color: "var(--text-primary-color)",
+                  }}
                 >
                   <BurgerIcon type="primary" />
                   <span className={`ml-2 text text_type_main-default`}>
                     Конструктор
                   </span>
-                </Link>
+                </NavLink>
               </li>
               <li className={`mr-2 ${styles["nav__link"]}`}>
-                <Link
-                  to={{ pathname: `/` }}
+                <NavLink
+                  exact
+                  to={{ pathname: `/order-list` }}
                   className={`pl-5 pr-5 ${styles["nav__link"]}`}
+                  activeStyle={{
+                    color: "var(--text-primary-color)",
+                  }}
                 >
                   <ListIcon type="primary" />
                   <span className={`ml-2 text text_type_main-default`}>
                     Лента заказов
                   </span>
-                </Link>
+                </NavLink>
               </li>
-              <li>{user?.user?.name ?? "-"}</li>
             </ul>
           </nav>
         </div>

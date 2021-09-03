@@ -14,13 +14,13 @@ function Login() {
   const dispatch = useDispatch();
   const [form, setForm] = useState({ email: "", password: "" });
 
-  useEffect(() => {
-    getAuthUser().then((res) => {
-      if (res.success) {
-        console.log(res.success);
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   getAuthUser().then((res) => {
+  //     if (res.success) {
+  //       console.log(res.success);
+  //     }
+  //   });
+  // }, []);
 
   useEffect(() => {
     if (inputEl) {

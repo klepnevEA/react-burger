@@ -2,7 +2,12 @@ import React, { useEffect } from "react";
 
 import IngredientModal from "../IngredientModal";
 import { useDispatch, useSelector } from "react-redux";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useLocation,
+} from "react-router-dom";
 
 import AppHeader from "../AppHeader";
 import Modal from "../Modal";
@@ -20,28 +25,38 @@ import ResetPassword from "./pages/ResetPassword";
 import Profile from "./pages/Profile";
 import Page404 from "./pages/Page404";
 import { ProtectedRoute } from "../ProtectedRoute";
+import IngredientDescription from "../IngredientDescription/IngredientDescription";
+import OrderList from "./pages/OrderList";
 
 function App() {
-  const dispatch = useDispatch();
+  const ModalSwitch = () => {
+    const dispatch = useDispatch();
+    const location = useLocation();
+    let background = location.state && location?.state?.background;
 
-  const { isOpenIngredientsDetals } = useSelector(
-    (state: RootState) => state.ingredientDetails
-  );
+    const { isOpenIngredientsDetals } = useSelector(
+      (state: RootState) => state.ingredientDetails
+    );
 
-  const { isOpenOrder } = useSelector((state: RootState) => state.orderDetails);
+    const { isOpenOrder } = useSelector(
+      (state: RootState) => state.orderDetails
+    );
 
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
+    useEffect(() => {
+      dispatch(getIngredients());
+    }, [dispatch]);
 
-  return (
-    <Router>
+    useEffect(() => {
+      console.log(background);
+    });
+
+    return (
       <DndProvider backend={HTML5Backend}>
         <div className={styles.wrapper}>
           <AppHeader />
           <div className={styles.container}>
             <main className={styles.main}>
-              <Switch>
+              <Switch location={background || location}>
                 <Route path="/" exact={true}>
                   <Main />
                 </Route>
@@ -60,10 +75,28 @@ function App() {
                 <ProtectedRoute path="/profile">
                   <Profile />
                 </ProtectedRoute>
+                <Route path="/order-list">
+                  <OrderList />
+                </Route>
+                <Route
+                  path="/ingredients/:ingredientId"
+                  children={<IngredientDescription />}
+                />
                 <Route>
                   <Page404 />
                 </Route>
               </Switch>
+
+              {background && (
+                <Route
+                  path="/ingredients/:ingredientId"
+                  children={
+                    <Modal>
+                      <IngredientModal />
+                    </Modal>
+                  }
+                />
+              )}
             </main>
           </div>
           {isOpenOrder ? (
@@ -71,13 +104,13 @@ function App() {
               <OrderDetails />
             </Modal>
           ) : null}
-          {isOpenIngredientsDetals ? (
-            <Modal>
-              <IngredientModal />
-            </Modal>
-          ) : null}
         </div>
       </DndProvider>
+    );
+  };
+  return (
+    <Router>
+      <ModalSwitch />
     </Router>
   );
 }

@@ -9,6 +9,7 @@ import {
   INGREDIENT_DATAILS_CLOSE,
   ORDER_DATAILS_CLOSE,
 } from "../../services/actions";
+import { useHistory } from "react-router-dom";
 
 interface Props {
   children: object;
@@ -18,11 +19,10 @@ const reactModals = document.getElementById("react-modals");
 
 function Modal(props: Props) {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const closeModal = () => {
-    dispatch({
-      type: INGREDIENT_DATAILS_CLOSE,
-    });
+    history.replace({ pathname: "/" });
     dispatch({
       type: ORDER_DATAILS_CLOSE,
     });

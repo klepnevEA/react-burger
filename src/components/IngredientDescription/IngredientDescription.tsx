@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { RootState } from "../../services/reducers";
 import styles from "./index.module.css";
 
-function IngredientModal() {
+function IngredientDescription() {
   const { ingredients } = useSelector(
     (state: RootState) => state.ingredientList
   );
@@ -55,4 +55,4 @@ function IngredientModal() {
   );
 }
 
-export default IngredientModal;
+export default IngredientDescription;
