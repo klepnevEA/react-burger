@@ -23,10 +23,10 @@ import {
   getAuthUser,
 } from "../../services/actions";
 import { TDataItem } from "../../interface";
-import IngredientsListItem from "../ingredientsListItem/ingredientsListItem";
+import { IngredientsListItem } from "../IngredientsListItem/ingredientsListItem";
 import { useHistory } from "react-router-dom";
 
-const BurgerConstructor = () => {
+export function BurgerConstructor() {
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -233,6 +233,4 @@ const BurgerConstructor = () => {
       </div>
     </div>
   );
-};
-
-export default BurgerConstructor;
+}

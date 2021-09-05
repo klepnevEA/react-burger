@@ -7,10 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { sendEmailRequest } from "../../../../services/actions";
 import { RootState } from "../../../../services/reducers";
-import Loader from "../../../Loader";
+import { Loader } from "../../../Loader";
 import styles from "./index.module.css";
 
-function ForgotPassword() {
+export function ForgotPassword() {
   const history = useHistory();
   const inputEl = useRef(null);
   const dispatch = useDispatch();
@@ -94,5 +94,3 @@ function ForgotPassword() {
     </div>
   );
 }
-
-export default ForgotPassword;

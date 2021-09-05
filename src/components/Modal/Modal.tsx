@@ -3,7 +3,7 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from "./index.module.css";
 import { createPortal } from "react-dom";
-import ModalOverlay from "../ModalOverlay";
+import { ModalOverlay } from "../ModalOverlay";
 import { useDispatch } from "react-redux";
 import { ORDER_DATAILS_CLOSE } from "../../services/actions";
 import { useHistory } from "react-router-dom";
@@ -14,7 +14,7 @@ interface Props {
 
 const reactModals = document.getElementById("react-modals");
 
-function Modal(props: Props) {
+export function Modal(props: Props) {
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -55,5 +55,3 @@ function Modal(props: Props) {
       )
     : null;
 }
-
-export default Modal;

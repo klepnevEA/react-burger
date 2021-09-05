@@ -12,7 +12,7 @@ import {
   sendUpdateUserRequest,
 } from "../../../../services/actions";
 
-function Profile() {
+export function Profile() {
   const dispatch = useDispatch();
   const [user, setUser] = useState({ email: "", name: "", password: "" });
 
@@ -147,5 +147,3 @@ function Profile() {
     </div>
   );
 }
-
-export default Profile;

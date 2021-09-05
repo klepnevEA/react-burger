@@ -7,10 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getAuthUser, sendRegisterRequest } from "../../../../services/actions";
 import { RootState } from "../../../../services/reducers";
-import Loader from "../../../Loader";
+import { Loader } from "../../../Loader";
 import styles from "./index.module.css";
 
-function Register() {
+export function Register() {
   const history = useHistory();
   const inputEl = useRef(null);
   const dispatch = useDispatch();
@@ -137,5 +137,3 @@ function Register() {
     </div>
   );
 }
-
-export default Register;

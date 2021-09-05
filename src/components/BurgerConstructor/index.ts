@@ -1,3 +1,1 @@
-import BurgerConstructor from "./BurgerConstructor";
-
-export default BurgerConstructor;
+export { BurgerConstructor } from "./BurgerConstructor";

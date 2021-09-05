@@ -1,3 +1,1 @@
-import IngredientDetails from "./IngredientDetails";
-
-export default IngredientDetails;
+export { IngredientDetails } from "./IngredientDetails";

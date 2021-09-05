@@ -7,10 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { resetPasswordRequest } from "../../../../services/actions";
 import { RootState } from "../../../../services/reducers";
-import Loader from "../../../Loader";
+import { Loader } from "../../../Loader";
 import styles from "./index.module.css";
 
-function ResetPassword() {
+export function ResetPassword() {
   const history = useHistory();
   const inputPassword = useRef(null);
   const dispatch = useDispatch();
@@ -112,5 +112,3 @@ function ResetPassword() {
     </div>
   );
 }
-
-export default ResetPassword;

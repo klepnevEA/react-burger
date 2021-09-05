@@ -12,7 +12,7 @@ const ItemTypes = {
   CARD: "card",
 };
 
-const IngredientsListItem = (props: any) => {
+export const IngredientsListItem = (props: any) => {
   const { itemIngredient, index, handleClose, id, moveIngredient } = props;
   const ref = useRef(null);
 
@@ -80,5 +80,3 @@ const IngredientsListItem = (props: any) => {
     </li>
   );
 };
-
-export default IngredientsListItem;

@@ -8,7 +8,7 @@ import { useHistory } from "react-router-dom";
 import { loginRequest } from "../../../../services/actions";
 import styles from "./index.module.css";
 
-function Login() {
+export function Login() {
   const history = useHistory();
   const inputEl = useRef(null);
   const dispatch = useDispatch();
@@ -113,5 +113,3 @@ function Login() {
     </div>
   );
 }
-
-export default Login;

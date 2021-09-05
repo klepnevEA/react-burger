@@ -9,7 +9,7 @@ import { NavLink } from "react-router-dom";
 import styles from "./index.module.css";
 import { getAuthUser } from "../../services/actions";
 
-function AppHeader() {
+export function AppHeader() {
   useEffect(() => {
     const refreshToken = localStorage.getItem("refreshToken");
     if (refreshToken) {
@@ -79,5 +79,3 @@ function AppHeader() {
     </header>
   );
 }
-
-export default AppHeader;

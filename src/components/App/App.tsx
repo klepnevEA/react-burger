@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import IngredientModal from "../IngredientModal";
+import { IngredientModal } from "../IngredientModal";
 import { useDispatch, useSelector } from "react-redux";
 import {
   BrowserRouter as Router,
@@ -9,24 +9,24 @@ import {
   useLocation,
 } from "react-router-dom";
 
-import AppHeader from "../AppHeader";
-import Modal from "../Modal";
+import { AppHeader } from "../AppHeader";
+import { Modal } from "../Modal";
 import styles from "./app.module.css";
-import OrderDetails from "../OrderDetails";
+import { OrderDetails } from "../OrderDetails";
 import { RootState } from "../../services/reducers";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { getIngredients } from "../../services/actions";
-import Main from "./pages/Main";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import ForgotPassword from "./pages/ForgotPassword";
-import ResetPassword from "./pages/ResetPassword";
-import Profile from "./pages/Profile";
-import Page404 from "./pages/Page404";
+import { Main } from "./pages/Main";
+import { Login } from "./pages/Login";
+import { Register } from "./pages/Register";
+import { ForgotPassword } from "./pages/ForgotPassword";
+import { ResetPassword } from "./pages/ResetPassword";
+import { Profile } from "./pages/Profile";
+import { Page404 } from "./pages/Page404";
 import { ProtectedRoute } from "../ProtectedRoute";
-import IngredientDescription from "../IngredientDescription/IngredientDescription";
-import OrderList from "./pages/OrderList";
+import { IngredientDescription } from "../IngredientDescription/IngredientDescription";
+import { OrderList } from "./pages/OrderList";
 
 function App() {
   const ModalSwitch = () => {

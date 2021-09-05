@@ -1,3 +1,1 @@
-import BurgerIngredients from "./BurgerIngredients";
-
-export default BurgerIngredients;
+export { BurgerIngredients } from "./BurgerIngredients";
