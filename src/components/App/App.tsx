@@ -25,6 +25,7 @@ import { ResetPassword } from "./pages/ResetPassword";
 import { Profile } from "./pages/Profile";
 import { Page404 } from "./pages/Page404";
 import { ProtectedRoute } from "../ProtectedRoute";
+import { ProtectedAuthRoute } from "../ProtectedAuthRoute";
 import { IngredientDescription } from "../IngredientDescription/IngredientDescription";
 import { OrderList } from "./pages/OrderList";
 
@@ -52,18 +53,18 @@ function App() {
                 <Route path="/" exact={true}>
                   <Main />
                 </Route>
-                <Route path="/login">
+                <ProtectedAuthRoute path="/login">
                   <Login />
-                </Route>
-                <Route path="/register">
+                </ProtectedAuthRoute>
+                <ProtectedAuthRoute path="/register">
                   <Register />
-                </Route>
-                <ProtectedRoute path="/forgot-password">
+                </ProtectedAuthRoute>
+                <ProtectedAuthRoute path="/forgot-password">
                   <ForgotPassword />
-                </ProtectedRoute>
-                <ProtectedRoute path="/reset-password">
+                </ProtectedAuthRoute>
+                <ProtectedAuthRoute path="/reset-password">
                   <ResetPassword />
-                </ProtectedRoute>
+                </ProtectedAuthRoute>
                 <ProtectedRoute path="/profile">
                   <Profile />
                 </ProtectedRoute>

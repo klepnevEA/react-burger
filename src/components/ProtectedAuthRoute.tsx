@@ -1,0 +1,39 @@
+import { Redirect, Route } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+import { authUser, getAuthUser } from "../services/actions";
+
+export function ProtectedAuthRoute({ children, ...rest }) {
+  const [isUserLoaded, setUserLoaded] = useState(false);
+
+  const init = async () => {
+    await getAuthUser();
+    setUserLoaded(true);
+  };
+
+  useEffect(() => {
+    init();
+  }, []);
+
+  if (!isUserLoaded) {
+    return null;
+  }
+
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        !authUser?.user?.name ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/",
+              state: { from: location },
+            }}
+          />
+        )
+      }
+    />
+  );
+}

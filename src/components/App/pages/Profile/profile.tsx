@@ -28,6 +28,14 @@ export function Profile() {
     dispatch(logoutRequest());
   };
 
+  const resetUser = () => {
+    getAuthUser().then((res) => {
+      if (res.success) {
+        setUser(res.user);
+      }
+    });
+  };
+
   const updateUser = async () => {
     if (user.password !== "" && user.email !== "" && user.name !== "") {
       await dispatch(sendUpdateUserRequest(user));
@@ -66,12 +74,13 @@ export function Profile() {
           </li>
           <li className={styles.profileItem}>
             <NavLink
-              to={{ pathname: `/profile/orders/:id` }}
+              to={{ pathname: `/login` }}
               className={styles.profileLink}
               exact
               activeStyle={{
                 color: "var(--text-primary-color)",
               }}
+              onClick={logout}
             >
               <span className="text text_type_main-medium">Выход</span>
             </NavLink>
@@ -131,17 +140,12 @@ export function Profile() {
           />
         </div>
         <div className={styles.profileButtons}>
-          <Button type="secondary" size="medium">
+          <Button type="secondary" size="medium" onClick={resetUser}>
             Отмена
           </Button>
           <Button type="primary" size="medium" onClick={updateUser}>
             Сохранить
           </Button>
-          <div className="ml-2">
-            <Button type="primary" size="medium" onClick={logout}>
-              Выйти
-            </Button>
-          </div>
         </div>
       </div>
     </div>
