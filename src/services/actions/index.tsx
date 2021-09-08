@@ -353,6 +353,7 @@ export function loginRequest(data: { email: string; password: string }) {
           }
           dispatch({
             type: LOGIN_SUCCESS,
+            payload: data.user,
           });
         } else {
           dispatch({
@@ -407,6 +408,7 @@ export function logoutRequest() {
             localStorage.setItem("authToken", "");
             dispatch({
               type: LOGIN_FAILED,
+              payload: {},
               registerName: "Разлогинился",
             });
           }

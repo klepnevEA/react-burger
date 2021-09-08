@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from "react";
 import styles from "./index.module.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getAuthUser,
   logoutRequest,
   sendUpdateUserRequest,
 } from "../../../../services/actions";
+import { RootState } from "../../../../services/reducers";
 
 export function Profile() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [user, setUser] = useState({ email: "", name: "", password: "" });
 
   useEffect(() => {
@@ -26,6 +28,7 @@ export function Profile() {
 
   const logout = () => {
     dispatch(logoutRequest());
+    // history.replace({ pathname: `/login` });
   };
 
   const resetUser = () => {

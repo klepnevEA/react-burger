@@ -7,6 +7,7 @@ import {
   Switch,
   Route,
   useLocation,
+  useHistory,
 } from "react-router-dom";
 
 import { AppHeader } from "../AppHeader";
@@ -33,7 +34,11 @@ function App() {
   const ModalSwitch = () => {
     const dispatch = useDispatch();
     const location = useLocation();
-    let background = location.state && location?.state?.background;
+    const history = useHistory();
+    let background =
+      (history.action === "PUSH" || history.action === "REPLACE") &&
+      location.state &&
+      location?.state?.background;
 
     const { isOpenOrder } = useSelector(
       (state: RootState) => state.orderDetails
@@ -53,9 +58,9 @@ function App() {
                 <Route path="/" exact={true}>
                   <Main />
                 </Route>
-                <ProtectedAuthRoute path="/login">
+                <Route path="/login">
                   <Login />
-                </ProtectedAuthRoute>
+                </Route>
                 <ProtectedAuthRoute path="/register">
                   <Register />
                 </ProtectedAuthRoute>

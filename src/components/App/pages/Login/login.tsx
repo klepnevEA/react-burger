@@ -3,22 +3,19 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { loginRequest } from "../../../../services/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { Redirect, useHistory, useLocation } from "react-router-dom";
+import { getAuthUser, loginRequest } from "../../../../services/actions";
 import styles from "./index.module.css";
+import { RootState } from "../../../../services/reducers";
 
 export function Login() {
   const history = useHistory();
   const inputEl = useRef(null);
   const dispatch = useDispatch();
-  const [form, setForm] = useState({ email: "", password: "" });
-
-  useEffect(() => {
-    if (inputEl) {
-      inputEl.current.focus();
-    }
-  }, []);
+  const location = useLocation();
+  const { user } = useSelector((state: RootState) => state.loginReducer);
+  const [formUser, setForm] = useState({ email: "", password: "" });
 
   const handleClickNav = useCallback(
     (text: string) => {
@@ -29,11 +26,16 @@ export function Login() {
 
   const sendLogin = async (e: Event) => {
     e.preventDefault();
-    if (form.password !== "" && form.email !== "") {
-      dispatch(loginRequest(form));
-      history.replace({ pathname: `/` });
+    if (formUser.password !== "" && formUser.email !== "") {
+      dispatch(loginRequest(formUser));
     }
   };
+
+  if (user.name) {
+    const { from } = location.state || { from: { pathname: "/" } };
+    return <Redirect to={from} />;
+  }
+
   return (
     <div className={styles.login}>
       <div className={styles.loginBox}>
@@ -49,9 +51,9 @@ export function Login() {
               size={"default"}
               ref={inputEl}
               onChange={(e) =>
-                setForm({ ...form, [e.target.name]: e.target.value })
+                setForm({ ...formUser, [e.target.name]: e.target.value })
               }
-              value={form.email}
+              value={formUser.email}
             />
           </div>
           <div className="mb-6">
@@ -64,9 +66,9 @@ export function Login() {
               size={"default"}
               icon={"ShowIcon"}
               onChange={(e) =>
-                setForm({ ...form, [e.target.name]: e.target.value })
+                setForm({ ...formUser, [e.target.name]: e.target.value })
               }
-              value={form.password}
+              value={formUser.password}
             />
           </div>
           <div className="mb-20">
