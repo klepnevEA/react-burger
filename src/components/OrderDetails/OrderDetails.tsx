@@ -5,7 +5,7 @@ import { RootState } from "../../services/reducers";
 
 import styles from "./index.module.css";
 
-function OrderDetails() {
+export function OrderDetails() {
   const { orderNumber, orderName } = useSelector(
     (state: RootState) => state.orderDetails
   );
@@ -25,5 +25,3 @@ function OrderDetails() {
     </div>
   );
 }
-
-export default OrderDetails;

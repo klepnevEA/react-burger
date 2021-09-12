@@ -1,32 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./index.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../services/reducers";
 import { TDataItem } from "../../interface";
-import { INGREDIENT_DATAILS_OPEN } from "../../services/actions";
-import IngredientDetails from "../IngredientDetails";
+import { IngredientDetails } from "../IngredientDetails";
+import { Link, useLocation } from "react-router-dom";
 
-function BurgerIngredients() {
+export function BurgerIngredients() {
   const [bunActive, setBunActive] = useState(true);
   const [sauceActive, setSauceActive] = useState(false);
   const [meatActive, setMeatActive] = useState(false);
+  const location = useLocation();
 
   const { ingredients } = useSelector(
     (state: RootState) => state.ingredientList
   );
 
-  const dispatch = useDispatch();
-
   const handleClick = () => {
     console.log("Click!");
-  };
-
-  const openIngredients = (ingredient: TDataItem) => {
-    dispatch({
-      type: INGREDIENT_DATAILS_OPEN,
-      ingredient,
-    });
   };
 
   const scrollList = (
@@ -118,9 +110,16 @@ function BurgerIngredients() {
                     <li
                       key={elem._id}
                       className={`pr-3 pl-3 pb-10 ${styles.item}`}
-                      onClick={() => openIngredients(elem)}
                     >
-                      <IngredientDetails ingredient={elem} />
+                      <Link
+                        to={{
+                          pathname: `/ingredients/${elem._id}`,
+                          state: { background: location },
+                        }}
+                        className={styles.link}
+                      >
+                        <IngredientDetails ingredient={elem} />
+                      </Link>
                     </li>
                   );
                 })}
@@ -132,5 +131,3 @@ function BurgerIngredients() {
     </div>
   );
 }
-
-export default BurgerIngredients;

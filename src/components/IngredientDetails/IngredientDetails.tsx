@@ -11,7 +11,7 @@ interface Props {
   ingredient: TDataItem;
 }
 
-function IngredientDetails(props: Props) {
+export function IngredientDetails(props: Props) {
   const { ingredient } = props;
   const ingredientId = ingredient._id;
   const ingredientType = ingredient.type;
@@ -51,5 +51,3 @@ function IngredientDetails(props: Props) {
     </>
   );
 }
-
-export default IngredientDetails;

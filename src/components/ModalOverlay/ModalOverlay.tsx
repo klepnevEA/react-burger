@@ -2,7 +2,7 @@ import React from "react";
 
 import styles from "./index.module.css";
 
-function ModalOverlay(props: any) {
+export function ModalOverlay(props: any) {
   const { closeModal } = props;
 
   return (
@@ -11,5 +11,3 @@ function ModalOverlay(props: any) {
     </>
   );
 }
-
-export default ModalOverlay;

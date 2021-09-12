@@ -41,6 +41,10 @@
   text-decoration: none;
 }
 
+.ative {
+  color: var(--text-primary-color);
+}
+
 .nav__link svg {
   fill: var(--text-inactive-color);
 }

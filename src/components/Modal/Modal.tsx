@@ -3,12 +3,10 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from "./index.module.css";
 import { createPortal } from "react-dom";
-import ModalOverlay from "../ModalOverlay";
+import { ModalOverlay } from "../ModalOverlay";
 import { useDispatch } from "react-redux";
-import {
-  INGREDIENT_DATAILS_CLOSE,
-  ORDER_DATAILS_CLOSE,
-} from "../../services/actions";
+import { ORDER_DATAILS_CLOSE } from "../../services/actions";
+import { useHistory } from "react-router-dom";
 
 interface Props {
   children: object;
@@ -16,13 +14,12 @@ interface Props {
 
 const reactModals = document.getElementById("react-modals");
 
-function Modal(props: Props) {
+export function Modal(props: Props) {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const closeModal = () => {
-    dispatch({
-      type: INGREDIENT_DATAILS_CLOSE,
-    });
+    history.replace({ pathname: "/" });
     dispatch({
       type: ORDER_DATAILS_CLOSE,
     });
@@ -58,5 +55,3 @@ function Modal(props: Props) {
       )
     : null;
 }
-
-export default Modal;

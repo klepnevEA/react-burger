@@ -1,12 +1,22 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { RootState } from "../../services/reducers";
 import styles from "./index.module.css";
 
-function IngredientModal() {
-  const { ingredient } = useSelector(
-    (state: RootState) => state.ingredientDetails
+export function IngredientModal() {
+  const { ingredients } = useSelector(
+    (state: RootState) => state.ingredientList
   );
+  const { ingredientId } = useParams<{ ingredientId?: string }>();
+
+  const findIngredient = () => {
+    let ingredient = ingredients.find((item: any) => item._id === ingredientId);
+
+    return ingredient;
+  };
+
+  const ingredient = findIngredient();
 
   return (
     <div className={styles["content-wrapper"]}>
@@ -44,5 +54,3 @@ function IngredientModal() {
     </div>
   );
 }
-
-export default IngredientModal;
