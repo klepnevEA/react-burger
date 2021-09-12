@@ -64,9 +64,9 @@ function App() {
                 <ProtectedAuthRoute path="/register">
                   <Register />
                 </ProtectedAuthRoute>
-                <ProtectedAuthRoute path="/forgot-password">
+                <Route path="/forgot-password">
                   <ForgotPassword />
-                </ProtectedAuthRoute>
+                </Route>
                 <ProtectedAuthRoute path="/reset-password">
                   <ResetPassword />
                 </ProtectedAuthRoute>

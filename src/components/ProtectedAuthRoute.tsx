@@ -32,7 +32,7 @@ export function ProtectedAuthRoute({ children, ...rest }) {
         ) : (
           <Redirect
             to={{
-              pathname: "/",
+              pathname: "/login",
               state: { from: location },
             }}
           />
