@@ -6,6 +6,15 @@
   box-sizing: border-box;
 }
 
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+}
+
 html {
   -webkit-text-size-adjust: none;
 }

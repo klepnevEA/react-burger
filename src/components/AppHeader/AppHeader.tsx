@@ -21,7 +21,7 @@ export function AppHeader() {
     <header className={`pb-4 pt-4 ${styles.header}`}>
       <div className={styles.container}>
         <div className={`${styles.col}`}>
-          <nav className={styles.nav}>
+          <nav className={styles["nav"]}>
             <ul className={styles["nav__list"]}>
               <li
                 className={`mr-2 ${styles["nav__link"]} ${styles["nav__link_active"]}`}

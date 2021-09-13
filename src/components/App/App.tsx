@@ -29,6 +29,8 @@ import { ProtectedRoute } from "../ProtectedRoute";
 import { ProtectedAuthRoute } from "../ProtectedAuthRoute";
 import { IngredientDescription } from "../IngredientDescription/IngredientDescription";
 import { OrderList } from "./pages/OrderList";
+import { Feed } from "./pages/Feed";
+import { FeedInfo } from "./pages/FeedInfo";
 
 function App() {
   const ModalSwitch = () => {
@@ -80,6 +82,10 @@ function App() {
                   path="/ingredients/:ingredientId"
                   children={<IngredientDescription />}
                 />
+                <Route path="/feed/:id" children={<FeedInfo />} />
+                <Route path="/feed">
+                  <Feed />
+                </Route>
                 <Route>
                   <Page404 />
                 </Route>
