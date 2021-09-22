@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./index.module.css";
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink, Route, Switch, useHistory } from "react-router-dom";
 import {
   Button,
   Input,
@@ -12,6 +12,9 @@ import {
   sendUpdateUserRequest,
 } from "../../../../services/actions";
 import { RootState } from "../../../../services/reducers";
+import { FormProfile } from "../FormsProfile";
+import { Page404 } from "../Page404";
+import { ProfileOrders } from "../ProfileOrders";
 
 export function Profile() {
   const dispatch = useDispatch();
@@ -96,61 +99,17 @@ export function Profile() {
           </div>
         </div>
       </div>
-      <div className={styles.profileForm}>
-        <div className="mb-6">
-          <Input
-            type={"text"}
-            placeholder={"Имя"}
-            name={"name"}
-            error={false}
-            errorText={"Ошибка"}
-            size={"default"}
-            icon={"EditIcon"}
-            onChange={(e) =>
-              setUser({ ...user, [e.target.name]: e.target.value })
-            }
-            value={user.name}
-          />
-        </div>
-        <div className="mb-6">
-          <Input
-            type={"text"}
-            placeholder={"Логин"}
-            name={"email"}
-            error={false}
-            errorText={"Ошибка"}
-            size={"default"}
-            icon={"EditIcon"}
-            onChange={(e) =>
-              setUser({ ...user, [e.target.name]: e.target.value })
-            }
-            value={user.email}
-          />
-        </div>
-        <div className="mb-6">
-          <Input
-            type={"password"}
-            placeholder={"Пароль"}
-            name={"password"}
-            error={false}
-            errorText={"Ошибка"}
-            size={"default"}
-            icon={"EditIcon"}
-            onChange={(e) =>
-              setUser({ ...user, [e.target.name]: e.target.value })
-            }
-            value={user.password}
-          />
-        </div>
-        <div className={styles.profileButtons}>
-          <Button type="secondary" size="medium" onClick={resetUser}>
-            Отмена
-          </Button>
-          <Button type="primary" size="medium" onClick={updateUser}>
-            Сохранить
-          </Button>
-        </div>
-      </div>
+      <Switch>
+        <Route path="/profile" exact={true}>
+          <FormProfile />
+        </Route>
+        <Route path="/profile/orders" exact={true}>
+          <ProfileOrders />
+        </Route>
+        <Route>
+          <Page404 />
+        </Route>
+      </Switch>
     </div>
   );
 }
