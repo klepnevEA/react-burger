@@ -63,7 +63,6 @@ export function Feed() {
         curr.status === "done"
           ? (acc["done"] = [...acc["done"], curr])
           : (acc["pending"] = [...acc["pending"], curr]);
-        console.log(acc);
         return acc;
       },
       { done: [], pending: [] }

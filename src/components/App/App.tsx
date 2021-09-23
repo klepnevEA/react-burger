@@ -17,7 +17,11 @@ import { OrderDetails } from "../OrderDetails";
 import { RootState } from "../../services/reducers";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { getIngredients, WS_CONNECTION_START } from "../../services/actions";
+import {
+  getIngredients,
+  WS_AUTH_CONNECTION_START,
+  WS_CONNECTION_START,
+} from "../../services/actions";
 import { Main } from "./pages/Main";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
@@ -50,6 +54,9 @@ function App() {
       dispatch(getIngredients());
       dispatch({
         type: WS_CONNECTION_START,
+      });
+      dispatch({
+        type: WS_AUTH_CONNECTION_START,
       });
     }, [dispatch]);
 

@@ -48,7 +48,7 @@ export function FormProfile() {
           size={"default"}
           icon={"EditIcon"}
           onChange={(e) =>
-            setUser({ ...user, [e.target.name]: e.target.value })
+            setUser({ ...user, [e.target.name]: e.target?.value })
           }
           value={user.name}
         />
@@ -63,7 +63,7 @@ export function FormProfile() {
           size={"default"}
           icon={"EditIcon"}
           onChange={(e) =>
-            setUser({ ...user, [e.target.name]: e.target.value })
+            setUser({ ...user, [e.target.name]: e.target?.value })
           }
           value={user.email}
         />
@@ -78,7 +78,7 @@ export function FormProfile() {
           size={"default"}
           icon={"EditIcon"}
           onChange={(e) =>
-            setUser({ ...user, [e.target.name]: e.target.value })
+            setUser({ ...user, [e.target.name]: e.target?.value })
           }
           value={user.password}
         />
