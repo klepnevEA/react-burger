@@ -2,10 +2,10 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory, useLocation } from "react-router-dom";
-import { getAuthUser, loginRequest } from "../../../../services/actions";
+import { loginRequest } from "../../../../services/actions";
 import styles from "./index.module.css";
 import { RootState } from "../../../../services/reducers";
 

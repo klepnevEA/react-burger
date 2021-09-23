@@ -1,24 +1,18 @@
 import React, { useEffect, useState } from "react";
 import styles from "./index.module.css";
-import { NavLink, Route, Switch, useHistory } from "react-router-dom";
-import {
-  Button,
-  Input,
-} from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { NavLink, Route, Switch } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import {
   getAuthUser,
   logoutRequest,
   sendUpdateUserRequest,
 } from "../../../../services/actions";
-import { RootState } from "../../../../services/reducers";
 import { FormProfile } from "../FormsProfile";
 import { Page404 } from "../Page404";
 import { ProfileOrders } from "../ProfileOrders";
 
 export function Profile() {
   const dispatch = useDispatch();
-  const history = useHistory();
   const [user, setUser] = useState({ email: "", name: "", password: "" });
 
   useEffect(() => {
@@ -32,20 +26,6 @@ export function Profile() {
   const logout = () => {
     dispatch(logoutRequest());
     // history.replace({ pathname: `/login` });
-  };
-
-  const resetUser = () => {
-    getAuthUser().then((res) => {
-      if (res.success) {
-        setUser(res.user);
-      }
-    });
-  };
-
-  const updateUser = async () => {
-    if (user.password !== "" && user.email !== "" && user.name !== "") {
-      await dispatch(sendUpdateUserRequest(user));
-    }
   };
 
   return (

@@ -43,7 +43,7 @@ export function AppHeader() {
               <li className={`mr-2 ${styles["nav__link"]}`}>
                 <NavLink
                   exact
-                  to={{ pathname: `/order-list` }}
+                  to={{ pathname: `/feed` }}
                   className={`pl-5 pr-5 ${styles["nav__link"]}`}
                   activeStyle={{
                     color: "var(--text-primary-color)",
