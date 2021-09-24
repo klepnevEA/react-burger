@@ -5,18 +5,8 @@ import {
   WS_AUTH_CONNECTION_CLOSED,
   WS_AUTH_GET_MESSAGE,
   WS_AUTH_SEND_MESSAGE,
+  getCookie,
 } from "../actions";
-
-const getCookie = (name: string) => {
-  const matches = document.cookie.match(
-    new RegExp(
-      "(?:^|; )" +
-        name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
-        "=([^;]*)"
-    )
-  );
-  return matches ? decodeURIComponent(matches[1]) : undefined;
-};
 
 export const socketMiddlewareAuth = (wsUrl: string, auth: boolean) => {
   return (store: any) => {
