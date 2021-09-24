@@ -26,6 +26,7 @@
 }
 
 .order {
+  color: var(--text-primary-color);
   background-color: var(--background);
   border-radius: 40px;
   padding: 24px;

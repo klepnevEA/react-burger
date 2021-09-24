@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./index.module.css";
-import { NavLink, Route, Switch } from "react-router-dom";
+import { NavLink, Route, Switch, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
   getAuthUser,
@@ -13,6 +13,7 @@ import { ProfileOrders } from "../ProfileOrders";
 
 export function Profile() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [user, setUser] = useState({ email: "", name: "", password: "" });
 
   useEffect(() => {

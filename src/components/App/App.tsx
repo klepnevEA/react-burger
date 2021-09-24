@@ -35,6 +35,7 @@ import { IngredientDescription } from "../IngredientDescription/IngredientDescri
 import { OrderList } from "./pages/OrderList";
 import { Feed } from "./pages/Feed";
 import { FeedInfo } from "./pages/FeedInfo";
+import { OrderModal } from "../OrderModal";
 
 function App() {
   const ModalSwitch = () => {
@@ -102,14 +103,24 @@ function App() {
               </Switch>
 
               {background && (
-                <Route
-                  path="/ingredients/:ingredientId"
-                  children={
-                    <Modal>
-                      <IngredientModal />
-                    </Modal>
-                  }
-                />
+                <>
+                  <Route
+                    path="/ingredients/:ingredientId"
+                    children={
+                      <Modal>
+                        <IngredientModal />
+                      </Modal>
+                    }
+                  />
+                  <Route
+                    path="/feed/:id"
+                    children={
+                      <Modal>
+                        <OrderModal />
+                      </Modal>
+                    }
+                  />
+                </>
               )}
             </main>
           </div>

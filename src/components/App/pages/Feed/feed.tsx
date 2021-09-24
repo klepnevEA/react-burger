@@ -4,6 +4,7 @@ import bun from "../../../../images/bun-02.png";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../services/reducers";
+import { Link, useLocation } from "react-router-dom";
 
 export function Feed() {
   const { ingredients } = useSelector(
@@ -13,6 +14,7 @@ export function Feed() {
     (store: RootState) => store.ws
   );
   let totaPrice = 0;
+  const location = useLocation();
 
   const getDays = (days: number) =>
     days === 0
@@ -84,47 +86,58 @@ export function Feed() {
             {orders.map((order, index) => {
               return (
                 <li className={styles["order-list__item"]} key={index}>
-                  <div className={styles["order"]}>
-                    <div className={styles["order__head"]}>
-                      <div className={styles["order__number"]}>
-                        #{order.number}
+                  <Link
+                    to={{
+                      pathname: `/feed/${order._id}`,
+                      state: { background: location },
+                    }}
+                    className={styles.link}
+                  >
+                    <div className={styles["order"]}>
+                      <div className={styles["order__head"]}>
+                        <div className={styles["order__number"]}>
+                          #{order.number}
+                        </div>
+                        <div className={styles["order__date"]}>
+                          {dateTime(order.updatedAt)}
+                        </div>
                       </div>
-                      <div className={styles["order__date"]}>
-                        {dateTime(order.updatedAt)}
+                      <div className={styles["order__title"]}>
+                        <h2 className="text text_type_main-medium">
+                          {order.name}
+                        </h2>
+                      </div>
+                      <div>
+                        {order.status === "done" ? "Выполнен" : "Готовится"}
+                      </div>
+                      <div className={styles["order__info"]}>
+                        <div className={styles["order__composition"]}>
+                          {getBurgerIngredients(
+                            order.ingredients,
+                            ingredients
+                          ).map((elem, index: number) => {
+                            if (index < 6) {
+                              return (
+                                <div key={index}>
+                                  <img
+                                    src={elem.image_mobile}
+                                    alt={elem.name}
+                                  />
+                                </div>
+                              );
+                            }
+                            return null;
+                          })}
+                        </div>
+                        <div className={styles["order__price"]}>
+                          <span className="text text_type_digits-default">
+                            {totaPrice}
+                          </span>
+                          <CurrencyIcon type="primary" />
+                        </div>
                       </div>
                     </div>
-                    <div className={styles["order__title"]}>
-                      <h2 className="text text_type_main-medium">
-                        {order.name}
-                      </h2>
-                    </div>
-                    <div>
-                      {order.status === "done" ? "Выполнен" : "Готовится"}
-                    </div>
-                    <div className={styles["order__info"]}>
-                      <div className={styles["order__composition"]}>
-                        {getBurgerIngredients(
-                          order.ingredients,
-                          ingredients
-                        ).map((elem, index: number) => {
-                          if (index < 6) {
-                            return (
-                              <div key={index}>
-                                <img src={elem.image_mobile} alt={elem.name} />
-                              </div>
-                            );
-                          }
-                          return null;
-                        })}
-                      </div>
-                      <div className={styles["order__price"]}>
-                        <span className="text text_type_digits-default">
-                          {totaPrice}
-                        </span>
-                        <CurrencyIcon type="primary" />
-                      </div>
-                    </div>
-                  </div>
+                  </Link>
                 </li>
               );
             })}
