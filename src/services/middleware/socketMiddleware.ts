@@ -12,7 +12,7 @@ export const socketMiddleware = (wsUrl: string, auth: boolean) => {
     let socket: any = null;
 
     return (next: any) => (action: any) => {
-      const { dispatch, getState } = store;
+      const { dispatch } = store;
       const { type, payload } = action;
       if (type === WS_CONNECTION_START) {
         // объект класса WebSocket
@@ -38,7 +38,6 @@ export const socketMiddleware = (wsUrl: string, auth: boolean) => {
         };
         // функция, которая вызывается при закрытии соединения
         socket.onclose = (event: any) => {
-          console.log("onclose");
           dispatch({ type: WS_CONNECTION_CLOSED, payload: event });
         };
 

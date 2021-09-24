@@ -70,7 +70,7 @@ export function Register() {
               onChange={(e) =>
                 setForm({ ...form, [e.target.name]: e.target.value })
               }
-              value={form.name}
+              value={form?.name}
               ref={inputEl}
             />
           </div>
@@ -86,7 +86,7 @@ export function Register() {
               onChange={(e) =>
                 setForm({ ...form, [e.target.name]: e.target.value })
               }
-              value={form.email}
+              value={form?.email}
             />
           </div>
           <div className="mb-6">
@@ -101,7 +101,7 @@ export function Register() {
               onChange={(e) =>
                 setForm({ ...form, [e.target.name]: e.target.value })
               }
-              value={form.password}
+              value={form?.password}
             />
           </div>
           <div className="mb-20">

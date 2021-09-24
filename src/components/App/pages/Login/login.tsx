@@ -53,7 +53,7 @@ export function Login() {
               onChange={(e) =>
                 setForm({ ...formUser, [e.target.name]: e.target.value })
               }
-              value={formUser.email}
+              value={formUser?.email}
             />
           </div>
           <div className="mb-6">
@@ -68,7 +68,7 @@ export function Login() {
               onChange={(e) =>
                 setForm({ ...formUser, [e.target.name]: e.target.value })
               }
-              value={formUser.password}
+              value={formUser?.password}
             />
           </div>
           <div className="mb-20">

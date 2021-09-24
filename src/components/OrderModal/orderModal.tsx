@@ -1,17 +1,22 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { RootState } from "../../services/reducers";
 import styles from "./index.module.css";
 
 export function OrderModal() {
-  const { total, totalToday, orders } = useSelector(
-    (store: RootState) => store.ws
+  const location = useLocation();
+  const params = location?.state;
+
+  const { orders } = useSelector((store: RootState) =>
+    params?.background.pathname === "/feed" ? store.ws : store.wsAuth
   );
+
   const { ingredients } = useSelector(
     (state: RootState) => state.ingredientList
   );
+
   let totaPrice = 0;
   const { feedId } = useParams<{ feedId?: string }>();
 
@@ -64,14 +69,13 @@ export function OrderModal() {
     return order;
   };
   const order = findOrder();
-  const listIngredients = getBurgerIngredients(order.ingredients, ingredients);
+  const listIngredients = getBurgerIngredients(order?.ingredients, ingredients);
 
   const orderCount = (arr: Array<any>) => {
     return arr?.reduce(
       (acc: any, curr: any) => {
         const id = curr._id;
         acc.count[id] = (acc.count[id] || 0) + 1;
-        console.log(acc);
         return acc;
       },
       { count: {} }
@@ -85,10 +89,10 @@ export function OrderModal() {
     <div className={styles["feed-info"]}>
       <div className="mb-6">
         <div className={styles["feed-info__number"]}>
-          <div className="text text_type_digits-default">#{order.number}</div>
+          <div className="text text_type_digits-default">#{order?.number}</div>
         </div>
 
-        <h1 className="text text_type_main-medium">{order.name}</h1>
+        <h1 className="text text_type_main-medium">{order?.name}</h1>
         <div className={styles["feed-info__status"]}>Выполнен</div>
       </div>
       <div className={styles["composition"]}>
@@ -117,7 +121,7 @@ export function OrderModal() {
         <div className="mt-4">
           <div className={styles["composition__info"]}>
             <div className={styles["composition__date"]}>
-              {dateTime(order.updatedAt)}
+              {dateTime(order?.updatedAt)}
             </div>
             <div className={styles["composition__price"]}>
               <span className="text text_type_digits-default">{totaPrice}</span>

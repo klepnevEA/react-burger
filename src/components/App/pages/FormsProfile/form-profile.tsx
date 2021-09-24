@@ -31,7 +31,7 @@ export function FormProfile() {
   };
 
   const updateUser = async () => {
-    if (user.password !== "" && user.email !== "" && user.name !== "") {
+    if (user?.password !== "" && user?.email !== "" && user?.name !== "") {
       await dispatch(sendUpdateUserRequest(user));
     }
   };
@@ -50,7 +50,7 @@ export function FormProfile() {
           onChange={(e) =>
             setUser({ ...user, [e.target.name]: e.target?.value })
           }
-          value={user.name}
+          value={user?.name || ""}
         />
       </div>
       <div className="mb-6">
@@ -65,7 +65,7 @@ export function FormProfile() {
           onChange={(e) =>
             setUser({ ...user, [e.target.name]: e.target?.value })
           }
-          value={user.email}
+          value={user?.email || ""}
         />
       </div>
       <div className="mb-6">
@@ -80,7 +80,7 @@ export function FormProfile() {
           onChange={(e) =>
             setUser({ ...user, [e.target.name]: e.target?.value })
           }
-          value={user.password}
+          value={user?.password || ""}
         />
       </div>
       <div className={styles.profileButtons}>

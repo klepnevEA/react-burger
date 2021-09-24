@@ -1,19 +1,22 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { RootState } from "../../../../services/reducers";
 import styles from "./index.module.css";
 
 export function FeedInfo() {
-  const { orders } = useSelector((store: RootState) => store.ws);
+  const location = useLocation();
+  const params = location?.state;
+
+  const { orders } = useSelector((store: RootState) =>
+    params?.background.pathname === "/feed" ? store.ws : store.wsAuth
+  );
   const { ingredients } = useSelector(
     (state: RootState) => state.ingredientList
   );
   let totaPrice = 0;
   const { feedId } = useParams<{ feedId?: string }>();
-
-  console.log(`ingredients : ${ingredients}`);
 
   const getDays = (days: number) =>
     days === 0

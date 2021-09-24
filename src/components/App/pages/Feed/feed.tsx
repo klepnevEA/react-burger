@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styles from "./index.module.css";
-import bun from "../../../../images/bun-02.png";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../services/reducers";
@@ -72,10 +71,6 @@ export function Feed() {
   };
 
   const status = getOrder(orders);
-
-  useEffect(() => {
-    console.log(orders);
-  }, []);
 
   return (
     <div className={styles["feed"]}>
@@ -155,6 +150,8 @@ export function Feed() {
                         {elem.number}
                       </li>
                     );
+                  } else {
+                    return null;
                   }
                 })}
               </ul>
@@ -169,6 +166,8 @@ export function Feed() {
                         {elem.number}
                       </li>
                     );
+                  } else {
+                    return null;
                   }
                 })}
               </ul>

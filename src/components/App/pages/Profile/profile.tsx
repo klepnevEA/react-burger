@@ -1,32 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./index.module.css";
-import { NavLink, Route, Switch, useHistory } from "react-router-dom";
+import { NavLink, Route, Switch } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import {
-  getAuthUser,
-  logoutRequest,
-  sendUpdateUserRequest,
-} from "../../../../services/actions";
+import { logoutRequest } from "../../../../services/actions";
 import { FormProfile } from "../FormsProfile";
 import { Page404 } from "../Page404";
 import { ProfileOrders } from "../ProfileOrders";
 
 export function Profile() {
   const dispatch = useDispatch();
-  const history = useHistory();
-  const [user, setUser] = useState({ email: "", name: "", password: "" });
+  // const [user, setUser] = useState({ email: "", name: "", password: "" });
 
-  useEffect(() => {
-    getAuthUser().then((res) => {
-      if (res.success) {
-        setUser(res.user);
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   getAuthUser().then((res) => {
+  //     if (res.success) {
+  //       setUser(res.user);
+  //     }
+  //   });
+  // }, []);
 
   const logout = () => {
     dispatch(logoutRequest());
-    // history.replace({ pathname: `/login` });
   };
 
   return (
