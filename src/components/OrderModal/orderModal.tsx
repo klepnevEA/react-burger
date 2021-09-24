@@ -13,7 +13,7 @@ export function OrderModal() {
     (state: RootState) => state.ingredientList
   );
   let totaPrice = 0;
-  const { id } = useParams<{ id?: string }>();
+  const { feedId } = useParams<{ feedId?: string }>();
 
   const getDays = (days: number) =>
     days === 0
@@ -46,8 +46,8 @@ export function OrderModal() {
     arrAllIngredients: Array<any>
   ) => {
     const list = arrIdBurgerIngredients
-      ?.map((id: string) =>
-        arrAllIngredients.filter((item: any) => item._id === id)
+      ?.map((feedId: string) =>
+        arrAllIngredients.filter((item: any) => item._id === feedId)
       )
       ?.flat();
     totaPrice = list?.reduce(
@@ -59,7 +59,7 @@ export function OrderModal() {
   };
 
   const findOrder = () => {
-    let order = orders.find((item: any) => item._id === id);
+    let order = orders.find((item: any) => item._id === feedId);
 
     return order;
   };

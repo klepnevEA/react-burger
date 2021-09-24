@@ -32,7 +32,6 @@ import { Page404 } from "./pages/Page404";
 import { ProtectedRoute } from "../ProtectedRoute";
 import { ProtectedAuthRoute } from "../ProtectedAuthRoute";
 import { IngredientDescription } from "../IngredientDescription/IngredientDescription";
-import { OrderList } from "./pages/OrderList";
 import { Feed } from "./pages/Feed";
 import { FeedInfo } from "./pages/FeedInfo";
 import { OrderModal } from "../OrderModal";
@@ -86,17 +85,14 @@ function App() {
                 <ProtectedRoute path="/profile">
                   <Profile />
                 </ProtectedRoute>
-                <Route path="/feed">
+                <Route path="/feed" exact={true}>
                   <Feed />
                 </Route>
                 <Route
                   path="/ingredients/:ingredientId"
                   children={<IngredientDescription />}
                 />
-                <Route path="/feed/:id" children={<FeedInfo />} />
-                {/* <Route path="/feed">
-                  <Feed />
-                </Route> */}
+                <Route path="/feed/:feedId" children={<FeedInfo />} />
                 <Route>
                   <Page404 />
                 </Route>
@@ -113,7 +109,7 @@ function App() {
                     }
                   />
                   <Route
-                    path="/feed/:id"
+                    path="/feed/:feedId"
                     children={
                       <Modal>
                         <OrderModal />
