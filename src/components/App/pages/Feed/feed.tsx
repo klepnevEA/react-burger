@@ -1,17 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./index.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../services/reducers";
 import { Link, useLocation } from "react-router-dom";
+import {
+  WS_CONNECTION_CLOSED,
+  WS_CONNECTION_START,
+} from "../../../../services/actions";
+import { Loader } from "../../../Loader";
 
 export function Feed() {
+  const dispatch = useDispatch();
   const { ingredients } = useSelector(
     (store: RootState) => store.ingredientList
   );
   const { total, totalToday, orders } = useSelector(
     (store: RootState) => store.ws
   );
+
+  useEffect(() => {
+    dispatch({
+      type: WS_CONNECTION_START,
+    });
+  }, [dispatch]);
+  useEffect(() => {
+    dispatch({ type: WS_CONNECTION_CLOSED });
+  }, [dispatch]);
+
   let totaPrice = 0;
   const location = useLocation();
 
@@ -73,120 +89,134 @@ export function Feed() {
   const status = getOrder(orders);
 
   return (
-    <div className={styles["feed"]}>
-      <h1 className="text text_type_main-medium mb-5">Лента заказов</h1>
-      <div className={styles.row}>
-        <div className={styles.col}>
-          <ul className={styles["order-list"]}>
-            {orders.map((order, index) => {
-              return (
-                <li className={styles["order-list__item"]} key={index}>
-                  <Link
-                    to={{
-                      pathname: `/feed/${order._id}`,
-                      state: { background: location },
-                    }}
-                    className={styles.link}
-                  >
-                    <div className={styles["order"]}>
-                      <div className={styles["order__head"]}>
-                        <div className={styles["order__number"]}>
-                          #{order.number}
+    <>
+      {orders.length ? (
+        <div className={styles["feed"]}>
+          <h1 className="text text_type_main-medium mb-5">Лента заказов</h1>
+          <div className={styles.row}>
+            <div className={styles.col}>
+              <ul className={styles["order-list"]}>
+                {orders.map((order, index) => {
+                  return (
+                    <li className={styles["order-list__item"]} key={index}>
+                      <Link
+                        to={{
+                          pathname: `/feed/${order._id}`,
+                          state: { background: location },
+                        }}
+                        className={styles.link}
+                      >
+                        <div className={styles["order"]}>
+                          <div className={styles["order__head"]}>
+                            <div className={styles["order__number"]}>
+                              #{order.number}
+                            </div>
+                            <div className={styles["order__date"]}>
+                              {dateTime(order.updatedAt)}
+                            </div>
+                          </div>
+                          <div className={styles["order__title"]}>
+                            <h2 className="text text_type_main-medium">
+                              {order.name}
+                            </h2>
+                          </div>
+                          <div>
+                            {order.status === "done" ? "Выполнен" : "Готовится"}
+                          </div>
+                          <div className={styles["order__info"]}>
+                            <div className={styles["order__composition"]}>
+                              {getBurgerIngredients(
+                                order.ingredients,
+                                ingredients
+                              ).map((elem, index: number) => {
+                                if (index < 6) {
+                                  return (
+                                    <div key={index}>
+                                      <img
+                                        src={elem.image_mobile}
+                                        alt={elem.name}
+                                      />
+                                    </div>
+                                  );
+                                }
+                                return null;
+                              })}
+                            </div>
+                            <div className={styles["order__price"]}>
+                              <span className="text text_type_digits-default">
+                                {totaPrice}
+                              </span>
+                              <CurrencyIcon type="primary" />
+                            </div>
+                          </div>
                         </div>
-                        <div className={styles["order__date"]}>
-                          {dateTime(order.updatedAt)}
-                        </div>
-                      </div>
-                      <div className={styles["order__title"]}>
-                        <h2 className="text text_type_main-medium">
-                          {order.name}
-                        </h2>
-                      </div>
-                      <div>
-                        {order.status === "done" ? "Выполнен" : "Готовится"}
-                      </div>
-                      <div className={styles["order__info"]}>
-                        <div className={styles["order__composition"]}>
-                          {getBurgerIngredients(
-                            order.ingredients,
-                            ingredients
-                          ).map((elem, index: number) => {
-                            if (index < 6) {
-                              return (
-                                <div key={index}>
-                                  <img
-                                    src={elem.image_mobile}
-                                    alt={elem.name}
-                                  />
-                                </div>
-                              );
-                            }
-                            return null;
-                          })}
-                        </div>
-                        <div className={styles["order__price"]}>
-                          <span className="text text_type_digits-default">
-                            {totaPrice}
-                          </span>
-                          <CurrencyIcon type="primary" />
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-        <div className={styles.col}>
-          <div className={styles["order-list-done"]}>
-            <div className={styles["order-list-done__col"]}>
-              <div className="text text_type_main-medium mb-6">Готовы:</div>
-              <ul className={styles["order-list-done__list-done"]}>
-                {status.done.map((elem, index: number) => {
-                  if (index < 20) {
-                    return (
-                      <li className="text text_type_digits-default" key={index}>
-                        {elem.number}
-                      </li>
-                    );
-                  } else {
-                    return null;
-                  }
+                      </Link>
+                    </li>
+                  );
                 })}
               </ul>
             </div>
-            <div className={styles["order-list-done__col"]}>
-              <div className="text text_type_main-medium mb-6">В работе:</div>
-              <ul>
-                {status.pending.map((elem, index: number) => {
-                  if (index < 20) {
-                    return (
-                      <li className="text text_type_digits-default" key={index}>
-                        {elem.number}
-                      </li>
-                    );
-                  } else {
-                    return null;
-                  }
-                })}
-              </ul>
+            <div className={styles.col}>
+              <div className={styles["order-list-done"]}>
+                <div className={styles["order-list-done__col"]}>
+                  <div className="text text_type_main-medium mb-6">Готовы:</div>
+                  <ul className={styles["order-list-done__list-done"]}>
+                    {status.done.map((elem, index: number) => {
+                      if (index < 20) {
+                        return (
+                          <li
+                            className="text text_type_digits-default"
+                            key={index}
+                          >
+                            {elem.number}
+                          </li>
+                        );
+                      } else {
+                        return null;
+                      }
+                    })}
+                  </ul>
+                </div>
+                <div className={styles["order-list-done__col"]}>
+                  <div className="text text_type_main-medium mb-6">
+                    В работе:
+                  </div>
+                  <ul>
+                    {status.pending.map((elem, index: number) => {
+                      if (index < 20) {
+                        return (
+                          <li
+                            className="text text_type_digits-default"
+                            key={index}
+                          >
+                            {elem.number}
+                          </li>
+                        );
+                      } else {
+                        return null;
+                      }
+                    })}
+                  </ul>
+                </div>
+              </div>
+              <div className="text text_type_main-medium mb-20">
+                <div className="text text_type_main-medium">
+                  Выполнено за все время:
+                </div>
+                <div className="text text_type_digits-large">{total}</div>
+              </div>
+              <div className="text text_type_main-medium mb-20">
+                <div className="text text_type_main-medium">
+                  Выполнено за сегодня:
+                </div>
+                <div className="text text_type_digits-large">{totalToday}</div>
+              </div>
             </div>
-          </div>
-          <div className="text text_type_main-medium mb-20">
-            <div className="text text_type_main-medium">
-              Выполнено за все время:
-            </div>
-            <div className="text text_type_digits-large">{total}</div>
-          </div>
-          <div className="text text_type_main-medium mb-20">
-            <div className="text text_type_main-medium">
-              Выполнено за сегодня:
-            </div>
-            <div className="text text_type_digits-large">{totalToday}</div>
           </div>
         </div>
-      </div>
-    </div>
+      ) : (
+        <Loader fullPage={true} />
+      )}
+    </>
   );
 }

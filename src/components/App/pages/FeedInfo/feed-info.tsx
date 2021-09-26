@@ -1,13 +1,33 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
+import {
+  WS_AUTH_CONNECTION_CLOSED,
+  WS_AUTH_CONNECTION_START,
+  WS_CONNECTION_CLOSED,
+  WS_CONNECTION_START,
+} from "../../../../services/actions";
 import { RootState } from "../../../../services/reducers";
+import { Loader } from "../../../Loader";
 import styles from "./index.module.css";
 
 export function FeedInfo() {
   const location = useLocation();
+  const dispatch = useDispatch();
   const params = location?.state;
+  useEffect(() => {
+    dispatch({
+      type: WS_CONNECTION_START,
+    });
+    dispatch({
+      type: WS_AUTH_CONNECTION_START,
+    });
+  }, [dispatch]);
+  useEffect(() => {
+    dispatch({ type: WS_AUTH_CONNECTION_CLOSED });
+    dispatch({ type: WS_CONNECTION_CLOSED });
+  }, [dispatch]);
 
   const { orders } = useSelector((store: RootState) =>
     params?.background.pathname === "/feed" ? store.ws : store.wsAuth
@@ -84,50 +104,62 @@ export function FeedInfo() {
   const orderPrise = orderCount(listIngredients);
 
   return (
-    <div className={styles["feed-info"]}>
-      <div className="mb-6">
-        <div className={styles["feed-info__number"]}>
-          <div className="text text_type_digits-default">#{order?.number}</div>
-        </div>
-
-        <h1 className="text text_type_main-medium">{order?.name}</h1>
-        <div className={styles["feed-info__status"]}>Выполнен</div>
-      </div>
-      <div className={styles["composition"]}>
-        <div className="text text_type_main-medium mb-6">Состав:</div>
-        <ul className={styles["list"]}>
-          {unicalIngredients.map((elem, index: number) => {
-            if (index < 6) {
-              return (
-                <li className={styles["list__item"]} key={index}>
-                  <div className={styles["list__img"]}>
-                    <img src={elem.image_mobile} alt={elem.name} />
-                  </div>
-                  <div className="text text_type_main-default">{elem.name}</div>
-                  <div className={styles["composition__price"]}>
-                    <span className="text text_type_digits-default">
-                      {orderPrise?.count[elem._id]} x {elem.price}
-                    </span>
-                    <CurrencyIcon type="primary" />
-                  </div>
-                </li>
-              );
-            }
-            return null;
-          })}
-        </ul>
-        <div className="mt-4">
-          <div className={styles["composition__info"]}>
-            <div className={styles["composition__date"]}>
-              {dateTime(order?.updatedAt)}
+    <>
+      {orders.length ? (
+        <div className={styles["feed-info"]}>
+          <div className="mb-6">
+            <div className={styles["feed-info__number"]}>
+              <div className="text text_type_digits-default">
+                #{order?.number}
+              </div>
             </div>
-            <div className={styles["composition__price"]}>
-              <span className="text text_type_digits-default">{totaPrice}</span>
-              <CurrencyIcon type="primary" />
+
+            <h1 className="text text_type_main-medium">{order?.name}</h1>
+            <div className={styles["feed-info__status"]}>Выполнен</div>
+          </div>
+          <div className={styles["composition"]}>
+            <div className="text text_type_main-medium mb-6">Состав:</div>
+            <ul className={styles["list"]}>
+              {unicalIngredients.map((elem, index: number) => {
+                if (index < 6) {
+                  return (
+                    <li className={styles["list__item"]} key={index}>
+                      <div className={styles["list__img"]}>
+                        <img src={elem.image_mobile} alt={elem.name} />
+                      </div>
+                      <div className="text text_type_main-default">
+                        {elem.name}
+                      </div>
+                      <div className={styles["composition__price"]}>
+                        <span className="text text_type_digits-default">
+                          {orderPrise?.count[elem._id]} x {elem.price}
+                        </span>
+                        <CurrencyIcon type="primary" />
+                      </div>
+                    </li>
+                  );
+                }
+                return null;
+              })}
+            </ul>
+            <div className="mt-4">
+              <div className={styles["composition__info"]}>
+                <div className={styles["composition__date"]}>
+                  {dateTime(order?.updatedAt)}
+                </div>
+                <div className={styles["composition__price"]}>
+                  <span className="text text_type_digits-default">
+                    {totaPrice}
+                  </span>
+                  <CurrencyIcon type="primary" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      ) : (
+        <Loader fullPage={true} />
+      )}
+    </>
   );
 }

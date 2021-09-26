@@ -6,7 +6,7 @@ type TProps = {
   fullPage?: boolean;
 };
 
-export function Loader(props: any) {
+export function Loader(props: TProps) {
   const { fullPage } = props;
   return (
     <div

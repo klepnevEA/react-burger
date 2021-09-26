@@ -14,7 +14,7 @@ export function Login() {
   const inputEl = useRef(null);
   const dispatch = useDispatch();
   const location = useLocation();
-  const { user, loginLoader, isLoginSuccess, message } = useSelector(
+  const { loginLoader, isLoginSuccess, message } = useSelector(
     (state: RootState) => state.loginReducer
   );
   const [formUser, setForm] = useState({ email: "", password: "" });

@@ -2,6 +2,7 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import React from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
+
 import { RootState } from "../../services/reducers";
 import styles from "./index.module.css";
 
