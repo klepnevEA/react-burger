@@ -7,6 +7,14 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
+.loadingWrapperFull {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
 .loading {
   display: inline-block;
   position: relative;

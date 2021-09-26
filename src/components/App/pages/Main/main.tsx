@@ -10,6 +10,8 @@ export function Main() {
   const { feedRequest } = useSelector(
     (state: RootState) => state.ingredientList
   );
+
+  const { orderLoader } = useSelector((state: RootState) => state.orderDetails);
   return (
     <>
       {!feedRequest ? (
@@ -24,6 +26,7 @@ export function Main() {
       ) : (
         <Loader />
       )}
+      {orderLoader && <Loader fullPage={true} />}
     </>
   );
 }

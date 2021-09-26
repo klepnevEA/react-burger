@@ -117,6 +117,7 @@ export function setOrder(data: {}) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: "Bearer " + getCookie("token"),
       },
       body: JSON.stringify({
         ingredients: data,
@@ -250,6 +251,7 @@ export function sendRegisterRequest(data: {
           authToken = data.accessToken.split("Bearer ")[1];
         }
         if (authToken) {
+          console.log("!!!!");
           // Сохраняем токен в куку token
           setCookie("token", authToken, { expires: 1 });
           dispatch({
@@ -259,7 +261,7 @@ export function sendRegisterRequest(data: {
         } else {
           dispatch({
             type: SEND_REGISTER_FAILED,
-            registerName: "Регистрация не прошла",
+            registerMessage: "Регистрация не прошла",
           });
         }
         if (data.refreshToken) {
@@ -270,7 +272,7 @@ export function sendRegisterRequest(data: {
       .catch((err) => {
         dispatch({
           type: SEND_REGISTER_FAILED,
-          registerName: err,
+          registerMessage: err,
         });
       });
   };
@@ -311,14 +313,14 @@ export function resetPasswordRequest(data: { code: string; password: string }) {
         } else {
           dispatch({
             type: RESET_PASSWORD_FAILED,
-            registerName: "Регистрация не прошла",
+            registerMessage: "Регистрация не прошла",
           });
         }
       })
       .catch((err) => {
         dispatch({
           type: RESET_PASSWORD_FAILED,
-          registerName: err,
+          registerMessage: err,
         });
       });
   };
@@ -354,7 +356,7 @@ export function loginRequest(data: { email: string; password: string }) {
         }
       })
       .then((data) => {
-        if (data.success) {
+        if (data) {
           tokenRefrech(data.refreshToken);
           localStorage.setItem("refreshToken", data.refreshToken);
           if (data.accessToken.indexOf("Bearer") === 0) {
@@ -374,14 +376,15 @@ export function loginRequest(data: { email: string; password: string }) {
         } else {
           dispatch({
             type: LOGIN_FAILED,
-            registerName: "Такого пользователя у нас нет",
+            registerMessage:
+              "Такого пользователя у нас нет или пароль не верный",
           });
         }
       })
       .catch((err) => {
         dispatch({
           type: LOGIN_FAILED,
-          registerName: err,
+          registerMessage: err,
         });
       });
   };

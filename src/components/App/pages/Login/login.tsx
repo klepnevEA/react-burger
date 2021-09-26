@@ -14,7 +14,9 @@ export function Login() {
   const inputEl = useRef(null);
   const dispatch = useDispatch();
   const location = useLocation();
-  const { user } = useSelector((state: RootState) => state.loginReducer);
+  const { user, loginLoader, isLoginSuccess, message } = useSelector(
+    (state: RootState) => state.loginReducer
+  );
   const [formUser, setForm] = useState({ email: "", password: "" });
 
   const handleClickNav = useCallback(
@@ -31,7 +33,7 @@ export function Login() {
     }
   };
 
-  if (user.name) {
+  if (loginLoader === false && isLoginSuccess === true) {
     const { from } = location.state || { from: { pathname: "/" } };
     return <Redirect to={from} />;
   }
@@ -81,6 +83,9 @@ export function Login() {
             >
               Войти
             </Button>
+            {!loginLoader && !isLoginSuccess && message ? (
+              <div className={styles.loginError}>{message}</div>
+            ) : null}
           </div>
         </form>
         <div>
