@@ -21,7 +21,7 @@ export function AppHeader() {
     <header className={`pb-4 pt-4 ${styles.header}`}>
       <div className={styles.container}>
         <div className={`${styles.col}`}>
-          <nav className={styles.nav}>
+          <nav className={styles["nav"]}>
             <ul className={styles["nav__list"]}>
               <li
                 className={`mr-2 ${styles["nav__link"]} ${styles["nav__link_active"]}`}
@@ -43,7 +43,7 @@ export function AppHeader() {
               <li className={`mr-2 ${styles["nav__link"]}`}>
                 <NavLink
                   exact
-                  to={{ pathname: `/order-list` }}
+                  to={{ pathname: `/feed` }}
                   className={`pl-5 pr-5 ${styles["nav__link"]}`}
                   activeStyle={{
                     color: "var(--text-primary-color)",

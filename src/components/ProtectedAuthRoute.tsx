@@ -1,7 +1,7 @@
 import { Redirect, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import { authUser, getAuthUser } from "../services/actions";
+import { getAuthUser } from "../services/actions";
 import { useSelector } from "react-redux";
 import { RootState } from "../services/reducers";
 

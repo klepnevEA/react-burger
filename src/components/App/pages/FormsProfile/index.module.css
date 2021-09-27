@@ -1,0 +1,42 @@
+.profile {
+  display: flex;
+  width: 100%;
+  padding: 120px 20px 0;
+}
+
+.col {
+  flex: 1 1 33%;
+}
+
+.profileAside {
+  width: 320px;
+}
+
+.profileNav {
+  padding: 0;
+}
+
+.profileItem {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.profileLink {
+  color: var(--text-inactive-color);
+  text-decoration: none;
+  line-height: 3;
+}
+
+.profileForm {
+  width: 480px;
+}
+
+.subText {
+  color: var(--text-inactive-color);
+}
+
+.profileButtons {
+  display: flex;
+  justify-content: flex-end;
+}

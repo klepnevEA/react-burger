@@ -45,6 +45,11 @@
   color: var(--text-primary-color);
 }
 
+.nav {
+  display: flex;
+  align-items: center;
+}
+
 .nav__link svg {
   fill: var(--text-inactive-color);
 }

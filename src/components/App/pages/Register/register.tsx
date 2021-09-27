@@ -4,7 +4,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation, Redirect } from "react-router-dom";
 import { getAuthUser, sendRegisterRequest } from "../../../../services/actions";
 import { RootState } from "../../../../services/reducers";
 import { Loader } from "../../../Loader";
@@ -14,10 +14,11 @@ export function Register() {
   const history = useHistory();
   const inputEl = useRef(null);
   const dispatch = useDispatch();
+  const location = useLocation();
   const [form, setForm] = useState({ email: "", password: "", name: "" });
   const [isLoginSuccess, setIsLoginSuccess] = useState(false);
 
-  const { registerLoader } = useSelector(
+  const { isRegisterSuccess, registerLoader } = useSelector(
     (state: RootState) => state.registerReducer
   );
 
@@ -29,10 +30,6 @@ export function Register() {
   );
 
   useEffect(() => {
-    if (inputEl) {
-      inputEl.current.focus();
-    }
-
     getAuthUser().then((res) => {
       setIsLoginSuccess(res.success);
     });
@@ -41,6 +38,11 @@ export function Register() {
       history.replace({ pathname: `/` });
     }
   }, [history, isLoginSuccess]);
+
+  if (registerLoader === false && isRegisterSuccess === true) {
+    const { from } = location.state || { from: { pathname: "/" } };
+    return <Redirect to={from} />;
+  }
 
   const sendRegister = async (e: Event) => {
     e.preventDefault();
@@ -57,6 +59,8 @@ export function Register() {
     <div className={styles.login}>
       <div className={styles.loginBox}>
         <form className={styles.loginForm}>
+          {`${registerLoader}`}
+          {`${isRegisterSuccess}`}
           <h1 className="text text_type_main-medium mb-6">Регистрация</h1>
           <div className="mb-6">
             <Input
@@ -70,7 +74,7 @@ export function Register() {
               onChange={(e) =>
                 setForm({ ...form, [e.target.name]: e.target.value })
               }
-              value={form.name}
+              value={form?.name}
               ref={inputEl}
             />
           </div>
@@ -86,7 +90,7 @@ export function Register() {
               onChange={(e) =>
                 setForm({ ...form, [e.target.name]: e.target.value })
               }
-              value={form.email}
+              value={form?.email}
             />
           </div>
           <div className="mb-6">
@@ -101,7 +105,7 @@ export function Register() {
               onChange={(e) =>
                 setForm({ ...form, [e.target.name]: e.target.value })
               }
-              value={form.password}
+              value={form?.password}
             />
           </div>
           <div className="mb-20">

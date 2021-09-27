@@ -28,7 +28,9 @@ import { Page404 } from "./pages/Page404";
 import { ProtectedRoute } from "../ProtectedRoute";
 import { ProtectedAuthRoute } from "../ProtectedAuthRoute";
 import { IngredientDescription } from "../IngredientDescription/IngredientDescription";
-import { OrderList } from "./pages/OrderList";
+import { Feed } from "./pages/Feed";
+import { FeedInfo } from "./pages/FeedInfo";
+import { OrderModal } from "../OrderModal";
 
 function App() {
   const ModalSwitch = () => {
@@ -73,27 +75,38 @@ function App() {
                 <ProtectedRoute path="/profile">
                   <Profile />
                 </ProtectedRoute>
-                <Route path="/order-list">
-                  <OrderList />
+                <Route path="/feed" exact={true}>
+                  <Feed />
                 </Route>
                 <Route
                   path="/ingredients/:ingredientId"
                   children={<IngredientDescription />}
                 />
+                <Route path="/feed/:feedId" children={<FeedInfo />} />
                 <Route>
                   <Page404 />
                 </Route>
               </Switch>
 
               {background && (
-                <Route
-                  path="/ingredients/:ingredientId"
-                  children={
-                    <Modal>
-                      <IngredientModal />
-                    </Modal>
-                  }
-                />
+                <>
+                  <Route
+                    path="/ingredients/:ingredientId"
+                    children={
+                      <Modal>
+                        <IngredientModal />
+                      </Modal>
+                    }
+                  />
+                  <Route
+                    path="/feed/:feedId"
+                    children={
+                      <Modal>
+                        <OrderModal />
+                      </Modal>
+                    }
+                  />
+                </>
               )}
             </main>
           </div>

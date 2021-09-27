@@ -19,7 +19,7 @@ export function Modal(props: Props) {
   const history = useHistory();
 
   const closeModal = () => {
-    history.replace({ pathname: "/" });
+    history.goBack();
     dispatch({
       type: ORDER_DATAILS_CLOSE,
     });

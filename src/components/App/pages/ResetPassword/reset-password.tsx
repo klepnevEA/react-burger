@@ -61,7 +61,7 @@ export function ResetPassword() {
               onChange={(e) =>
                 setForm({ ...form, [e.target.name]: e.target.value })
               }
-              value={form.password}
+              value={form?.password}
               ref={inputPassword}
             />
           </div>
@@ -76,7 +76,7 @@ export function ResetPassword() {
               onChange={(e) =>
                 setForm({ ...form, [e.target.name]: e.target.value })
               }
-              value={form.code}
+              value={form?.code}
             />
           </div>
           <div className="mb-20">

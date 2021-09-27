@@ -1,48 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./index.module.css";
-import { NavLink, useHistory } from "react-router-dom";
-import {
-  Button,
-  Input,
-} from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  getAuthUser,
-  logoutRequest,
-  sendUpdateUserRequest,
-} from "../../../../services/actions";
-import { RootState } from "../../../../services/reducers";
+import { NavLink, Route, Switch } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logoutRequest } from "../../../../services/actions";
+import { FormProfile } from "../FormsProfile";
+import { Page404 } from "../Page404";
+import { ProfileOrders } from "../ProfileOrders";
 
 export function Profile() {
   const dispatch = useDispatch();
-  const history = useHistory();
-  const [user, setUser] = useState({ email: "", name: "", password: "" });
+  // const [user, setUser] = useState({ email: "", name: "", password: "" });
 
-  useEffect(() => {
-    getAuthUser().then((res) => {
-      if (res.success) {
-        setUser(res.user);
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   getAuthUser().then((res) => {
+  //     if (res.success) {
+  //       setUser(res.user);
+  //     }
+  //   });
+  // }, []);
 
   const logout = () => {
     dispatch(logoutRequest());
-    // history.replace({ pathname: `/login` });
-  };
-
-  const resetUser = () => {
-    getAuthUser().then((res) => {
-      if (res.success) {
-        setUser(res.user);
-      }
-    });
-  };
-
-  const updateUser = async () => {
-    if (user.password !== "" && user.email !== "" && user.name !== "") {
-      await dispatch(sendUpdateUserRequest(user));
-    }
   };
 
   return (
@@ -96,61 +74,17 @@ export function Profile() {
           </div>
         </div>
       </div>
-      <div className={styles.profileForm}>
-        <div className="mb-6">
-          <Input
-            type={"text"}
-            placeholder={"Имя"}
-            name={"name"}
-            error={false}
-            errorText={"Ошибка"}
-            size={"default"}
-            icon={"EditIcon"}
-            onChange={(e) =>
-              setUser({ ...user, [e.target.name]: e.target.value })
-            }
-            value={user.name}
-          />
-        </div>
-        <div className="mb-6">
-          <Input
-            type={"text"}
-            placeholder={"Логин"}
-            name={"email"}
-            error={false}
-            errorText={"Ошибка"}
-            size={"default"}
-            icon={"EditIcon"}
-            onChange={(e) =>
-              setUser({ ...user, [e.target.name]: e.target.value })
-            }
-            value={user.email}
-          />
-        </div>
-        <div className="mb-6">
-          <Input
-            type={"password"}
-            placeholder={"Пароль"}
-            name={"password"}
-            error={false}
-            errorText={"Ошибка"}
-            size={"default"}
-            icon={"EditIcon"}
-            onChange={(e) =>
-              setUser({ ...user, [e.target.name]: e.target.value })
-            }
-            value={user.password}
-          />
-        </div>
-        <div className={styles.profileButtons}>
-          <Button type="secondary" size="medium" onClick={resetUser}>
-            Отмена
-          </Button>
-          <Button type="primary" size="medium" onClick={updateUser}>
-            Сохранить
-          </Button>
-        </div>
-      </div>
+      <Switch>
+        <Route path="/profile" exact={true}>
+          <FormProfile />
+        </Route>
+        <Route path="/profile/orders" exact={true}>
+          <ProfileOrders />
+        </Route>
+        <Route>
+          <Page404 />
+        </Route>
+      </Switch>
     </div>
   );
 }

@@ -5,6 +5,7 @@ import { LOGIN, LOGIN_SUCCESS, LOGIN_FAILED } from "../actions";
 const loginState = {
   isLoginSuccess: false,
   loginLoader: false,
+  message: "",
   user: {},
 };
 
@@ -32,6 +33,7 @@ export const loginReducer = (state = loginState, action: any) => {
         ...state,
         loginLoader: false,
         isLoginSuccess: false,
+        message: action.registerMessage,
         user: action.payload,
       };
     }

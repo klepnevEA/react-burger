@@ -11,3 +11,7 @@
   width: 100%;
   max-width: 420px;
 }
+
+.loginError {
+  color: var(--colors-interface-error);
+}

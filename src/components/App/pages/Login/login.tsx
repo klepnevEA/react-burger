@@ -2,10 +2,10 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory, useLocation } from "react-router-dom";
-import { getAuthUser, loginRequest } from "../../../../services/actions";
+import { loginRequest } from "../../../../services/actions";
 import styles from "./index.module.css";
 import { RootState } from "../../../../services/reducers";
 
@@ -14,7 +14,9 @@ export function Login() {
   const inputEl = useRef(null);
   const dispatch = useDispatch();
   const location = useLocation();
-  const { user } = useSelector((state: RootState) => state.loginReducer);
+  const { loginLoader, isLoginSuccess, message } = useSelector(
+    (state: RootState) => state.loginReducer
+  );
   const [formUser, setForm] = useState({ email: "", password: "" });
 
   const handleClickNav = useCallback(
@@ -31,7 +33,7 @@ export function Login() {
     }
   };
 
-  if (user.name) {
+  if (loginLoader === false && isLoginSuccess === true) {
     const { from } = location.state || { from: { pathname: "/" } };
     return <Redirect to={from} />;
   }
@@ -53,7 +55,7 @@ export function Login() {
               onChange={(e) =>
                 setForm({ ...formUser, [e.target.name]: e.target.value })
               }
-              value={formUser.email}
+              value={formUser?.email}
             />
           </div>
           <div className="mb-6">
@@ -68,7 +70,7 @@ export function Login() {
               onChange={(e) =>
                 setForm({ ...formUser, [e.target.name]: e.target.value })
               }
-              value={formUser.password}
+              value={formUser?.password}
             />
           </div>
           <div className="mb-20">
@@ -81,6 +83,9 @@ export function Login() {
             >
               Войти
             </Button>
+            {!loginLoader && !isLoginSuccess && message ? (
+              <div className={styles.loginError}>{message}</div>
+            ) : null}
           </div>
         </form>
         <div>
