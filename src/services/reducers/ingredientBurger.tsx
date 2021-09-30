@@ -7,18 +7,28 @@ import {
   INGREDIENT_CONSTRUCTOR_CUSTOM_ID,
   INGREDIENT_CONSTRUCTOR_DELETE,
   REOTDER_INGREDIENTS,
-} from "../actions";
+} from "../actions/ingredientBurger";
 
-const ingredientConstructorBurgerReducerState = {
-  ingredientsConstructor: [],
-  ingredientsConstructorBun: {},
-  totalPriceBun: 0,
-  totalPriceIngredients: 0,
-};
+import type { TActions } from "../actions/ingredientBurger";
+
+export interface TIngredientConstructorBurgerReducerState {
+  ingredientsConstructor: [];
+  ingredientsConstructorBun: {};
+  totalPriceBun: number;
+  totalPriceIngredients: number;
+}
+
+const ingredientConstructorBurgerReducerState: TIngredientConstructorBurgerReducerState =
+  {
+    ingredientsConstructor: [],
+    ingredientsConstructorBun: {},
+    totalPriceBun: 0,
+    totalPriceIngredients: 0,
+  };
 
 export const ingredientConstructorBurgerReducer = (
   state = ingredientConstructorBurgerReducerState,
-  action: any
+  action: TActions
 ) => {
   switch (action.type) {
     case INGREDIENT_CONSTRUCTOR_ADD: {

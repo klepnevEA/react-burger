@@ -1,14 +1,28 @@
 // объект созданного заказа
 
-import { SEND_EMAIL, SEND_EMAIL_SUCCESS, SEND_EMAIL_FAILED } from "../actions";
+import {
+  SEND_EMAIL,
+  SEND_EMAIL_SUCCESS,
+  SEND_EMAIL_FAILED,
+} from "../actions/sendMailReducer";
 
-const sendMailState = {
+import type { TActions } from "../actions/sendMailReducer";
+export interface TSendMailState {
+  isMailSuccess: boolean;
+  mailLoader: boolean;
+  mailStatus: string;
+}
+
+const sendMailState: TSendMailState = {
   isMailSuccess: false,
   mailLoader: false,
   mailStatus: "",
 };
 
-export const sendMailReducer = (state = sendMailState, action: any) => {
+export const sendMailReducer = (
+  state = sendMailState,
+  action: TActions
+): TSendMailState => {
   switch (action.type) {
     case SEND_EMAIL: {
       return {
