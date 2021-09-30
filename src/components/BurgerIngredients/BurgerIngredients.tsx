@@ -8,9 +8,9 @@ import { IngredientDetails } from "../IngredientDetails";
 import { Link, useLocation } from "react-router-dom";
 
 export function BurgerIngredients() {
-  const [bunActive, setBunActive] = useState(true);
-  const [sauceActive, setSauceActive] = useState(false);
-  const [meatActive, setMeatActive] = useState(false);
+  const [bunActive, setBunActive] = useState<boolean>(true);
+  const [sauceActive, setSauceActive] = useState<boolean>(false);
+  const [meatActive, setMeatActive] = useState<boolean>(false);
   const location = useLocation();
 
   const { ingredients } = useSelector(

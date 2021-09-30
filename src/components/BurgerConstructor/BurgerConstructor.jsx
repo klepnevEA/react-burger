@@ -22,9 +22,9 @@ import {
   setOrder,
   getAuthUser,
 } from "../../services/actions";
-import { TDataItem } from "../../interface";
 import { IngredientsListItem } from "../IngredientsListItem/ingredientsListItem";
 import { useHistory } from "react-router-dom";
+import { TIngredient } from "../../services/types";
 
 export function BurgerConstructor() {
   const dispatch = useDispatch();
@@ -53,11 +53,11 @@ export function BurgerConstructor() {
     (state: RootState) => state.ingredientList
   );
 
-  const handleDrop = (itemId: any, customId: number) => {
+  const handleDrop = (itemId: string, customId: number) => {
     dispatch({
       type: INGREDIENT_CONSTRUCTOR_ADD,
       customId: customId,
-      ellement: ingredients.filter((element: any) => {
+      ellement: ingredients.filter((element: TIngredient) => {
         return element._id === itemId.ingredientId;
       }),
     });
@@ -66,7 +66,7 @@ export function BurgerConstructor() {
     });
   };
 
-  const handleClose = (item: TDataItem) => {
+  const handleClose = (item: TIngredient) => {
     dispatch({
       type: INGREDIENT_CONSTRUCTOR_DELETE,
       customId: item.customId,
@@ -78,23 +78,23 @@ export function BurgerConstructor() {
     });
   };
 
-  const handleDropBun = (itemId: any) => {
+  const handleDropBun = (itemId: string) => {
     dispatch({
       type: INGREDIENT_CONSTRUCTOR_ADD_BUN,
-      ellement: ingredients.filter((element: any) => {
+      ellement: ingredients.filter((element: TIngredient) => {
         return element._id === itemId.ingredientId;
       }),
     });
   };
 
-  const handheDropCount = (itemId: any) => {
+  const handheDropCount = (itemId: string) => {
     dispatch({
       type: INGREDIENT_LIST_COUNT_INGREDIENTS,
       ellementId: itemId,
     });
   };
 
-  const handheDropCountBun = (itemId: any) => {
+  const handheDropCountBun = (itemId: string) => {
     dispatch({
       type: INGREDIENT_LIST_COUNT_BUN,
       ellementId: itemId,
@@ -151,13 +151,13 @@ export function BurgerConstructor() {
     });
   };
 
-  const moveIngredient = (dragIndex: any, hoverIndex: any) => {
+  const moveIngredient = (dragIndex: number, hoverIndex: number) => {
     const newIngredient = [...ingredientsConstructor];
     newIngredient.splice(hoverIndex, 0, newIngredient.splice(dragIndex, 1)[0]);
     dispatch({ type: REOTDER_INGREDIENTS, payload: newIngredient });
   };
 
-  const renderIngredient = (itemIngredient: any, index: any) => {
+  const renderIngredient = (itemIngredient: TIngredient, index: number) => {
     return (
       <IngredientsListItem
         key={index}
@@ -196,8 +196,9 @@ export function BurgerConstructor() {
               }}
               ref={dropTarget}
             >
-              {ingredientsConstructor.map((itemIngredient: TDataItem, index) =>
-                renderIngredient(itemIngredient, index)
+              {ingredientsConstructor.map(
+                (itemIngredient: TIngredient, index) =>
+                  renderIngredient(itemIngredient, index)
               )}
             </ul>
           </div>

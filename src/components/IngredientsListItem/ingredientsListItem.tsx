@@ -7,12 +7,21 @@ import {
 
 import styles from "./index.module.css";
 import { useDrag, useDrop } from "react-dnd";
+import { TIngredient } from "../../services/types";
 
 const ItemTypes = {
   CARD: "card",
 };
 
-export const IngredientsListItem = (props: any) => {
+interface TProps {
+  handleClose: () => void;
+  id: number;
+  index: number;
+  itemIngredient: TIngredient;
+  moveIngredient: () => void;
+}
+
+export const IngredientsListItem = (props: TProps) => {
   const { itemIngredient, index, handleClose, id, moveIngredient } = props;
   const ref = useRef(null);
 

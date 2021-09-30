@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { RootState } from "../../services/reducers";
 import styles from "./index.module.css";
+import { TIngredient } from "../../services/types";
 
 export function IngredientModal() {
   const { ingredients } = useSelector(
@@ -11,7 +12,9 @@ export function IngredientModal() {
   const { ingredientId } = useParams<{ ingredientId?: string }>();
 
   const findIngredient = () => {
-    let ingredient = ingredients.find((item: any) => item._id === ingredientId);
+    let ingredient = ingredients.find(
+      (item: TIngredient) => item._id === ingredientId
+    );
 
     return ingredient;
   };

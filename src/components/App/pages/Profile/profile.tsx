@@ -9,15 +9,6 @@ import { ProfileOrders } from "../ProfileOrders";
 
 export function Profile() {
   const dispatch = useDispatch();
-  // const [user, setUser] = useState({ email: "", name: "", password: "" });
-
-  // useEffect(() => {
-  //   getAuthUser().then((res) => {
-  //     if (res.success) {
-  //       setUser(res.user);
-  //     }
-  //   });
-  // }, []);
 
   const logout = () => {
     dispatch(logoutRequest());

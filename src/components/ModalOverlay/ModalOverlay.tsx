@@ -2,7 +2,12 @@ import React from "react";
 
 import styles from "./index.module.css";
 
-export function ModalOverlay(props: any) {
+interface TProps {
+  closeModal: () => void;
+}
+
+export function ModalOverlay(props: TProps) {
+  console.log(props);
   const { closeModal } = props;
 
   return (

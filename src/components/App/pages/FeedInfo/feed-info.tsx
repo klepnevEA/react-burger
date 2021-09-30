@@ -11,11 +11,13 @@ import {
 import { RootState } from "../../../../services/reducers";
 import { Loader } from "../../../Loader";
 import styles from "./index.module.css";
+import { TOrder, TIngredient } from "../../../../services/types";
 
 export function FeedInfo() {
   const location = useLocation();
   const dispatch = useDispatch();
   const params = location?.state;
+
   useEffect(() => {
     dispatch({
       type: WS_CONNECTION_START,
@@ -35,7 +37,7 @@ export function FeedInfo() {
   const { ingredients } = useSelector(
     (state: RootState) => state.ingredientList
   );
-  let totaPrice = 0;
+  let totaPrice: number = 0;
   const { feedId } = useParams<{ feedId?: string }>();
 
   const getDays = (days: number) =>
@@ -65,16 +67,16 @@ export function FeedInfo() {
   };
 
   const getBurgerIngredients = (
-    arrIdBurgerIngredients: Array<string>,
-    arrAllIngredients: Array<any>
+    arrIdBurgerIngredients: string[],
+    arrAllIngredients: TIngredient[]
   ) => {
     const list = arrIdBurgerIngredients
       ?.map((feedId: string) =>
-        arrAllIngredients.filter((item: any) => item._id === feedId)
+        arrAllIngredients.filter((item: TIngredient) => item._id === feedId)
       )
       ?.flat();
     totaPrice = list?.reduce(
-      (acc: number, curr: any) => (acc += curr.price),
+      (acc: number, curr: TIngredient) => (acc += curr.price),
       0
     );
 
@@ -82,25 +84,28 @@ export function FeedInfo() {
   };
 
   const findOrder = () => {
-    let order = orders.find((item: any) => item._id === feedId);
+    let order = orders.find((item: TOrder) => item._id === feedId);
 
     return order;
   };
   const order = findOrder();
   const listIngredients = getBurgerIngredients(order?.ingredients, ingredients);
 
-  const orderCount = (arr: Array<any>) => {
-    return arr?.reduce(
-      (acc: any, curr: any) => {
-        const id = curr._id;
-        acc.count[id] = (acc.count[id] || 0) + 1;
-        return acc;
-      },
-      { count: {} }
-    );
+  const orderCount = (arr: TOrder[]) => {
+    if (arr) {
+      return arr?.reduce(
+        (acc: TOrder, curr: TOrder) => {
+          const id = curr._id;
+          acc.count[id] = (acc.count[id] || 0) + 1;
+          return acc;
+        },
+        { count: {} }
+      );
+    }
+    return 0;
   };
 
-  const unicalIngredients: Array<any> = Array.from(new Set(listIngredients));
+  const unicalIngredients: TIngredient[] = Array.from(new Set(listIngredients));
   const orderPrise = orderCount(listIngredients);
 
   return (

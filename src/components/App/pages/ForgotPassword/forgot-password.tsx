@@ -2,7 +2,7 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { sendEmailRequest } from "../../../../services/actions";
@@ -12,7 +12,6 @@ import styles from "./index.module.css";
 
 export function ForgotPassword() {
   const history = useHistory();
-  const inputEl = useRef(null);
   const dispatch = useDispatch();
   const [value, setValue] = React.useState("");
 
@@ -26,12 +25,6 @@ export function ForgotPassword() {
     },
     [history]
   );
-
-  useEffect(() => {
-    if (inputEl) {
-      inputEl.current.focus();
-    }
-  }, []);
 
   const sendEmail = async (e: Event) => {
     e.preventDefault();
@@ -58,7 +51,6 @@ export function ForgotPassword() {
               error={false}
               errorText={"Ошибка"}
               size={"default"}
-              ref={inputEl}
             />
           </div>
           <div className="mb-20">

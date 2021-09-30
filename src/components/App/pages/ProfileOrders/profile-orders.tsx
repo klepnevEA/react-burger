@@ -9,6 +9,7 @@ import {
   WS_AUTH_CONNECTION_START,
 } from "../../../../services/actions";
 import { Loader } from "../../../Loader";
+import { TIngredient } from "../../../../services/types";
 
 export function ProfileOrders() {
   const dispatch = useDispatch();
@@ -55,16 +56,16 @@ export function ProfileOrders() {
   };
 
   const getBurgerIngredients = (
-    arrIdBurgerIngredients: Array<string>,
-    arrAllIngredients: Array<any>
+    arrIdBurgerIngredients: string[],
+    arrAllIngredients: TIngredient[]
   ) => {
     const list = arrIdBurgerIngredients
       ?.map((id: string) =>
-        arrAllIngredients.filter((item: any) => item._id === id)
+        arrAllIngredients.filter((item: TIngredient) => item._id === id)
       )
       ?.flat();
     totaPrice = list?.reduce(
-      (acc: number, curr: any) => (acc += curr.price),
+      (acc: number, curr: TIngredient) => (acc += curr.price),
       0
     );
 

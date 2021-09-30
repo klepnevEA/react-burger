@@ -2,7 +2,7 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { resetPasswordRequest } from "../../../../services/actions";
@@ -10,11 +10,16 @@ import { RootState } from "../../../../services/reducers";
 import { Loader } from "../../../Loader";
 import styles from "./index.module.css";
 
+interface TFormUser {
+  code: string;
+  password: string;
+}
+
 export function ResetPassword() {
   const history = useHistory();
   const inputPassword = useRef(null);
   const dispatch = useDispatch();
-  const [form, setForm] = useState({ code: "", password: "" });
+  const [form, setForm] = useState<TFormUser>({ code: "", password: "" });
 
   const handleClick = useCallback(
     (text: string) => {
@@ -26,12 +31,6 @@ export function ResetPassword() {
   const { resetLoader } = useSelector(
     (state: RootState) => state.resetPassword
   );
-
-  useEffect(() => {
-    if (inputPassword) {
-      inputPassword.current.focus();
-    }
-  }, []);
 
   const resetRassord = async (e: Event) => {
     e.preventDefault();
@@ -62,7 +61,6 @@ export function ResetPassword() {
                 setForm({ ...form, [e.target.name]: e.target.value })
               }
               value={form?.password}
-              ref={inputPassword}
             />
           </div>
           <div className="mb-6">

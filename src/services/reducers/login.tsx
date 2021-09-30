@@ -5,6 +5,7 @@ import { LOGIN, LOGIN_SUCCESS, LOGIN_FAILED } from "../actions";
 const loginState = {
   isLoginSuccess: false,
   loginLoader: false,
+  isLoggined: false,
   message: "",
   user: {},
 };

@@ -5,6 +5,7 @@ import { useLocation, useParams } from "react-router-dom";
 
 import { RootState } from "../../services/reducers";
 import styles from "./index.module.css";
+import { TIngredient, TOrder } from "../../services/types";
 
 export function OrderModal() {
   const location = useLocation();
@@ -48,33 +49,32 @@ export function OrderModal() {
   };
 
   const getBurgerIngredients = (
-    arrIdBurgerIngredients: Array<string>,
-    arrAllIngredients: Array<any>
+    arrIdBurgerIngredients: string[],
+    arrAllIngredients: TIngredient[]
   ) => {
     const list = arrIdBurgerIngredients
       ?.map((feedId: string) =>
-        arrAllIngredients.filter((item: any) => item._id === feedId)
+        arrAllIngredients.filter((item: TIngredient) => item._id === feedId)
       )
       ?.flat();
     totaPrice = list?.reduce(
-      (acc: number, curr: any) => (acc += curr.price),
+      (acc: number, curr: TIngredient) => (acc += curr.price),
       0
     );
 
     return list;
   };
-
   const findOrder = () => {
-    let order = orders.find((item: any) => item._id === feedId);
+    let order = orders.find((item: TOrder) => item._id === feedId);
 
     return order;
   };
   const order = findOrder();
   const listIngredients = getBurgerIngredients(order?.ingredients, ingredients);
 
-  const orderCount = (arr: Array<any>) => {
+  const orderCount = (arr: TOrder[]) => {
     return arr?.reduce(
-      (acc: any, curr: any) => {
+      (acc: TOrder, curr: TOrder) => {
         const id = curr._id;
         acc.count[id] = (acc.count[id] || 0) + 1;
         return acc;
@@ -83,7 +83,7 @@ export function OrderModal() {
     );
   };
 
-  const unicalIngredients: Array<any> = Array.from(new Set(listIngredients));
+  const unicalIngredients: TIngredient[] = Array.from(new Set(listIngredients));
   const orderPrise = orderCount(listIngredients);
 
   return (

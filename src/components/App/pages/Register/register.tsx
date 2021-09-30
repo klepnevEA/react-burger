@@ -9,14 +9,19 @@ import { getAuthUser, sendRegisterRequest } from "../../../../services/actions";
 import { RootState } from "../../../../services/reducers";
 import { Loader } from "../../../Loader";
 import styles from "./index.module.css";
+import { TUser } from "../../../../services/types";
 
 export function Register() {
   const history = useHistory();
   const inputEl = useRef(null);
   const dispatch = useDispatch();
   const location = useLocation();
-  const [form, setForm] = useState({ email: "", password: "", name: "" });
-  const [isLoginSuccess, setIsLoginSuccess] = useState(false);
+  const [form, setForm] = useState<TUser>({
+    email: "",
+    password: "",
+    name: "",
+  });
+  const [isLoginSuccess, setIsLoginSuccess] = useState<boolean>(false);
 
   const { isRegisterSuccess, registerLoader } = useSelector(
     (state: RootState) => state.registerReducer
