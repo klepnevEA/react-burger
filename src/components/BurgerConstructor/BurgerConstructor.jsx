@@ -22,9 +22,9 @@ import {
   INGREDIENT_LIST_COUNT_INGREDIENTS,
   INGREDIENT_LIST_COUNT_CLEAR,
   INGREDIENT_LIST_COUNT_INGREDIENTS_DECREASE,
-  setOrder,
-  getAuthUser,
-} from "../../services/actions";
+} from "../../services/actions/ingredientList";
+
+import { setOrder, getAuthUser } from "../../services/actions";
 import { IngredientsListItem } from "../IngredientsListItem/ingredientsListItem";
 import { useHistory } from "react-router-dom";
 import { TIngredient } from "../../services/types";

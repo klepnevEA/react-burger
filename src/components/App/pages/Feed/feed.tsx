@@ -7,7 +7,7 @@ import { Link, useLocation } from "react-router-dom";
 import {
   WS_CONNECTION_CLOSED,
   WS_CONNECTION_START,
-} from "../../../../services/actions";
+} from "../../../../services/actions/ws-reducer";
 import { Loader } from "../../../Loader";
 import { TOrder, TIngredient } from "../../../../services/types";
 

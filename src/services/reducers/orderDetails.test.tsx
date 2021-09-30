@@ -1,4 +1,4 @@
-import { SET_ORDER, SET_ORDER_SUCCESS } from "../actions";
+import { SET_ORDER, SET_ORDER_SUCCESS } from "../actions/orderDetails";
 import { orderDetailsReducer } from "./orderDetails";
 
 const initialState = {

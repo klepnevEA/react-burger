@@ -5,7 +5,7 @@ import {
   WS_CONNECTION_CLOSED,
   WS_GET_MESSAGE,
   WS_SEND_MESSAGE,
-} from "../actions";
+} from "../actions/ws-reducer";
 
 export const socketMiddleware = (wsUrl: string, auth: boolean) => {
   return (store: any) => {

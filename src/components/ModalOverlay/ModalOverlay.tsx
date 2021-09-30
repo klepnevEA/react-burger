@@ -7,7 +7,6 @@ interface TProps {
 }
 
 export function ModalOverlay(props: TProps) {
-  console.log(props);
   const { closeModal } = props;
 
   return (

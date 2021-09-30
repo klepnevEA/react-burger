@@ -3,16 +3,17 @@ import {
   WS_AUTH_CONNECTION_ERROR,
   WS_AUTH_CONNECTION_CLOSED,
   WS_AUTH_GET_MESSAGE,
-} from "../actions";
+} from "../actions/ws-reducer-auth";
+import type { TActions } from "../actions/ws-reducer-auth";
 import { PayloadAction } from "@reduxjs/toolkit";
 
-type TWsReduserState = {
+interface TWsReduserState {
   wsConnected: Boolean;
   error: PayloadAction | null;
-  orders: Array<any>;
+  orders: [];
   total: number | null;
   totalToday: number | null;
-};
+}
 
 const initialState: TWsReduserState = {
   wsConnected: false,
@@ -24,7 +25,7 @@ const initialState: TWsReduserState = {
 
 export const wsReducerAuth = (
   state = initialState,
-  action: any
+  action: TActions
 ): TWsReduserState => {
   switch (action.type) {
     case WS_AUTH_CONNECTION_SUCCESS:

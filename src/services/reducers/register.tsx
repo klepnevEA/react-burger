@@ -4,9 +4,20 @@ import {
   SEND_REGISTER,
   SEND_REGISTER_SUCCESS,
   SEND_REGISTER_FAILED,
-} from "../actions";
+} from "../actions/register";
 
-const registerState = {
+import type { TActions } from "../actions/register";
+
+interface TRegisterState {
+  isRegisterSuccess: boolean;
+  registerLoader: boolean;
+  registerStatus: string;
+  authToken: string;
+  refreshToken: string;
+  user: {};
+}
+
+const registerState: TRegisterState = {
   isRegisterSuccess: false,
   registerLoader: false,
   registerStatus: "",
@@ -15,7 +26,7 @@ const registerState = {
   user: {},
 };
 
-export const registerReducer = (state = registerState, action: any) => {
+export const registerReducer = (state = registerState, action: TActions) => {
   switch (action.type) {
     case SEND_REGISTER: {
       return {

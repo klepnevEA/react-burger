@@ -5,7 +5,7 @@ import styles from "./index.module.css";
 import { createPortal } from "react-dom";
 import { ModalOverlay } from "../ModalOverlay";
 import { useDispatch } from "react-redux";
-import { ORDER_DATAILS_CLOSE } from "../../services/actions";
+import { ORDER_DATAILS_CLOSE } from "../../services/actions/orderDetails";
 import { useHistory } from "react-router-dom";
 
 interface Props {

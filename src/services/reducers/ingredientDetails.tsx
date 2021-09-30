@@ -1,15 +1,25 @@
-import { INGREDIENT_DATAILS_CLOSE, INGREDIENT_DATAILS_OPEN } from "../actions";
+import {
+  INGREDIENT_DATAILS_CLOSE,
+  INGREDIENT_DATAILS_OPEN,
+} from "../actions/ingredientDetails";
+
+import type { TActions } from "../actions/ingredientDetails";
 
 // объект текущего просматриваемого ингредиента
 
-const ingredientDetailsState = {
+interface TIngredientDetailsState {
+  isOpenIngredientsDetals: boolean;
+  ingredient: {};
+}
+
+const ingredientDetailsState: TIngredientDetailsState = {
   isOpenIngredientsDetals: false,
   ingredient: {},
 };
 
 export const ingredientDetailsReducer = (
   state = ingredientDetailsState,
-  action: any
+  action: TActions
 ) => {
   switch (action.type) {
     case INGREDIENT_DATAILS_OPEN: {

@@ -1,8 +1,18 @@
 // объект созданного заказа
 
-import { LOGIN, LOGIN_SUCCESS, LOGIN_FAILED } from "../actions";
+import { LOGIN, LOGIN_SUCCESS, LOGIN_FAILED } from "../actions/login";
 
-const loginState = {
+import type { TActions } from "../actions/login";
+
+interface TInitialState {
+  isLoginSuccess: boolean;
+  loginLoader: boolean;
+  isLoggined: boolean;
+  message: string;
+  user: {};
+}
+
+const loginState: TInitialState = {
   isLoginSuccess: false,
   loginLoader: false,
   isLoggined: false,
@@ -10,7 +20,7 @@ const loginState = {
   user: {},
 };
 
-export const loginReducer = (state = loginState, action: any) => {
+export const loginReducer = (state = loginState, action: TActions) => {
   switch (action.type) {
     case LOGIN: {
       return {

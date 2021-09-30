@@ -7,7 +7,7 @@ import { Link, useLocation } from "react-router-dom";
 import {
   WS_AUTH_CONNECTION_CLOSED,
   WS_AUTH_CONNECTION_START,
-} from "../../../../services/actions";
+} from "../../../../services/actions/ws-reducer-auth";
 import { Loader } from "../../../Loader";
 import { TIngredient } from "../../../../services/types";
 

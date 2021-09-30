@@ -3,16 +3,16 @@ import {
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
   WS_GET_MESSAGE,
-} from "../actions";
+} from "../actions/ws-reducer";
 import { PayloadAction } from "@reduxjs/toolkit";
 
-type TWsReduserState = {
+interface TWsReduserState {
   wsConnected: Boolean;
   error: PayloadAction | null;
-  orders: Array<any>;
+  orders: [];
   total: number | null;
   totalToday: number | null;
-};
+}
 
 const initialState: TWsReduserState = {
   wsConnected: false,

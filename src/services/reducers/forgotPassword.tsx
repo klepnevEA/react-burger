@@ -7,7 +7,7 @@ import {
 } from "../actions/sendMailReducer";
 
 import type { TActions } from "../actions/sendMailReducer";
-export interface TSendMailState {
+interface TSendMailState {
   isMailSuccess: boolean;
   mailLoader: boolean;
   mailStatus: string;

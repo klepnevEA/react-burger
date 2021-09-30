@@ -2,7 +2,7 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { resetPasswordRequest } from "../../../../services/actions";
@@ -17,7 +17,6 @@ interface TFormUser {
 
 export function ResetPassword() {
   const history = useHistory();
-  const inputPassword = useRef(null);
   const dispatch = useDispatch();
   const [form, setForm] = useState<TFormUser>({ code: "", password: "" });
 

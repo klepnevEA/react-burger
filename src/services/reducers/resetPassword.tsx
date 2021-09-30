@@ -4,15 +4,21 @@ import {
   RESET_PASSWORD,
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAILED,
-} from "../actions";
+} from "../actions/resetPassword";
+import type { TActions } from "../actions/resetPassword";
+interface TResetState {
+  isResetSuccess: boolean;
+  resetLoader: boolean;
+  resetStatus: string;
+}
 
-const resetState = {
+const resetState: TResetState = {
   isResetSuccess: false,
   resetLoader: false,
   resetStatus: "",
 };
 
-export const resetPassword = (state = resetState, action: any) => {
+export const resetPassword = (state = resetState, action: TActions) => {
   switch (action.type) {
     case RESET_PASSWORD: {
       return {

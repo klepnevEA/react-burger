@@ -3,11 +3,14 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import {
-  WS_AUTH_CONNECTION_CLOSED,
-  WS_AUTH_CONNECTION_START,
   WS_CONNECTION_CLOSED,
   WS_CONNECTION_START,
-} from "../../../../services/actions";
+} from "../../../../services/actions/ws-reducer";
+
+import {
+  WS_AUTH_CONNECTION_CLOSED,
+  WS_AUTH_CONNECTION_START,
+} from "../../../../services/actions/ws-reducer-auth";
 import { RootState } from "../../../../services/reducers";
 import { Loader } from "../../../Loader";
 import styles from "./index.module.css";

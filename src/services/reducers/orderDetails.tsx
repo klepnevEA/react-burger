@@ -5,16 +5,28 @@ import {
   SET_ORDER,
   SET_ORDER_FAILED,
   SET_ORDER_SUCCESS,
-} from "../actions";
+} from "../actions/orderDetails";
 
-const orderDetailsState = {
+import type { TActions } from "../actions/orderDetails";
+
+interface TOrderDetailsState {
+  isOpenOrder: boolean;
+  orderLoader: boolean;
+  orderNumber: number;
+  orderName: string;
+}
+
+const orderDetailsState: TOrderDetailsState = {
   isOpenOrder: false,
   orderLoader: false,
   orderNumber: 0,
   orderName: "",
 };
 
-export const orderDetailsReducer = (state = orderDetailsState, action: any) => {
+export const orderDetailsReducer = (
+  state = orderDetailsState,
+  action: TActions
+) => {
   switch (action.type) {
     case SET_ORDER: {
       return {

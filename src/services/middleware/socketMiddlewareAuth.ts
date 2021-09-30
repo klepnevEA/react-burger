@@ -5,8 +5,9 @@ import {
   WS_AUTH_CONNECTION_CLOSED,
   WS_AUTH_GET_MESSAGE,
   WS_AUTH_SEND_MESSAGE,
-  getCookie,
-} from "../actions";
+} from "../actions/ws-reducer-auth";
+
+import { getCookie } from "../actions";
 
 export const socketMiddlewareAuth = (wsUrl: string, auth: boolean) => {
   return (store: any) => {
@@ -23,12 +24,12 @@ export const socketMiddlewareAuth = (wsUrl: string, auth: boolean) => {
       }
       if (socket) {
         // функция, которая вызывается при открытии сокета
-        socket.onopen = (event: any) => {
+        socket.onopen = (event: Event) => {
           dispatch({ type: WS_AUTH_CONNECTION_SUCCESS, payload: event });
         };
 
         // функция, которая вызывается при ошибке соединения
-        socket.onerror = (event: any) => {
+        socket.onerror = (event: Event) => {
           dispatch({ type: WS_AUTH_CONNECTION_ERROR, payload: event });
         };
 

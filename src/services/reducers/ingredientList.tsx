@@ -6,15 +6,23 @@ import {
   INGREDIENT_LIST_COUNT_INGREDIENTS,
   INGREDIENT_LIST_COUNT_CLEAR,
   INGREDIENT_LIST_COUNT_INGREDIENTS_DECREASE,
-} from "../actions";
+} from "../actions/ingredientList";
 
-const initialState = {
+import type { TActions } from "../actions/ingredientList";
+
+interface TInitialState {
+  feedRequest: boolean;
+  feedFailed: boolean;
+  ingredients: [];
+}
+
+const initialState: TInitialState = {
   feedRequest: false,
   feedFailed: false,
   ingredients: [],
 };
 
-export const ingredientReducer = (state = initialState, action: any) => {
+export const ingredientReducer = (state = initialState, action: TActions) => {
   switch (action.type) {
     case GET_FEED: {
       return {

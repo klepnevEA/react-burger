@@ -11,7 +11,7 @@ import {
 
 import type { TActions } from "../actions/ingredientBurger";
 
-export interface TIngredientConstructorBurgerReducerState {
+interface TIngredientConstructorBurgerReducerState {
   ingredientsConstructor: [];
   ingredientsConstructorBun: {};
   totalPriceBun: number;
