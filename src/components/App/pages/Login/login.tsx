@@ -9,11 +9,6 @@ import { loginRequest } from "../../../../services/actions";
 import styles from "./index.module.css";
 import { RootState } from "../../../../services/reducers";
 
-interface TFormUser {
-  email: string;
-  password: string;
-}
-
 export function Login() {
   const history = useHistory();
   const inputEl = useRef(null);
@@ -22,7 +17,7 @@ export function Login() {
   const { loginLoader, isLoginSuccess, message } = useSelector(
     (state: RootState) => state.loginReducer
   );
-  const [formUser, setForm] = useState<TFormUser>({ email: "", password: "" });
+  const [formUser, setForm] = useState({ email: "", password: "" });
 
   const handleClickNav = useCallback(
     (text: string) => {

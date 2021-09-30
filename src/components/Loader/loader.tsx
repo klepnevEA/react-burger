@@ -2,9 +2,9 @@ import React from "react";
 import cn from "classnames";
 import styles from "./index.module.css";
 
-interface TProps {
+type TProps = {
   fullPage?: boolean;
-}
+};
 
 export function Loader(props: TProps) {
   const { fullPage } = props;

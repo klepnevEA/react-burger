@@ -9,15 +9,10 @@ import {
   getAuthUser,
   sendUpdateUserRequest,
 } from "../../../../services/actions";
-import { TUser } from "../../../../services/types";
 
 export function FormProfile() {
   const dispatch = useDispatch();
-  const [user, setUser] = useState<TUser>({
-    email: "",
-    name: "",
-    password: "",
-  });
+  const [user, setUser] = useState({ email: "", name: "", password: "" });
 
   useEffect(() => {
     getAuthUser().then((res) => {

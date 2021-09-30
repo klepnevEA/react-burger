@@ -9,7 +9,6 @@ import {
   WS_CONNECTION_START,
 } from "../../../../services/actions";
 import { Loader } from "../../../Loader";
-import { TOrder, TIngredient } from "../../../../services/types";
 
 export function Feed() {
   const dispatch = useDispatch();
@@ -29,7 +28,7 @@ export function Feed() {
     dispatch({ type: WS_CONNECTION_CLOSED });
   }, [dispatch]);
 
-  let totaPrice: number = 0;
+  let totaPrice = 0;
   const location = useLocation();
 
   const getDays = (days: number) =>
@@ -59,24 +58,25 @@ export function Feed() {
   };
 
   const getBurgerIngredients = (
-    arrIdBurgerIngredients: string[],
-    arrAllIngredients: TIngredient[]
+    arrIdBurgerIngredients: Array<string>,
+    arrAllIngredients: Array<any>
   ) => {
     const list = arrIdBurgerIngredients
       ?.map((id: string) =>
-        arrAllIngredients.filter((item: TIngredient) => item._id === id)
+        arrAllIngredients.filter((item: any) => item._id === id)
       )
       ?.flat();
     totaPrice = list?.reduce(
-      (acc: number, curr: TIngredient) => (acc += curr.price),
+      (acc: number, curr: any) => (acc += curr.price),
       0
     );
+
     return list;
   };
 
-  const getOrder = (orders: TOrder[]) => {
+  const getOrder = (orders: Array<string>) => {
     return orders?.reduce(
-      (acc: { [name: string]: TOrder[] }, curr) => {
+      (acc: { [name: string]: Array<any> }, curr) => {
         curr.status === "done"
           ? (acc["done"] = [...acc["done"], curr])
           : (acc["pending"] = [...acc["pending"], curr]);

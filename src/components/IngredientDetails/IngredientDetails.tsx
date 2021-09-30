@@ -5,10 +5,10 @@ import {
 import React from "react";
 import { useDrag } from "react-dnd";
 import styles from "./index.module.css";
-import { TIngredient } from "../../services/types";
+import { TDataItem } from "../../../src/interface";
 
 interface Props {
-  ingredient: TIngredient;
+  ingredient: TDataItem;
 }
 
 export function IngredientDetails(props: Props) {

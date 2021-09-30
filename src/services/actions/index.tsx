@@ -68,7 +68,6 @@ export const getCookie = (name: string) => {
   const token = localStorage.getItem("authToken") || "";
   const matches = token.match(
     new RegExp(
-      // eslint-disable-next-line
       "(?:^|; )" +
         name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
         "=([^;]*)"
@@ -252,6 +251,7 @@ export function sendRegisterRequest(data: {
           authToken = data.accessToken.split("Bearer ")[1];
         }
         if (authToken) {
+          console.log("!!!!");
           // Сохраняем токен в куку token
           setCookie("token", authToken, { expires: 1 });
           dispatch({
