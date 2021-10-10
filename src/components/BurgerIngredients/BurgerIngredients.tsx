@@ -3,9 +3,9 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./index.module.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../../services/reducers";
-import { TDataItem } from "../../interface";
 import { IngredientDetails } from "../IngredientDetails";
 import { Link, useLocation } from "react-router-dom";
+import { TIngredient } from "../../services/types";
 
 export function BurgerIngredients() {
   const [bunActive, setBunActive] = useState<boolean>(true);
@@ -13,7 +13,7 @@ export function BurgerIngredients() {
   const [meatActive, setMeatActive] = useState<boolean>(false);
   const location = useLocation();
 
-  const { ingredients } = useSelector(
+  const ingredients: TIngredient[] = useSelector(
     (state: RootState) => state.ingredientList
   );
 
@@ -105,7 +105,7 @@ export function BurgerIngredients() {
                 {value.name}
               </div>
               <ul className={styles.list}>
-                {value.list.map((elem: TDataItem) => {
+                {value.list.map((elem: TIngredient) => {
                   return (
                     <li
                       key={elem._id}

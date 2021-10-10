@@ -47,6 +47,7 @@ export interface IIngredientConstructorCustomId {
 export interface IIngredientConstructorDelete {
   readonly type: typeof INGREDIENT_CONSTRUCTOR_DELETE;
   readonly item: TIngredient;
+  readonly customId: string;
 }
 export interface IReorderIngredients {
   readonly type: typeof REOTDER_INGREDIENTS;

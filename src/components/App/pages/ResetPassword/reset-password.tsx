@@ -80,6 +80,7 @@ export function ResetPassword() {
             <Button
               type="primary"
               size="medium"
+              // @ts-ignore: Unreachable code error
               onClick={(e: Event) => resetRassord(e)}
             >
               Сохранить

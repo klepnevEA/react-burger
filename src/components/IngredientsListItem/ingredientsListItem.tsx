@@ -14,11 +14,11 @@ const ItemTypes = {
 };
 
 interface TProps {
-  handleClose: () => void;
-  id: number;
+  handleClose: (item: TIngredient) => void;
+  id?: string;
   index: number;
   itemIngredient: TIngredient;
-  moveIngredient: () => void;
+  moveIngredient: (dragIndex: number, hoverIndex: number) => void;
 }
 
 export const IngredientsListItem = (props: TProps) => {
@@ -32,7 +32,7 @@ export const IngredientsListItem = (props: TProps) => {
         handlerId: monitor.getHandlerId(),
       };
     },
-    hover(item, monitor) {
+    hover(item: any, monitor) {
       if (!ref.current) {
         return;
       }
@@ -41,10 +41,11 @@ export const IngredientsListItem = (props: TProps) => {
       if (dragIndex === hoverIndex) {
         return;
       }
+      // @ts-ignore: Unreachable code error
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      const clientOffset = monitor.getClientOffset();
+      const clientOffset: any = monitor.getClientOffset();
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;

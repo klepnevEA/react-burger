@@ -35,7 +35,7 @@ import { OrderModal } from "../OrderModal";
 function App() {
   const ModalSwitch = () => {
     const dispatch = useDispatch();
-    const location = useLocation();
+    const location = useLocation<any>();
     const history = useHistory();
 
     let background =

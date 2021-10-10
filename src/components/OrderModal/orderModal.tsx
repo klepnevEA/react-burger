@@ -7,8 +7,17 @@ import { RootState } from "../../services/reducers";
 import styles from "./index.module.css";
 import { TIngredient, TOrder } from "../../services/types";
 
+interface LocationState {
+  from: {
+    pathname: string;
+  };
+  background: {
+    pathname: string;
+  };
+}
+
 export function OrderModal() {
-  const location = useLocation();
+  const location = useLocation<LocationState>();
   const params = location?.state;
 
   const { orders } = useSelector((store: RootState) =>
@@ -69,12 +78,15 @@ export function OrderModal() {
 
     return order;
   };
-  const order = findOrder();
-  const listIngredients = getBurgerIngredients(order?.ingredients, ingredients);
+  const order: any = findOrder();
+  const listIngredients: any = getBurgerIngredients(
+    order?.ingredients,
+    ingredients
+  );
 
   const orderCount = (arr: TOrder[]) => {
     return arr?.reduce(
-      (acc: TOrder, curr: TOrder) => {
+      (acc: any, curr: TOrder) => {
         const id = curr._id;
         acc.count[id] = (acc.count[id] || 0) + 1;
         return acc;
@@ -99,7 +111,7 @@ export function OrderModal() {
       <div className={styles["composition"]}>
         <div className="text text_type_main-medium mb-6">Состав:</div>
         <ul className={styles["list"]}>
-          {unicalIngredients.map((elem, index: number) => {
+          {unicalIngredients.map((elem: any, index: number) => {
             if (index < 6) {
               return (
                 <li className={styles["list__item"]} key={index}>

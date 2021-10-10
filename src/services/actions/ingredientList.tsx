@@ -22,7 +22,7 @@ export interface TIngredient {
   price: number;
   proteins: number;
   type: string;
-  __v: string | number;
+  __v: number;
   count?: number;
   _id?: string;
   customId?: string;
@@ -54,6 +54,7 @@ export interface IIngredientListCountClear {
 }
 export interface IIngredientListCountIngredientsDecrease {
   readonly type: typeof INGREDIENT_LIST_COUNT_INGREDIENTS_DECREASE;
+  readonly ellementId: string;
 }
 
 export type TActions =

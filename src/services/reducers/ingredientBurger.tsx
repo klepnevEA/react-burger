@@ -7,6 +7,7 @@ import {
   INGREDIENT_CONSTRUCTOR_CUSTOM_ID,
   INGREDIENT_CONSTRUCTOR_DELETE,
   REOTDER_INGREDIENTS,
+  TIngredient,
 } from "../actions/ingredientBurger";
 
 import type { TActions } from "../actions/ingredientBurger";
@@ -47,7 +48,7 @@ export const ingredientConstructorBurgerReducer = (
       return {
         ...state,
         ingredientsConstructor: [
-          ...state.ingredientsConstructor.map((item) => {
+          ...state.ingredientsConstructor.map((item: TIngredient) => {
             return {
               ...item,
               customId: Number((Math.random() * 1000).toFixed(0)),
@@ -61,7 +62,7 @@ export const ingredientConstructorBurgerReducer = (
       return {
         ...state,
         ingredientsConstructor: [...state.ingredientsConstructor].filter(
-          (item) => item.customId !== action.customId
+          (item: TIngredient) => item.customId !== action.customId
         ),
         totalPriceIngredients: state.totalPriceIngredients - action.item.price,
       };

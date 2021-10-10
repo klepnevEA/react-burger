@@ -57,6 +57,7 @@ export function ForgotPassword() {
             <Button
               type="primary"
               size="medium"
+              // @ts-ignore: Unreachable code error
               onClick={(e: Event) => sendEmail(e)}
             >
               Восстановить

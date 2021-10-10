@@ -11,11 +11,17 @@ import { Loader } from "../../../Loader";
 import styles from "./index.module.css";
 import { TUser } from "../../../../services/types";
 
+interface LocationState {
+  from: {
+    pathname: string;
+  };
+}
+
 export function Register() {
   const history = useHistory();
   const inputEl = useRef(null);
   const dispatch = useDispatch();
-  const location = useLocation();
+  const location = useLocation<LocationState>();
   const [form, setForm] = useState<TUser>({
     email: "",
     password: "",
@@ -75,6 +81,7 @@ export function Register() {
               error={false}
               errorText={"Ошибка"}
               size={"default"}
+              // @ts-ignore: Unreachable code error
               icon={"EditIconn"}
               onChange={(e) =>
                 setForm({ ...form, [e.target.name]: e.target.value })
@@ -91,6 +98,7 @@ export function Register() {
               error={false}
               errorText={"Ошибка"}
               size={"default"}
+              // @ts-ignore: Unreachable code error
               icon={"EditIconn"}
               onChange={(e) =>
                 setForm({ ...form, [e.target.name]: e.target.value })
@@ -106,6 +114,7 @@ export function Register() {
               error={false}
               errorText={"Ошибка"}
               size={"default"}
+              // @ts-ignore: Unreachable code error
               icon={"EditIconn"}
               onChange={(e) =>
                 setForm({ ...form, [e.target.name]: e.target.value })
@@ -117,6 +126,7 @@ export function Register() {
             <Button
               type="primary"
               size="medium"
+              // @ts-ignore: Unreachable code error
               onClick={(e: Event) => sendRegister(e)}
             >
               Зарегистрироваться

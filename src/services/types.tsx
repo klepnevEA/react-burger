@@ -20,7 +20,7 @@ export interface TIngredient {
   price: number;
   proteins: number;
   type: string;
-  __v: string | number;
+  __v: number;
   count?: number;
   _id?: string;
   customId?: string;

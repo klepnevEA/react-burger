@@ -6,6 +6,7 @@ import {
   INGREDIENT_LIST_COUNT_INGREDIENTS,
   INGREDIENT_LIST_COUNT_CLEAR,
   INGREDIENT_LIST_COUNT_INGREDIENTS_DECREASE,
+  TIngredient,
 } from "../actions/ingredientList";
 
 import type { TActions } from "../actions/ingredientList";
@@ -50,7 +51,7 @@ export const ingredientReducer = (state = initialState, action: TActions) => {
         ...state,
         ingredients: [
           ...state.ingredients,
-          state.ingredients.map((item) =>
+          state.ingredients.map((item: TIngredient) =>
             item._id === action.ellementId.ingredientId && item.type === "bun"
               ? (item.__v = 2)
               : item.type === "bun"
@@ -65,7 +66,7 @@ export const ingredientReducer = (state = initialState, action: TActions) => {
         ...state,
         ingredients: [
           ...state.ingredients,
-          state.ingredients.map((item) =>
+          state.ingredients.map((item: TIngredient) =>
             item._id === action.ellementId.ingredientId ? item.__v++ : item.__v
           ),
         ],
@@ -76,7 +77,7 @@ export const ingredientReducer = (state = initialState, action: TActions) => {
         ...state,
         ingredients: [
           ...state.ingredients,
-          state.ingredients.map((item) =>
+          state.ingredients.map((item: TIngredient) =>
             item._id === action.ellementId ? item.__v-- : item.__v
           ),
         ],
@@ -87,7 +88,7 @@ export const ingredientReducer = (state = initialState, action: TActions) => {
         ...state,
         ingredients: [
           ...state.ingredients,
-          state.ingredients.map((item) => (item.__v = 0)),
+          state.ingredients.map((item: TIngredient) => (item.__v = 0)),
         ],
       };
     }

@@ -9,7 +9,7 @@ import {
   WS_AUTH_CONNECTION_START,
 } from "../../../../services/actions/ws-reducer-auth";
 import { Loader } from "../../../Loader";
-import { TIngredient } from "../../../../services/types";
+import { TIngredient, TOrder } from "../../../../services/types";
 
 export function ProfileOrders() {
   const dispatch = useDispatch();
@@ -76,7 +76,7 @@ export function ProfileOrders() {
     <>
       {orders.length ? (
         <ul className={styles["order-list"]}>
-          {orders?.map((order, index) => {
+          {orders?.map((order: TOrder, index) => {
             return (
               <li className={styles["order-list__item"]} key={index}>
                 <Link

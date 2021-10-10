@@ -14,11 +14,17 @@ interface TFormUser {
   password: string;
 }
 
+interface LocationState {
+  from: {
+    pathname: string;
+  };
+}
+
 export function Login() {
   const history = useHistory();
   const inputEl = useRef(null);
   const dispatch = useDispatch();
-  const location = useLocation();
+  const location = useLocation<LocationState>();
   const { loginLoader, isLoginSuccess, message } = useSelector(
     (state: RootState) => state.loginReducer
   );
@@ -39,7 +45,7 @@ export function Login() {
   };
 
   if (loginLoader === false && isLoginSuccess === true) {
-    const { from } = location.state || { from: { pathname: "/" } };
+    const from: any = location.state || { from: { pathname: "/" } };
     return <Redirect to={from} />;
   }
 
@@ -82,6 +88,7 @@ export function Login() {
             <Button
               type="primary"
               size="medium"
+              // @ts-ignore: Unreachable code error
               onClick={(e: Event) => {
                 sendLogin(e);
               }}

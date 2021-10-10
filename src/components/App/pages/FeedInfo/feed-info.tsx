@@ -19,7 +19,7 @@ import { TOrder, TIngredient } from "../../../../services/types";
 export function FeedInfo() {
   const location = useLocation();
   const dispatch = useDispatch();
-  const params = location?.state;
+  const params: any = location?.state;
 
   useEffect(() => {
     dispatch({
@@ -91,13 +91,16 @@ export function FeedInfo() {
 
     return order;
   };
-  const order = findOrder();
-  const listIngredients = getBurgerIngredients(order?.ingredients, ingredients);
+  const order: any = findOrder();
+  const listIngredients: any = getBurgerIngredients(
+    order?.ingredients,
+    ingredients
+  );
 
   const orderCount = (arr: TOrder[]) => {
     if (arr) {
       return arr?.reduce(
-        (acc: TOrder, curr: TOrder) => {
+        (acc: any, curr: any) => {
           const id = curr._id;
           acc.count[id] = (acc.count[id] || 0) + 1;
           return acc;
@@ -128,7 +131,7 @@ export function FeedInfo() {
           <div className={styles["composition"]}>
             <div className="text text_type_main-medium mb-6">Состав:</div>
             <ul className={styles["list"]}>
-              {unicalIngredients.map((elem, index: number) => {
+              {unicalIngredients.map((elem: any, index: number) => {
                 if (index < 6) {
                   return (
                     <li className={styles["list__item"]} key={index}>

@@ -96,7 +96,7 @@ export function Feed() {
           <div className={styles.row}>
             <div className={styles.col}>
               <ul className={styles["order-list"]}>
-                {orders.map((order, index) => {
+                {orders.map((order: TOrder, index) => {
                   return (
                     <li className={styles["order-list__item"]} key={index}>
                       <Link

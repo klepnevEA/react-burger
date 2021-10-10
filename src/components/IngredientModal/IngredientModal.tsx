@@ -6,7 +6,7 @@ import styles from "./index.module.css";
 import { TIngredient } from "../../services/types";
 
 export function IngredientModal() {
-  const { ingredients } = useSelector(
+  const ingredients: TIngredient[] = useSelector(
     (state: RootState) => state.ingredientList
   );
   const { ingredientId } = useParams<{ ingredientId?: string }>();
