@@ -64,15 +64,16 @@ export const ingredientConstructorBurgerReducer = (
         ingredientsConstructor: [...state.ingredientsConstructor].filter(
           (item: TIngredient) => item.customId !== action.customId
         ),
-        totalPriceIngredients: state.totalPriceIngredients - action.item.price,
+        totalPriceIngredients:
+          state.totalPriceIngredients - action?.item?.price || 0,
       };
     }
 
     case INGREDIENT_CONSTRUCTOR_ADD_BUN: {
       return {
         ...state,
-        ingredientsConstructorBun: action.ellement[0],
-        totalPriceBun: action.ellement[0].price * 2,
+        ingredientsConstructorBun: action.ellement,
+        totalPriceBun: action?.ellement?.price * 2,
       };
     }
     case INGREDIENT_CONSTRUCTOR_CLEAR: {

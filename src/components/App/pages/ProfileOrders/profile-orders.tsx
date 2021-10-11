@@ -74,7 +74,7 @@ export function ProfileOrders() {
 
   return (
     <>
-      {orders.length ? (
+      {orders?.length ? (
         <ul className={styles["order-list"]}>
           {orders?.map((order: TOrder, index) => {
             return (

@@ -34,7 +34,7 @@ export interface IIngredientConstructorAdd {
 
 export interface IIngredientConstructorAddBun {
   readonly type: typeof INGREDIENT_CONSTRUCTOR_ADD_BUN;
-  readonly ellement: TIngredient[];
+  readonly ellement: TIngredient;
 }
 
 export interface IIngredientConstructorClear {

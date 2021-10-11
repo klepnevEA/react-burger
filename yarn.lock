@@ -5189,7 +5189,7 @@
   dependencies:
     "bser" "2.1.1"
 
-"fetch-mock@9.11.0":
+"fetch-mock@^9.11.0":
   "integrity" "sha512-PG1XUv+x7iag5p/iNHD4/jdpxL9FtVSqRMUQhPab4hVDt80T1MH5ehzVrL2IdXO9Q2iBggArFvPqjUbHFuI58Q=="
   "resolved" "https://registry.npmjs.org/fetch-mock/-/fetch-mock-9.11.0.tgz"
   "version" "9.11.0"

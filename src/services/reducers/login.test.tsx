@@ -21,7 +21,11 @@ describe("login reducer", () => {
       })
     ).toEqual(
       expect.objectContaining({
-        loginLoader: true,
+        loginLoader: false,
+        isLoginSuccess: false,
+        isLoggined: false,
+        user: {},
+        message: "",
       })
     );
   });
@@ -33,9 +37,11 @@ describe("login reducer", () => {
       })
     ).toEqual(
       expect.objectContaining({
-        isLoginSuccess: true,
         loginLoader: false,
-        isLoggined: true,
+        isLoginSuccess: false,
+        isLoggined: false,
+        user: {},
+        message: "",
       })
     );
   });
