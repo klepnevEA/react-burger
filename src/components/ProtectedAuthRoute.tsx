@@ -2,8 +2,6 @@ import { Redirect, Route } from "react-router-dom";
 import { FC, useEffect, useState } from "react";
 
 import { getAuthUser } from "../services/actions";
-import { useSelector } from "react-redux";
-import { RootState } from "../services/reducers";
 
 export const ProtectedAuthRoute: FC<{
   path: string;

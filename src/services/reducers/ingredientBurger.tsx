@@ -44,6 +44,14 @@ export const ingredientConstructorBurgerReducer = (
       };
     }
 
+    case INGREDIENT_CONSTRUCTOR_ADD_BUN: {
+      return {
+        ...state,
+        ingredientsConstructorBun: action.ellement[0],
+        totalPriceBun: action?.ellement[0].price * 2,
+      };
+    }
+
     case INGREDIENT_CONSTRUCTOR_CUSTOM_ID: {
       return {
         ...state,
@@ -69,13 +77,6 @@ export const ingredientConstructorBurgerReducer = (
       };
     }
 
-    case INGREDIENT_CONSTRUCTOR_ADD_BUN: {
-      return {
-        ...state,
-        ingredientsConstructorBun: action.ellement,
-        totalPriceBun: action?.ellement?.price * 2,
-      };
-    }
     case INGREDIENT_CONSTRUCTOR_CLEAR: {
       return {
         ...state,

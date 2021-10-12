@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../services/reducers";
 import { IngredientDetails } from "../IngredientDetails";
 import { Link, useLocation } from "react-router-dom";
-import { TIngredient } from "../../services/types";
+import { TIngredient, TIngredientList } from "../../services/types";
 
 export function BurgerIngredients() {
   const [bunActive, setBunActive] = useState<boolean>(true);
@@ -13,7 +13,7 @@ export function BurgerIngredients() {
   const [meatActive, setMeatActive] = useState<boolean>(false);
   const location = useLocation();
 
-  const ingredients: TIngredient[] = useSelector(
+  const ingredients: TIngredientList = useSelector(
     (state: RootState) => state.ingredientList
   );
 
@@ -65,15 +65,15 @@ export function BurgerIngredients() {
     meat: { type: "meat", name: "Мясо", list: [] },
   };
 
-  for (let i = 0; i < ingredients.length; i++) {
-    if (ingredients[i].type === "bun") {
-      ingredientsType.bun.list.push(ingredients[i] as never);
+  for (let i = 0; i < ingredients.ingredients.length; i++) {
+    if (ingredients.ingredients[i].type === "bun") {
+      ingredientsType.bun.list.push(ingredients.ingredients[i] as never);
     }
-    if (ingredients[i].type === "main") {
-      ingredientsType.meat.list.push(ingredients[i] as never);
+    if (ingredients.ingredients[i].type === "main") {
+      ingredientsType.meat.list.push(ingredients.ingredients[i] as never);
     }
-    if (ingredients[i].type === "sauce") {
-      ingredientsType.sauce.list.push(ingredients[i] as never);
+    if (ingredients.ingredients[i].type === "sauce") {
+      ingredientsType.sauce.list.push(ingredients.ingredients[i] as never);
     }
   }
 

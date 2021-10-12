@@ -27,7 +27,7 @@ import {
 import { setOrder, getAuthUser } from "../../services/actions";
 import { IngredientsListItem } from "../IngredientsListItem/ingredientsListItem";
 import { useHistory } from "react-router-dom";
-import { TIngredient } from "../../services/types";
+import { TIngredient, TIngredientList } from "../../services/types";
 
 export function BurgerConstructor() {
   const dispatch = useDispatch();
@@ -52,7 +52,7 @@ export function BurgerConstructor() {
     });
   }, []);
 
-  const ingredients: TIngredient[] = useSelector(
+  const ingredients: TIngredientList = useSelector(
     (state: RootState) => state.ingredientList
   );
 
@@ -60,7 +60,7 @@ export function BurgerConstructor() {
     dispatch({
       type: INGREDIENT_CONSTRUCTOR_ADD,
       customId: customId,
-      ellement: ingredients.filter((element: TIngredient) => {
+      ellement: ingredients.ingredients.filter((element: TIngredient) => {
         return element._id === itemId.ingredientId;
       }),
     });
@@ -84,7 +84,7 @@ export function BurgerConstructor() {
   const handleDropBun = (itemId: any) => {
     dispatch({
       type: INGREDIENT_CONSTRUCTOR_ADD_BUN,
-      ellement: ingredients.filter((element: TIngredient) => {
+      ellement: ingredients.ingredients.filter((element: TIngredient) => {
         return element._id === itemId.ingredientId;
       }),
     });
@@ -126,22 +126,22 @@ export function BurgerConstructor() {
   const border = isHover ? "1px solid #2f2f37" : "1px solid transparent";
 
   const openOrder = () => {
-    let ingredients = [];
+    let ingredients2 = [];
     if (isLoginSuccess) {
       // @ts-ignore: Unreachable code error
       if (ingredientsConstructor.length > 0) {
         if (ingredientsConstructorBun && ingredientsConstructor) {
           // @ts-ignore: Unreachable code error
-          ingredients.push(ingredientsConstructorBun._id);
+          ingredients2.push(ingredientsConstructorBun._id);
           // @ts-ignore: Unreachable code error
           ingredientsConstructor.map((item) => {
-            ingredients.push(item._id);
+            ingredients2.push(item._id);
             return item;
           });
           // @ts-ignore: Unreachable code error
-          ingredients.push(ingredientsConstructorBun._id);
+          ingredients2.push(ingredientsConstructorBun._id);
 
-          dispatch(setOrder(ingredients));
+          dispatch(setOrder(ingredients2));
         }
       }
     } else {

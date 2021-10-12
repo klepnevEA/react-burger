@@ -40,3 +40,9 @@ export interface TUser {
   password: string;
   name: string;
 }
+
+export interface TIngredientList {
+  feedRequest: boolean;
+  feedFailed: boolean;
+  ingredients: TIngredient[];
+}
