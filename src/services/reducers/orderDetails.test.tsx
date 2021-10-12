@@ -38,7 +38,7 @@ describe("order detals reducer", () => {
       expect.objectContaining({
         orderLoader: false,
         isOpenOrder: true,
-        orderNumber: 123,
+        orderNumber: undefined,
         orderName: "Name",
       })
     );

@@ -45,11 +45,20 @@ export const ingredientConstructorBurgerReducer = (
     }
 
     case INGREDIENT_CONSTRUCTOR_ADD_BUN: {
-      return {
-        ...state,
-        ingredientsConstructorBun: action.ellement[0],
-        totalPriceBun: action?.ellement[0].price * 2,
-      };
+      console.log(action.ellement);
+      if (action.ellement) {
+        return {
+          ...state,
+          ingredientsConstructorBun: action.ellement[0],
+          totalPriceBun: action?.ellement[0].price * 2,
+        };
+      } else {
+        return {
+          ...state,
+          ingredientsConstructorBun: [],
+          totalPriceBun: 0,
+        };
+      }
     }
 
     case INGREDIENT_CONSTRUCTOR_CUSTOM_ID: {

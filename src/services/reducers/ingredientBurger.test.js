@@ -59,12 +59,14 @@ describe("Action creators", () => {
     expect(
       ingredientConstructorBurgerReducer(burgerReducerState, {
         type: INGREDIENT_CONSTRUCTOR_ADD_BUN,
+        ingredientsConstructorBun: [],
+        totalPriceBun: 0,
       })
     ).toEqual(
       expect.objectContaining({
         ingredientsConstructor: [],
-        totalPriceBun: NaN,
-        ingredientsConstructorBun: undefined,
+        ingredientsConstructorBun: [],
+        totalPriceBun: 0,
         totalPriceIngredients: 0,
       })
     );
