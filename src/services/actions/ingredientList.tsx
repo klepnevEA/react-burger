@@ -30,31 +30,42 @@ export interface TIngredient {
 
 export interface IGetFeed {
   readonly type: typeof GET_FEED;
+  feedRequest: boolean;
+  feedFailed: boolean;
 }
 
 export interface IGetFeedFailed {
   readonly type: typeof GET_FEED_FAILED;
+  feedFailed: boolean;
+  feedRequest: boolean;
 }
 
 export interface IGetFeedSuccess {
   readonly type: typeof GET_FEED_SUCCESS;
-  readonly ingredients: TIngredient[];
+  ingredients: TIngredient[];
+  feedRequest: boolean;
 }
 export interface IIngredientListCountBun {
   readonly type: typeof INGREDIENT_LIST_COUNT_BUN;
-  readonly ellementId: { ingredientId: string };
+  ellementId: { ingredientId: string };
+  ingredients: TIngredient[];
+  feedFailed: boolean;
+  feedRequest: boolean;
 }
 
 export interface IIngredientListCountIngredients {
   readonly type: typeof INGREDIENT_LIST_COUNT_INGREDIENTS;
-  readonly ellementId: { ingredientId: string };
+  ellementId: { ingredientId: string };
+  ingredients: TIngredient[];
 }
 export interface IIngredientListCountClear {
   readonly type: typeof INGREDIENT_LIST_COUNT_CLEAR;
+  ingredients: TIngredient[];
 }
 export interface IIngredientListCountIngredientsDecrease {
   readonly type: typeof INGREDIENT_LIST_COUNT_INGREDIENTS_DECREASE;
-  readonly ellementId: string;
+  ellementId: string;
+  ingredients: TIngredient[];
 }
 
 export type TActions =

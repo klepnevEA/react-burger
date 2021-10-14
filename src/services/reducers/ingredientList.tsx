@@ -14,7 +14,7 @@ import type { TActions } from "../actions/ingredientList";
 interface TInitialState {
   feedRequest: boolean;
   feedFailed: boolean;
-  ingredients: [];
+  ingredients: TIngredient[];
 }
 
 const initialState: TInitialState = {
