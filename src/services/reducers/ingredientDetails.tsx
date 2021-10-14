@@ -1,6 +1,7 @@
 import {
   INGREDIENT_DATAILS_CLOSE,
   INGREDIENT_DATAILS_OPEN,
+  TIngredient,
 } from "../actions/ingredientDetails";
 
 import type { TActions } from "../actions/ingredientDetails";

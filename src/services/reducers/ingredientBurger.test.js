@@ -3,7 +3,6 @@ import {
   INGREDIENT_CONSTRUCTOR_CUSTOM_ID,
   INGREDIENT_CONSTRUCTOR_DELETE,
 } from "../actions/ingredientBurger";
-import { INGREDIENT_DATAILS_OPEN } from "../actions/ingredientDetails";
 import { ingredientConstructorBurgerReducer } from "./ingredientBurger";
 
 const burgerReducerState = {

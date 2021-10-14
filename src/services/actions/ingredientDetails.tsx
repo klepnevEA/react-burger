@@ -23,11 +23,14 @@ export interface TIngredient {
 
 export interface IIngredientDetalsOpen {
   readonly type: typeof INGREDIENT_DATAILS_OPEN;
-  readonly ingredient: TIngredient;
+  ingredient: TIngredient;
+  isOpenIngredientsDetals: boolean;
 }
 
 export interface IIngredientDetalsClose {
   readonly type: typeof INGREDIENT_DATAILS_CLOSE;
+  ingredient: TIngredient;
+  isOpenIngredientsDetals: boolean;
 }
 
 export type TActions = IIngredientDetalsOpen | IIngredientDetalsClose;
