@@ -10,17 +10,30 @@ export interface TUser {
 
 export interface ILogin {
   readonly type: typeof LOGIN;
+  loginLoader: boolean;
+  isLoginSuccess: boolean;
+  isLoggined: boolean;
+  user: TUser;
+  message: string;
 }
 
 export interface ILoginSuccess {
   readonly type: typeof LOGIN_SUCCESS;
-  readonly payload: TUser;
+  payload: TUser;
+  loginLoader: boolean;
+  isLoginSuccess: boolean;
+  isLoggined: boolean;
+  user: TUser;
+  message: string;
 }
 
 export interface ILoginFailed {
   readonly type: typeof LOGIN_FAILED;
-  readonly payload: TUser;
-  readonly registerMessage: string;
+  payload: TUser;
+  registerMessage: string;
+  isLoggined: boolean;
+  loginLoader: boolean;
+  isLoginSuccess: boolean;
 }
 
 export type TActions = ILogin | ILoginSuccess | ILoginFailed;

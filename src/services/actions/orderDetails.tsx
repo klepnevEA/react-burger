@@ -14,17 +14,26 @@ export interface ISetOrder {
 
 export interface ISetOrderSuccess {
   readonly type: typeof SET_ORDER_SUCCESS;
-  readonly numberOrder: string;
-  readonly orderName: string;
+  numberOrder: string;
+  orderName: string;
+  orderLoader: boolean;
+  isOpenOrder: boolean;
+  orderNumber: number;
 }
 
 export interface ISetOrderFailed {
   readonly type: typeof SET_ORDER_FAILED;
-  readonly orderName: string;
+  orderName: string;
+  orderLoader: boolean;
+  orderNumber: number;
+  isOpenOrder: boolean;
 }
 
 export interface IOrderCloseDetals {
   readonly type: typeof ORDER_DATAILS_CLOSE;
+  isOpenOrder: boolean;
+  orderNumber: number;
+  orderName: string;
 }
 export type TActions =
   | ISetOrder

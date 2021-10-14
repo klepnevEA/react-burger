@@ -12,14 +12,20 @@ export interface TUser {
 
 export interface IResetPassowd {
   readonly type: typeof RESET_PASSWORD;
+  readonly resetLoader: boolean;
 }
 
 export interface IResetPassowdSuccess {
   readonly type: typeof RESET_PASSWORD_SUCCESS;
+  readonly resetLoader: boolean;
+  readonly isResetSuccess: boolean;
 }
 
 export interface IResetPassowdFailed {
   readonly type: typeof RESET_PASSWORD_FAILED;
+  readonly resetLoader: boolean;
+  readonly isResetSuccess: boolean;
+  readonly resetStatus: string;
 }
 
 export type TActions =

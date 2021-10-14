@@ -1,4 +1,4 @@
-import { LOGIN, LOGIN_FAILED, LOGIN_SUCCESS } from "../actions";
+import { LOGIN, LOGIN_FAILED, LOGIN_SUCCESS } from "../actions/login";
 import { loginReducer } from "./login";
 
 const initialState = {
@@ -10,18 +10,19 @@ const initialState = {
 };
 
 describe("login reducer", () => {
-  it("should return the initial state", () => {
-    expect(loginReducer(undefined, {})).toEqual(initialState);
-  });
-
   it("should handle LOGIN loader", () => {
     expect(
       loginReducer(initialState, {
         type: LOGIN,
+        loginLoader: true,
+        isLoginSuccess: false,
+        isLoggined: false,
+        user: { name: "Test", email: "test@test.ts" },
+        message: "",
       })
     ).toEqual(
       expect.objectContaining({
-        loginLoader: false,
+        loginLoader: true,
         isLoginSuccess: false,
         isLoggined: false,
         user: {},
@@ -34,14 +35,19 @@ describe("login reducer", () => {
     expect(
       loginReducer(initialState, {
         type: LOGIN_SUCCESS,
+        payload: { name: "Test", email: "test@test.ts" },
+        loginLoader: false,
+        isLoginSuccess: true,
+        isLoggined: true,
+        user: { name: "Test", email: "test@test.ts" },
+        message: "",
       })
     ).toEqual(
       expect.objectContaining({
+        isLoggined: true,
+        isLoginSuccess: true,
         loginLoader: false,
-        isLoginSuccess: false,
-        isLoggined: false,
-        user: {},
-        message: "",
+        user: { name: "Test", email: "test@test.ts" },
       })
     );
   });
@@ -50,9 +56,16 @@ describe("login reducer", () => {
     expect(
       loginReducer(initialState, {
         type: LOGIN_FAILED,
+        payload: { name: "Test", email: "test@test.ts" },
+        registerMessage: "Привет",
+        isLoggined: false,
+        loginLoader: false,
+        isLoginSuccess: false,
       })
     ).toEqual(
       expect.objectContaining({
+        user: { name: "Test", email: "test@test.ts" },
+        message: "Привет",
         isLoggined: false,
         loginLoader: false,
         isLoginSuccess: false,

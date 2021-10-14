@@ -13,11 +13,6 @@ const burgerReducerState = {
   totalPriceIngredients: 0,
 };
 describe("Action creators", () => {
-  it("should return the initial state", () => {
-    expect(ingredientConstructorBurgerReducer(undefined, {})).toEqual(
-      burgerReducerState
-    );
-  });
   it("should handle INGREDIENT_DATAILS_OPEN", () => {
     expect(
       ingredientConstructorBurgerReducer(burgerReducerState, {
