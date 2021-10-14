@@ -11,9 +11,6 @@ const sendMailState = {
   mailStatus: "",
 };
 describe("Action creators", () => {
-  it("should return the initial state", () => {
-    expect(sendMailReducer(undefined, {})).toEqual(sendMailState);
-  });
   it("should handle SEND_EMAIL", () => {
     expect(
       sendMailReducer(sendMailState, {

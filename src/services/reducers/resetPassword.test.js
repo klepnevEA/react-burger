@@ -12,10 +12,6 @@ const resetState = {
 };
 
 describe("register", () => {
-  it("should return the initial state resetState", () => {
-    expect(resetPassword(undefined, {})).toEqual(resetState);
-  });
-
   it("should handle RESET_PASSWORD", () => {
     expect(
       resetPassword(resetState, {

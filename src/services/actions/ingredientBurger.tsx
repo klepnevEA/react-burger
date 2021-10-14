@@ -34,7 +34,9 @@ export interface IIngredientConstructorAdd {
 
 export interface IIngredientConstructorAddBun {
   readonly type: typeof INGREDIENT_CONSTRUCTOR_ADD_BUN;
-  readonly ellement: TIngredient[];
+  ellement: TIngredient[];
+  ingredientsConstructorBun: [];
+  totalPriceBun: number;
 }
 
 export interface IIngredientConstructorClear {
@@ -46,8 +48,10 @@ export interface IIngredientConstructorCustomId {
 }
 export interface IIngredientConstructorDelete {
   readonly type: typeof INGREDIENT_CONSTRUCTOR_DELETE;
-  readonly item: TIngredient;
-  readonly customId: string;
+  item: TIngredient;
+  customId: string;
+  ingredientsConstructor: TIngredient[];
+  totalPriceIngredients: number;
 }
 export interface IReorderIngredients {
   readonly type: typeof REOTDER_INGREDIENTS;

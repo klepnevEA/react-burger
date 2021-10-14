@@ -14,10 +14,6 @@ const registerState = {
 };
 
 describe("register", () => {
-  it("should return the initial state register", () => {
-    expect(registerReducer(undefined, {})).toEqual(registerState);
-  });
-
   it("should handle SEND_REGISTER_SUCCESS", () => {
     expect(
       registerReducer(registerState, {

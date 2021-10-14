@@ -13,8 +13,8 @@ import {
 import type { TActions } from "../actions/ingredientBurger";
 
 interface TIngredientConstructorBurgerReducerState {
-  ingredientsConstructor: [];
-  ingredientsConstructorBun: {};
+  ingredientsConstructor: TIngredient[];
+  ingredientsConstructorBun: any;
   totalPriceBun: number;
   totalPriceIngredients: number;
 }

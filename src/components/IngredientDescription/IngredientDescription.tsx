@@ -3,16 +3,17 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { RootState } from "../../services/reducers";
 import styles from "./index.module.css";
-import { TIngredient } from "../../services/types";
+import { TIngredient, TIngredientList } from "../../services/types";
 
 export function IngredientDescription() {
-  const ingredients: TIngredient[] = useSelector(
+  const ingredients: TIngredientList = useSelector(
     (state: RootState) => state.ingredientList
   );
+  console.log(ingredients.ingredients);
   const { ingredientId } = useParams<{ ingredientId?: string }>();
 
   const findIngredient = () => {
-    let ingredient = ingredients.find(
+    let ingredient = ingredients.ingredients.find(
       (item: TIngredient) => item._id === ingredientId
     );
 
