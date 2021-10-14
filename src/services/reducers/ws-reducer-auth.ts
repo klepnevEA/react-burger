@@ -50,9 +50,9 @@ export const wsReducerAuth = (
     case WS_AUTH_GET_MESSAGE:
       return {
         ...state,
-        orders: action.payload.orders,
-        total: action.payload.total,
-        totalToday: action.payload.totalToday,
+        orders: action.payload?.orders,
+        total: action.payload?.total,
+        totalToday: action.payload?.totalToday,
       };
 
     default:

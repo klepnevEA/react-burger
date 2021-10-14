@@ -17,11 +17,14 @@ export interface IWSAuth {
 
 export interface IWSAuthSuccess {
   readonly type: typeof WS_AUTH_CONNECTION_SUCCESS;
+  wsConnected: boolean;
 }
 
 export interface IWSAuthError {
   readonly type: typeof WS_AUTH_CONNECTION_ERROR;
-  readonly payload: { payload: void; type: string };
+  payload: { payload: void; type: string };
+  error: string;
+  wsConnected: boolean;
 }
 
 export interface IWSAuthClosed {
