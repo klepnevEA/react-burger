@@ -110,6 +110,7 @@ export function BurgerIngredients() {
                     <li
                       key={elem._id}
                       className={`pr-3 pl-3 pb-10 ${styles.item}`}
+                      data-cy="ingredient-elem"
                     >
                       <Link
                         to={{

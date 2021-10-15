@@ -180,7 +180,10 @@ export function BurgerConstructor() {
   return (
     <div className="pt-25">
       <div className={`mb-10 ${styles.ingrediants}`} ref={dropTargetBunTop}>
-        <div className={`pl-8 mb-2 ${styles["ingredients-top"]}`}>
+        <div
+          className={`pl-8 mb-2 ${styles["ingredients-top"]}`}
+          data-cy="up-bun"
+        >
           {
             // @ts-ignore: Unreachable code error
             ingredientsConstructorBun.name && (
@@ -208,6 +211,7 @@ export function BurgerConstructor() {
                 border: border,
               }}
               ref={dropTarget}
+              data-cy="other-container"
             >
               {
                 // @ts-ignore: Unreachable code error
@@ -219,7 +223,10 @@ export function BurgerConstructor() {
             </ul>
           </div>
         </div>
-        <div className={`pl-8 mt-2 ${styles["ingredients-bottom"]}`}>
+        <div
+          className={`pl-8 mt-2 ${styles["ingredients-bottom"]}`}
+          data-cy="down-bun"
+        >
           {
             // @ts-ignore: Unreachable code error
             ingredientsConstructorBun.name && (
