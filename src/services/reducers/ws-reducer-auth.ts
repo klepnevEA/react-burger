@@ -6,11 +6,12 @@ import {
 } from "../actions/ws-reducer-auth";
 import type { TActions } from "../actions/ws-reducer-auth";
 import { PayloadAction } from "@reduxjs/toolkit";
+import { TOrder } from "../types";
 
 interface TWsReduserState {
-  wsConnected: Boolean;
-  error: PayloadAction | null;
-  orders: [];
+  wsConnected: boolean;
+  error: string | null;
+  orders: TOrder[];
   total: number | null;
   totalToday: number | null;
 }
@@ -37,7 +38,7 @@ export const wsReducerAuth = (
     case WS_AUTH_CONNECTION_ERROR:
       return {
         ...state,
-        error: action.payload,
+        error: "Ошибка",
         wsConnected: false,
       };
 

@@ -29,13 +29,13 @@ describe("register", () => {
     expect(
       wsReducerAuth(initialState, {
         type: WS_AUTH_CONNECTION_ERROR,
-        error: "Error",
+        error: "Ошибка",
         wsConnected: false,
       })
     ).toEqual(
       expect.objectContaining({
         wsConnected: false,
-        error: undefined,
+        error: "Ошибка",
         orders: [],
         total: null,
         totalToday: null,

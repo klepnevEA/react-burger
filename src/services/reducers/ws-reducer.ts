@@ -5,11 +5,12 @@ import {
   WS_GET_MESSAGE,
 } from "../actions/ws-reducer";
 import { PayloadAction } from "@reduxjs/toolkit";
+import { TOrder } from "../types";
 
 interface TWsReduserState {
-  wsConnected: Boolean;
+  wsConnected: boolean;
   error: PayloadAction | null;
-  orders: [];
+  orders: TOrder[];
   total: number | null;
   totalToday: number | null;
 }

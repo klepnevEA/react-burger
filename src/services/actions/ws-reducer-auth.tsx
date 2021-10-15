@@ -22,13 +22,13 @@ export interface IWSAuthSuccess {
 
 export interface IWSAuthError {
   readonly type: typeof WS_AUTH_CONNECTION_ERROR;
-  payload: { payload: void; type: string };
   error: string;
   wsConnected: boolean;
 }
 
 export interface IWSAuthClosed {
   readonly type: typeof WS_AUTH_CONNECTION_CLOSED;
+  wsConnected: boolean;
 }
 
 export interface IWSAuthGetMessage {
