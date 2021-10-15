@@ -9,7 +9,6 @@ export function IngredientDescription() {
   const ingredients: TIngredientList = useSelector(
     (state: RootState) => state.ingredientList
   );
-  console.log(ingredients.ingredients);
   const { ingredientId } = useParams<{ ingredientId?: string }>();
 
   const findIngredient = () => {

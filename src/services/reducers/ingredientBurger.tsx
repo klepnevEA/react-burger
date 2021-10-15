@@ -45,7 +45,6 @@ export const ingredientConstructorBurgerReducer = (
     }
 
     case INGREDIENT_CONSTRUCTOR_ADD_BUN: {
-      console.log(action.ellement);
       if (action.ellement) {
         return {
           ...state,

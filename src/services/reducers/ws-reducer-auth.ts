@@ -5,7 +5,6 @@ import {
   WS_AUTH_GET_MESSAGE,
 } from "../actions/ws-reducer-auth";
 import type { TActions } from "../actions/ws-reducer-auth";
-import { PayloadAction } from "@reduxjs/toolkit";
 import { TOrder } from "../types";
 
 interface TWsReduserState {

@@ -36,12 +36,13 @@ describe("service is available", function () {
         expect($children).to.have.length(1);
       });
     dragAndDrop(2);
-    dragAndDrop(3);
     dragAndDrop(4);
+    dragAndDrop(4);
+    dragAndDrop(5);
     cy.get('[data-cy="other-container"]')
       .children()
       .should(($children) => {
-        expect($children).to.have.length(3);
+        expect($children).to.have.length(4);
       });
   });
 
